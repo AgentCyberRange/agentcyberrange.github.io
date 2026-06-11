@@ -797,19 +797,19 @@ function PaperSite() {
             <div className="mt-8 flex flex-col gap-6">
               <FindingCard
                 index={1}
-                title="Practical Web Exploitation Capability"
+                title="Detection rate across different depths of GPT-5.5"
                 image={finding1Fig}
                 imageAlt="Detection rate of GPT-5.5 across vulnerability depths"
               >
-                Figure 8: Detection rate across different depths of GPT-5.5. Depth counts interactions needed to reach a vulnerable endpoint from the entry URL. Bars show total (light) and detected (dark) vulnerabilities; the line is the detection rate, falling from 35% at depth 2 to 11% at depth 6, showing that agents struggle to find deeper vulnerabilities.
+                Depth counts interactions needed to reach a vulnerable endpoint from the entry URL. Bars show total (light) and detected (dark) vulnerabilities; the line is the detection rate, falling from 35% at depth 2 to 11% at depth 6, showing that agents struggle to find deeper vulnerabilities.
               </FindingCard>
               <FindingCard
                 index={2}
-                title="Realistic Cyber Attack in Enterprise Ranges"
+                title="A representative failed post-exploitation task requiring chained exploitation"
                 image={finding2Fig}
                 imageAlt="A representative failed post-exploitation task requiring chained exploitation"
               >
-                Figure 11: A representative failed post-exploitation task requiring chained exploitation. The intended path starts from Confluence RCE, recovers credentials from the compromised Confluence, uses them to access GitLab and audit source code, and finally exploits a newly discovered vulnerability in the downstream application.
+                The intended path starts from Confluence RCE, recovers credentials from the compromised Confluence, uses them to access GitLab and audit source code, and finally exploits a newly discovered vulnerability in the downstream application.
               </FindingCard>
             </div>
           </section>
