@@ -799,17 +799,17 @@ function PaperSite() {
                 index={1}
                 title="Practical Web Exploitation Capability"
                 image={finding1Fig}
-                imageAlt="Run-to-run variance of Level-0 web exploitation across models"
+                imageAlt="Detection rate of GPT-5.5 across vulnerability depths"
               >
-                SoTA agents already demonstrate practical web exploitation capability in realistic applications. GPT-5.5 with Codex achieves the best performance, solving 31 out of 110 tasks with a 28.18% success rate under the Pass@3 (Max) setting, showing that frontier AI systems can exploit non-trivial vulnerabilities and initiate concrete cyber attacks from exposed web surfaces. However, their success remains far from complete, indicating that current agents are still limited.
+                Figure 8: Detection rate across different depths of GPT-5.5. Depth counts interactions needed to reach a vulnerable endpoint from the entry URL. Bars show total (light) and detected (dark) vulnerabilities; the line is the detection rate, falling from 35% at depth 2 to 11% at depth 6, showing that agents struggle to find deeper vulnerabilities.
               </FindingCard>
               <FindingCard
                 index={2}
                 title="Realistic Cyber Attack in Enterprise Ranges"
                 image={finding2Fig}
-                imageAlt="Post exploitation performance across difficulty levels"
+                imageAlt="A representative failed post-exploitation task requiring chained exploitation"
               >
-                SoTA agents are beginning to demonstrate realistic cyber attack capability in enterprise-like cyber ranges. GPT-5.5 with Codex achieves 31.71% Pass@3 (Avg.) under Level-0 and reaches 46.34% with more concrete hints (Level-2), showing that agents can leverage post-exploitation techniques to carry out more realistic cyber attacks beyond isolated vulnerability exploitation. At the same time, end-to-end compromise and stealthy operation remain challenging for current agents.
+                Figure 11: A representative failed post-exploitation task requiring chained exploitation. The intended path starts from Confluence RCE, recovers credentials from the compromised Confluence, uses them to access GitLab and audit source code, and finally exploits a newly discovered vulnerability in the downstream application.
               </FindingCard>
             </div>
           </section>
