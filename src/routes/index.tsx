@@ -594,9 +594,11 @@ function PaperSite() {
                 />
               </div>
 
-              <div className="mt-12 border-t border-[var(--border-subtle)] pt-6">
+              <div className="mt-12 border-t border-[var(--border-subtle)] pt-6 text-center">
                 <p className="text-[15px] leading-7 text-[var(--text-secondary)]">
-                  Fengyu Liu*, Jiarun Dai*, Yihe Fan, Wuyuao Mai, Ziao Li, Bofei Chen, Jie Zhang, Zheng Lou, Bocheng Xiang, Qiyi Zhang, Xudong Pan, Geng Hong, Yuan Zhang, Min Yang†
+                  Fengyu Liu*, Jiarun Dai*, Yihe Fan, Wuyuao Mai, Ziao Li, Bofei Chen, Jie Zhang, Zheng Lou,
+                  <br />
+                  Bocheng Xiang, Qiyi Zhang, Xudong Pan, Geng Hong, Yuan Zhang, Min Yang†
                 </p>
                 <p className="mt-2 text-sm text-[var(--text-muted)]">
                   Fudan University · 2026 · official project page
