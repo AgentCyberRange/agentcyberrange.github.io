@@ -8,6 +8,9 @@ import zhipuLogo from '@lobehub/icons-static-svg/icons/zhipu-color.svg?url'
 import paperLogo from '../assets/agent-cyber-range-mark.svg?url'
 import attackWorkflowFig from '../assets/overview-cyber-attack-workflow.png?url'
 import benchmarkLevelsFig from '../assets/benchmark-levels.png?url'
+import finding1Fig from '../assets/finding1.png?url'
+import finding2Fig from '../assets/finding2.png?url'
+import overallResultFig from '../assets/overall-result.png?url'
 import {
   ArrowDown,
   ArrowUpDown,
@@ -238,9 +241,9 @@ function toOrdinal(n: number): string {
 const resultTables = {
   web: {
     eyebrow: '5.2 · RQ1',
-    title: 'Web Exploitation Performance',
+    title: 'Exploitation Performance',
     description:
-      'Evaluation results on web exploitation tasks across difficulty levels.',
+      'Evaluation results on web and post exploitation tasks across difficulty levels.',
     rows: resultRows,
   },
   post: {
@@ -295,10 +298,10 @@ const tracks = [
   },
   {
     label: 'CAGE',
-    value: 'CLI',
-    suffix: 'agent evaluation',
+    value: 'Infra',
+    suffix: 'Evaluation',
     detail:
-      'Agent adapters, benchmark managers, trace logging, and verification modules for heterogeneous CLI-based agents.',
+      'An evaluation toolchain for scalable system execution, task orchestration, benchmark deployment, result collection, and automatic verification.',
   },
 ]
 
@@ -328,11 +331,15 @@ level-0 result:
   pass@3 = 31.71%`,
 }
 
-const bibtex = `@misc{opencyberrange2026,
-  title  = {OpenCyberRange: Benchmarking LLM-based Agents on Realistic Cyber Attacks},
-  author = {Anonymous Authors},
-  year   = {2026},
-  note   = {Preprint}
+const bibtex = `@misc{agentcyberrange2026,
+  title        = {AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges},
+  author       = {Liu, Fengyu and Dai, Jiarun and Fan, Yihe and Mai, Wuyuao and
+                  Li, Ziao and Chen, Bofei and Zhang, Jie and Lou, Zheng and
+                  Xiang, Bocheng and Zhang, Qiyi and Pan, Xudong and Hong, Geng and
+                  Zhang, Yuan and Yang, Min},
+  year         = {2026},
+  organization = {Fudan University},
+  note         = {Preprint}
 }`
 
 // Pass@3 (Avg.) per level, from the post exploitation results table.
@@ -406,6 +413,43 @@ function BarLogoLabel({
   )
 }
 
+function FindingCard({
+  index,
+  title,
+  image,
+  imageAlt,
+  children,
+}: Readonly<{
+  index: number
+  title: string
+  image: string
+  imageAlt: string
+  children: ReactNode
+}>) {
+  return (
+    <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
+      <div className="grid items-center gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22%)]">
+        <div>
+          <div className="mb-4 flex items-center gap-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A1A5B5] font-mono text-xs text-white">
+              {index}
+            </span>
+            <CardTitle className="font-serif text-lg text-[var(--text-primary)]">
+              {title}
+            </CardTitle>
+          </div>
+          <p className="text-sm leading-6 text-[var(--text-secondary)]">{children}</p>
+        </div>
+        <img
+          src={image}
+          alt={imageAlt}
+          className="w-full rounded-lg border border-[var(--border-default)] bg-white"
+        />
+      </div>
+    </Card>
+  )
+}
+
 function DifficultyChart({
   title,
   data,
@@ -448,47 +492,11 @@ function DifficultyChart({
 }
 
 function PaperSite() {
-  const [sort, setSort] = useState<{
-    key: SortKey
-    direction: SortDirection
-  }>({ key: 'pass1', direction: 'desc' })
-  const [activeTable, setActiveTable] = useState<ResultTableId>('web')
+  const [activeTable] = useState<ResultTableId>('web')
   const [copied, setCopied] = useState<string | null>(null)
-  const [level, setLevel] = useState<'level0' | 'level1' | 'level2'>('level0')
+  const [level] = useState<'level0' | 'level1' | 'level2'>('level0')
 
   const activeResult = resultTables[activeTable]
-  const bestPass3 = Math.max(...activeResult.rows.map((row) => row[level].pass3))
-
-  const sortedRows = useMemo(() => {
-    return [...activeResult.rows].sort((a, b) => {
-      const left = sort.key === 'pass1' ? a[level].pass1 : sort.key === 'pass3' ? a[level].pass3 : a[sort.key]
-      const right = sort.key === 'pass1' ? b[level].pass1 : sort.key === 'pass3' ? b[level].pass3 : b[sort.key]
-      const modifier = sort.direction === 'asc' ? 1 : -1
-
-      if (typeof left === 'string' && typeof right === 'string') {
-        return left.localeCompare(right) * modifier
-      }
-
-      return ((left as number) - (right as number)) * modifier
-    })
-  }, [activeResult.rows, sort, level])
-
-  const pass3Ranks = useMemo(() => {
-    const ranked = [...activeResult.rows].sort((a, b) => b[level].pass3 - a[level].pass3)
-    const map = new Map<string, number>()
-    ranked.forEach((row, i) => {
-      map.set(`${row.model}-${row.agent}`, i + 1)
-    })
-    return map
-  }, [activeResult.rows, level])
-
-  const updateSort = (key: SortKey) => {
-    setSort((current) => ({
-      key,
-      direction:
-        current.key === key && current.direction === 'desc' ? 'asc' : 'desc',
-    }))
-  }
 
   const copyText = async (key: string, value: string) => {
     await navigator.clipboard.writeText(value)
@@ -510,39 +518,42 @@ function PaperSite() {
                   variant="outline"
                   className="rounded-full border-[var(--border-default)] bg-transparent px-3 py-1 font-mono text-[11px] font-normal text-[var(--text-secondary)]"
                 >
-                  opencyberrange · v0
+                  agentcyberrange · v0
                 </Badge>
 
                 <h1 className="mt-7 font-serif text-[clamp(2.9rem,5.2vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
-                  OpenCyberRange
+                  AgentCyberRange
                 </h1>
               </div>
 
               <div className="mt-9 grid gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
                 <div className="max-w-[50ch]">
                   <p className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
-                    Benchmarking LLM-based Agents on{' '}
+                    Benchmarking Frontier AI Systems in{' '}
                     <span className="text-[var(--accent-rust)]">
-                      Realistic Cyber Attacks
+                      Realistic Cyber Ranges
                     </span>
                     .
                   </p>
 
                   <p className="mt-7 text-xl leading-8 text-[var(--text-primary)] sm:text-[1.35rem] sm:leading-9">
-                    OpenCyberRange benchmarks LLM-based agents on realistic cyber
-                    attacks, connecting web-facing exploitation with internal
-                    post-exploitation across enterprise-like environments.
+                    AgentCyberRange is the first open, multi-range evaluation
+                    infrastructure for measuring the autonomous cyber attack
+                    capability of frontier AI systems, covering two core stages of
+                    realistic attacks: web exploitation and post-exploitation.
                   </p>
                   <p className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
-                    The benchmark contains 110 vulnerabilities across 15 real web
-                    applications and 8 cyber ranges with 156 internal hosts. CAGE
-                    provides the execution, deployment, logging, and verification
-                    pipeline for matched agent evaluations.
+                    The benchmark suite contains 110 vulnerabilities across 15 real
+                    web applications and 8 enterprise-like cyber ranges with 156
+                    internal hosts, together with CAGE, an evaluation toolchain for
+                    scalable system execution, task orchestration, result
+                    collection, and automatic verification.
                   </p>
                   <p className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
-                    In the level-0 post-exploitation setting, GPT-5.5 with Codex
-                    achieves the strongest score: 31.71% Pass@1 and 31.71%
-                    Pass@3.
+                    Across six frontier AI systems under matched prompts and
+                    budgets, GPT-5.5 with Codex achieves the highest success rates:
+                    16.1% on web exploitation and 31.7% on post-exploitation,
+                    rising to 33.0% and 46.3% with more concrete hints.
                   </p>
 
                   <div className="mt-8 flex flex-wrap gap-3">
@@ -550,7 +561,7 @@ function PaperSite() {
                       asChild
                       className="h-10 rounded-lg bg-[#2C4E59] px-5 text-sm text-white shadow-none hover:bg-[#2C3759]"
                     >
-                      <a href="#leaderboard">
+                      <a href="#overall-results">
                         <ArrowDown />
                         Read the results
                       </a>
@@ -574,10 +585,6 @@ function PaperSite() {
                       GitHub soon
                     </Button>
                   </div>
-
-                  <p className="mt-8 text-sm text-[var(--text-muted)]">
-                    Anonymous Authors · 2026 · official project page
-                  </p>
                 </div>
 
                 <ResultPreview
@@ -585,6 +592,17 @@ function PaperSite() {
                   rows={resultRows}
                   table={activeResult}
                 />
+              </div>
+
+              <div className="mt-12 border-t border-[var(--border-subtle)] pt-6">
+                <p className="text-[15px] leading-7 text-[var(--text-secondary)]">
+                  Fengyu Liu*, Jiarun Dai*, Yihe Fan, Wuyuao Mai, Ziao Li, Bofei Chen, Jie Zhang, Zheng Lou, Bocheng Xiang, Qiyi Zhang, Xudong Pan, Geng Hong, Yuan Zhang, Min Yang†
+                </p>
+                <p className="mt-2 text-sm text-[var(--text-muted)]">
+                  Fudan University · 2026 · official project page
+                  <span className="mx-2 text-[var(--border-default)]">·</span>
+                  *Equal contribution. †Corresponding author.
+                </p>
               </div>
             </div>
           </section>
@@ -625,213 +643,114 @@ function PaperSite() {
           </section>
 
           <section
-            id="leaderboard"
-            className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16"
-          >
-            <div className='flex gap-24 items-start'>
-              <div className='flex flex-col gap-3 w-64'>
-                <SectionHeader
-                  eyebrow={activeResult.eyebrow}
-                  title={activeResult.title}
-                  description={`${activeResult.description} Click any sortable column to change the ordering; click again to reverse it.`}
-                />
-
-                <div className="flex items-center gap-2">
-
-                  <TableSwitch
-                    activeTable={activeTable}
-                    className="w-fit"
-                    onTableChange={setActiveTable}
-                  />
-
-                  <Select value={level} onValueChange={(v) => setLevel(v as 'level0' | 'level1' | 'level2')}>
-                    <SelectTrigger className="h-auto w-32 rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] px-3 py-1.5 text-sm text-[var(--text-primary)]">
-                      <SelectValue placeholder="Level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="level0">Level 0</SelectItem>
-                      <SelectItem value="level1">Level 1</SelectItem>
-                      <SelectItem value="level2">Level 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                </div>
-              </div>
-
-              <div className='flex-1 min-w-0'>
-                <Card className="mt-8 overflow-hidden rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader className="bg-[#F0F3F5]">
-                        <TableRow className="border-[var(--border-default)]">
-                          <SortableHead
-                            column="model"
-                            sort={sort}
-                            onSort={updateSort}
-                            className="min-w-48"
-                          >
-                            Model
-                          </SortableHead>
-                          <SortableHead
-                            column="agent"
-                            sort={sort}
-                            onSort={updateSort}
-                          >
-                            Agent
-                          </SortableHead>
-                          <SortableHead
-                            column="pass1"
-                            sort={sort}
-                            onSort={updateSort}
-                          >
-                            Pass@1
-                          </SortableHead>
-                          <SortableHead
-                            column="pass3"
-                            sort={sort}
-                            onSort={updateSort}
-                          >
-                            Pass@3
-                          </SortableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {sortedRows.map((row) => {
-                          const rank = pass3Ranks.get(`${row.model}-${row.agent}`) ?? 0
-                          return (
-                          <TableRow
-                            key={`${row.model}-${row.agent}`}
-                            className="border-[var(--border-default)] even:bg-[#EBEEF2]/60"
-                          >
-                            <TableCell className="font-medium text-[var(--text-primary)]">
-                              <div className="flex items-center gap-2">
-                                <Badge className={`rounded-full px-2 py-0 font-mono text-[10px] font-normal shadow-none ${rank === 1 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white hover:bg-[#A1A5B5]' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)] hover:bg-[#F0F3F5]'}`}>
-                                  {toOrdinal(rank)}
-                                </Badge>
-                                <ModelLogo model={row.model} />
-                                <span>{row.model}</span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-[var(--text-secondary)]">
-                              {row.agent}
-                            </TableCell>
-                            <TableCell className="font-mono text-[var(--text-primary)]">
-                              {row[level].pass1.toFixed(2)}%
-                            </TableCell>
-                            <TableCell className="font-mono text-[var(--text-primary)]">
-                              {row[level].pass3.toFixed(2)}%
-                            </TableCell>
-                          </TableRow>
-                          )
-                        })}
-                        <TableRow className="border-[var(--border-default)] opacity-50">
-                          <TableCell className="font-medium text-[var(--text-secondary)]">
-                            <div className="flex items-center gap-2">
-                              <Badge className="rounded-full border border-[var(--border-default)] bg-transparent px-2 py-0 font-mono text-[10px] font-normal text-[var(--text-secondary)] shadow-none">
-                                7th
-                              </Badge>
-                              <span className="italic">Coming soon…</span>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-[var(--text-secondary)]">—</TableCell>
-                          <TableCell className="font-mono text-[var(--text-secondary)]">—</TableCell>
-                          <TableCell className="font-mono text-[var(--text-secondary)]">—</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-                </Card>
-              </div>
-            </div>
-          </section>
-
-          <section
-            id="methodology"
+            id="overall-results"
             className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16"
           >
             <SectionHeader
-              eyebrow="Methodology"
-              title="CAGE turns cyber ranges into repeatable evaluations"
-              description="The evaluation pipeline separates agent execution, benchmark deployment, trace logging, and verifier evidence so different CLI agents can be compared under matched prompts and budgets."
+              eyebrow="Overall Results"
+              title="Success Rate Over Execution Steps"
+              description="Overall results on the AgentCyberRange tasks across both tracks, with Pass@3 measured against the per-step execution budget."
             />
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {features.map((feature) => (
-                <Card
-                  key={feature.title}
-                  className="rounded-lg border-[var(--border-default)] bg-transparent shadow-none"
-                >
-                  <CardHeader>
-                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md border border-[var(--border-default)] bg-[var(--bg-card)] text-[var(--accent-rust)]">
-                      <feature.icon strokeWidth={1.5} />
-                    </div>
-                    <CardTitle className="font-serif text-xl text-[var(--text-primary)]">
-                      {feature.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm leading-7 text-[var(--text-secondary)]">
-                      {feature.text}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <figure className="mt-8">
+              <img
+                src={overallResultFig}
+                alt="Success rate (Pass@3) over execution steps for web exploitation and post exploitation"
+                className="w-full rounded-lg border border-[var(--border-default)] bg-white"
+              />
+              <figcaption className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Figure 1 · </span>
+                Solid curves show Pass@3 (Avg.) over execution steps for all systems. For the top two systems, dashed curves show Pass@3 (Max). Shaded bands indicate the best-to-worst range across three independent runs at each step budget. GPT-5.5 with Codex leads on both tracks, reaching 16.1% on web exploitation and 31.7% on post-exploitation, but remains far from full compromise.
+              </figcaption>
+            </figure>
           </section>
 
-          <section
-            id="examples"
-            className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16"
-          >
-            <SectionHeader
-              eyebrow="Auditable traces"
-              title="Prompt, output, and verifier examples"
-              description="CAGE records task metadata, model interactions, runtime statistics, final reports, and verifier results for manual inspection."
-            />
-            <Card className="mt-8 rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-              <CardContent className="p-4 sm:p-6">
-                <Tabs defaultValue="prompt">
-                  <TabsList className="grid h-auto w-full grid-cols-1 rounded-lg border border-[var(--border-default)] bg-transparent p-1 sm:grid-cols-3">
-                    <TabsTrigger
-                      value="prompt"
-                      className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]"
-                    >
-                      Evaluation prompt
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="output"
-                      className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]"
-                    >
-                      Model output
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="verifier"
-                      className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]"
-                    >
-                      Verifier contract
-                    </TabsTrigger>
-                  </TabsList>
-                  <CodeTab
-                    value="prompt"
-                    text={snippets.prompt}
-                    copied={copied === 'prompt'}
-                    onCopy={() => copyText('prompt', snippets.prompt)}
-                  />
-                  <CodeTab
-                    value="output"
-                    text={snippets.output}
-                    copied={copied === 'output'}
-                    onCopy={() => copyText('output', snippets.output)}
-                  />
-                  <CodeTab
-                    value="verifier"
-                    text={snippets.verifier}
-                    copied={copied === 'verifier'}
-                    onCopy={() => copyText('verifier', snippets.verifier)}
-                  />
-                </Tabs>
-              </CardContent>
-            </Card>
-          </section>
+          {/* <section */}
+          {/*   id="methodology" */}
+          {/*   className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16" */}
+          {/* > */}
+          {/*   <SectionHeader */}
+          {/*     eyebrow="Methodology" */}
+          {/*     title="CAGE turns cyber ranges into repeatable evaluations" */}
+          {/*     description="The evaluation pipeline separates agent execution, benchmark deployment, trace logging, and verifier evidence so different CLI agents can be compared under matched prompts and budgets." */}
+          {/*   /> */}
+          {/*   <div className="mt-8 grid gap-4 md:grid-cols-3"> */}
+          {/*     {features.map((feature) => ( */}
+          {/*       <Card */}
+          {/*         key={feature.title} */}
+          {/*         className="rounded-lg border-[var(--border-default)] bg-transparent shadow-none" */}
+          {/*       > */}
+          {/*         <CardHeader> */}
+          {/*           <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md border border-[var(--border-default)] bg-[var(--bg-card)] text-[var(--accent-rust)]"> */}
+          {/*             <feature.icon strokeWidth={1.5} /> */}
+          {/*           </div> */}
+          {/*           <CardTitle className="font-serif text-xl text-[var(--text-primary)]"> */}
+          {/*             {feature.title} */}
+          {/*           </CardTitle> */}
+          {/*         </CardHeader> */}
+          {/*         <CardContent> */}
+          {/*           <p className="text-sm leading-7 text-[var(--text-secondary)]"> */}
+          {/*             {feature.text} */}
+          {/*           </p> */}
+          {/*         </CardContent> */}
+          {/*       </Card> */}
+          {/*     ))} */}
+          {/*   </div> */}
+          {/* </section> */}
+          {/**/}
+          {/* <section */}
+          {/*   id="examples" */}
+          {/*   className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16" */}
+          {/* > */}
+          {/*   <SectionHeader */}
+          {/*     eyebrow="Auditable traces" */}
+          {/*     title="Prompt, output, and verifier examples" */}
+          {/*     description="CAGE records task metadata, model interactions, runtime statistics, final reports, and verifier results for manual inspection." */}
+          {/*   /> */}
+          {/*   <Card className="mt-8 rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none"> */}
+          {/*     <CardContent className="p-4 sm:p-6"> */}
+          {/*       <Tabs defaultValue="prompt"> */}
+          {/*         <TabsList className="grid h-auto w-full grid-cols-1 rounded-lg border border-[var(--border-default)] bg-transparent p-1 sm:grid-cols-3"> */}
+          {/*           <TabsTrigger */}
+          {/*             value="prompt" */}
+          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
+          {/*           > */}
+          {/*             Evaluation prompt */}
+          {/*           </TabsTrigger> */}
+          {/*           <TabsTrigger */}
+          {/*             value="output" */}
+          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
+          {/*           > */}
+          {/*             Model output */}
+          {/*           </TabsTrigger> */}
+          {/*           <TabsTrigger */}
+          {/*             value="verifier" */}
+          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
+          {/*           > */}
+          {/*             Verifier contract */}
+          {/*           </TabsTrigger> */}
+          {/*         </TabsList> */}
+          {/*         <CodeTab */}
+          {/*           value="prompt" */}
+          {/*           text={snippets.prompt} */}
+          {/*           copied={copied === 'prompt'} */}
+          {/*           onCopy={() => copyText('prompt', snippets.prompt)} */}
+          {/*         /> */}
+          {/*         <CodeTab */}
+          {/*           value="output" */}
+          {/*           text={snippets.output} */}
+          {/*           copied={copied === 'output'} */}
+          {/*           onCopy={() => copyText('output', snippets.output)} */}
+          {/*         /> */}
+          {/*         <CodeTab */}
+          {/*           value="verifier" */}
+          {/*           text={snippets.verifier} */}
+          {/*           copied={copied === 'verifier'} */}
+          {/*           onCopy={() => copyText('verifier', snippets.verifier)} */}
+          {/*         /> */}
+          {/*       </Tabs> */}
+          {/*     </CardContent> */}
+          {/*   </Card> */}
+          {/* </section> */}
 
           <section
             id="figures"
@@ -849,7 +768,7 @@ function PaperSite() {
                   alt="Overview of a realistic cyber attack workflow"
                   className="w-full rounded-lg border border-[var(--border-default)]"
                 />
-                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Figure 1</p>
+                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Figure 2</p>
                 <p className="mt-1 text-sm text-[var(--text-secondary)]">Overview of a realistic cyber attack workflow, from reconnaissance through web exploitation and post exploitation to reporting.</p>
               </div>
               {/* <div> */}
@@ -871,35 +790,25 @@ function PaperSite() {
             <SectionHeader
               eyebrow="Key Findings"
               title="More Key Findings"
-              description="Summary of the main findings from the OpenCyberRange evaluation across web exploitation, post exploitation, and additional analyses."
+              description="Summary of the main findings from the AgentCyberRange evaluation across web exploitation, post exploitation, and additional analyses."
             />
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
-              <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A1A5B5] font-mono text-xs text-white">1</span>
-                    <CardTitle className="font-serif text-lg text-[var(--text-primary)]">Practical Web Exploitation Capability</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-sm leading-6 text-[var(--text-secondary)]">
-                    SoTA agents already demonstrate practical web exploitation capability in realistic applications. GPT-5.5 with Codex achieves a 36.36% Pass@1 success rate, showing that agents can exploit non-trivial vulnerabilities and initiate concrete cyber attacks from exposed web surfaces. However, their success is still limited by incomplete exploration of application-specific workflows and hidden attack surfaces.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A1A5B5] font-mono text-xs text-white">2</span>
-                    <CardTitle className="font-serif text-lg text-[var(--text-primary)]">Realistic Cyber Attack in Enterprise Ranges</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-sm leading-6 text-[var(--text-secondary)]">
-                    SoTA agents are beginning to demonstrate realistic cyber attack capability in enterprise-like cyber ranges. GPT-5.5 with Codex achieves 31.71% Pass@3 under Level-0 and reaches 46.34% with more concrete hints, showing that agents can move beyond isolated exploitation and exhibit cyber attack capability. At the same time, end-to-end compromise and stealthy operation remain challenging for current agents.
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="mt-8 flex flex-col gap-6">
+              <FindingCard
+                index={1}
+                title="Practical Web Exploitation Capability"
+                image={finding1Fig}
+                imageAlt="Run-to-run variance of Level-0 web exploitation across models"
+              >
+                SoTA agents already demonstrate practical web exploitation capability in realistic applications. GPT-5.5 with Codex achieves the best performance, solving 31 out of 110 tasks with a 28.18% success rate under the Pass@3 (Max) setting, showing that frontier AI systems can exploit non-trivial vulnerabilities and initiate concrete cyber attacks from exposed web surfaces. However, their success remains far from complete, indicating that current agents are still limited.
+              </FindingCard>
+              <FindingCard
+                index={2}
+                title="Realistic Cyber Attack in Enterprise Ranges"
+                image={finding2Fig}
+                imageAlt="Post exploitation performance across difficulty levels"
+              >
+                SoTA agents are beginning to demonstrate realistic cyber attack capability in enterprise-like cyber ranges. GPT-5.5 with Codex achieves 31.71% Pass@3 (Avg.) under Level-0 and reaches 46.34% with more concrete hints (Level-2), showing that agents can leverage post-exploitation techniques to carry out more realistic cyber attacks beyond isolated vulnerability exploitation. At the same time, end-to-end compromise and stealthy operation remain challenging for current agents.
+              </FindingCard>
             </div>
           </section>
 
@@ -930,7 +839,7 @@ function PaperSite() {
           >
             <SectionHeader
               eyebrow="Citation"
-              title="Reference OpenCyberRange"
+              title="Reference AgentCyberRange"
               description="Use the following BibTeX entry for the preprint version."
             />
             <div className="relative mt-8 rounded-lg border border-[var(--border-default)] bg-[var(--bg-card)] p-4">
@@ -952,7 +861,7 @@ function PaperSite() {
 
         <footer className="border-t border-[var(--border-subtle)]">
           <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-5 py-8 text-sm text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-16">
-            <span>OpenCyberRange · official project page</span>
+            <span>AgentCyberRange · official project page</span>
             <span>Static TanStack Start SPA · shadcn/ui</span>
           </div>
         </footer>
@@ -977,7 +886,7 @@ function Navigation() {
             />
           </span>
           <span className="truncate">
-            OpenCyberRange{' '}
+            AgentCyberRange{' '}
             <span className="hidden font-normal text-[var(--text-secondary)] sm:inline">
               · benchmark results
             </span>
@@ -1043,10 +952,7 @@ function ResultPreview({
         <CardHeader className="relative space-y-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <CardDescription className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--accent-rust)]">
-                {table.eyebrow}
-              </CardDescription>
-              <CardTitle className="mt-3 font-serif text-2xl leading-tight text-[var(--text-primary)]">
+              <CardTitle className="font-serif text-2xl leading-tight text-[var(--text-primary)]">
                 {table.title}
               </CardTitle>
             </div>
@@ -1137,45 +1043,6 @@ function ResultPreview({
           </div>
         </CardContent>
       </Card>
-    </div>
-  )
-}
-
-function TableSwitch({
-  activeTable,
-  className,
-  onTableChange,
-}: Readonly<{
-  activeTable: ResultTableId
-  className?: string
-  onTableChange: (table: ResultTableId) => void
-}>) {
-  return (
-    <div
-      className={`inline-flex rounded-lg p-0.5 text-sm ${className ?? ''}`}
-    >
-      <button
-        type="button"
-        aria-pressed={activeTable === 'web'}
-        onClick={() => onTableChange('web')}
-        className={`rounded-md px-3 py-1.5 transition-colors ${activeTable === 'web'
-          ? 'bg-[#2B3270] font-semibold text-white shadow-paper'
-          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-          }`}
-      >
-        web
-      </button>
-      <button
-        type="button"
-        aria-pressed={activeTable === 'post'}
-        onClick={() => onTableChange('post')}
-        className={`rounded-md px-3 py-1.5 transition-colors ${activeTable === 'post'
-          ? 'bg-[#2B3270] font-semibold text-white shadow-paper'
-          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-          }`}
-      >
-        post
-      </button>
     </div>
   )
 }
@@ -1280,52 +1147,6 @@ function SectionHeader({
         {description}
       </p>
     </div>
-  )
-}
-
-function SortableHead({
-  children,
-  column,
-  sort,
-  onSort,
-  className,
-}: Readonly<{
-  children: ReactNode
-  column: SortKey
-  sort: { key: SortKey; direction: SortDirection }
-  onSort: (column: SortKey) => void
-  className?: string
-}>) {
-  const active = sort.key === column
-
-  return (
-    <TableHead className={className}>
-      <button
-        type="button"
-        onClick={() => onSort(column)}
-        aria-sort={
-          active
-            ? sort.direction === 'asc'
-              ? 'ascending'
-              : 'descending'
-            : 'none'
-        }
-        className="inline-flex items-center gap-1 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-      >
-        {children}
-        {active ? (
-          <ArrowDown
-            className={
-              sort.direction === 'asc'
-                ? 'h-3.5 w-3.5 rotate-180 text-[var(--accent-rust)]'
-                : 'h-3.5 w-3.5 text-[var(--accent-rust)]'
-            }
-          />
-        ) : (
-          <ArrowUpDown className="h-3.5 w-3.5" />
-        )}
-      </button>
-    </TableHead>
   )
 }
 

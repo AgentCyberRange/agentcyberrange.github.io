@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
 const root = process.cwd()
@@ -16,3 +16,7 @@ const paperSource = join(root, 'docs', 'Pentest_Bench.docx')
 const paperTarget = join(clientDir, 'Pentest_Bench.docx')
 mkdirSync(dirname(paperTarget), { recursive: true })
 copyFileSync(paperSource, paperTarget)
+
+// Custom domain for GitHub Pages. The CNAME file must live at the published
+// site root so GitHub serves this project at the apex domain.
+writeFileSync(join(clientDir, 'CNAME'), 'agentcyberrange.io\n')
