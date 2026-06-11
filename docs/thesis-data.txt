@@ -1,0 +1,77 @@
+\begin{table}[h!]
+    \caption{Evaluation results on \textbf{post exploitation} tasks under the \textbf{level-1} setting.}
+    \label{tab:internal-results}
+    \vspace{0.6em}
+    \footnotesize
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{6pt}
+
+    \begin{threeparttable}
+    \begin{tabular}{cccccc}
+    \toprule
+    \textbf{Model} & \textbf{Agent} 
+     & \textbf{Succ. Rate (Pass@1)}
+     & \textbf{Succ. Rate (Pass@3)}
+    & \textbf{Cost (M)} & \textbf{Time (min)} \\
+    \midrule
+    GPT-5.5         & Codex        & \best{31.25\%}   & \best{31.53\%} & 37.36 & 85.00 \\
+    Claude-Opus-4.7 & Claude Code  & \worst{4.62\%}    & 11.11\% & 43.78 & 99.28 \\
+    GLM-5.1         & Claude Code  & 18.13\%   & 11.23\% & 17.79 & 111.30 \\
+    DeepSeek-V4-Pro & Claude Code  & 9.79\%    & 12.57\% & 20.01 & 80.70 \\
+    Qwen-3.7-Max    & Qwen Code    & 18.13\%   & 12.45\% & 21.84 & 90.18 \\
+    Kimi-2.6        & Kimi Code    & 9.79\%    & \worst{5.34\%} & 18.23 & 104.10 \\
+    \bottomrule
+    \end{tabular}
+    \begin{tablenotes}[flushleft]
+        \footnotesize
+        \item \textit{Note.} Pass@1 denotes the task success rate in a single run. Pass@3 denotes the average result over three independent runs.
+    \end{tablenotes}
+    \end{threeparttable}
+\end{table}
+
+
+
+\begin{table}[h]
+    \caption{Evaluation results on \textbf{post exploitation} tasks across different models.}
+    \label{tab:internal-results-with-levels}
+    \vspace{0.6em}
+    \footnotesize
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{5pt}
+
+    \begin{threeparttable}
+    \begin{tabular}{cc|ccccccc}
+    \toprule
+    \textbf{Model} & \textbf{Agent} & \textbf{Level} 
+    & \textbf{Succ.@1} & \textbf{Rate@1}
+    & \textbf{Succ.@3} & \textbf{Rate@3}
+    & \textbf{Cost (M)} & \textbf{Time (min)} \\
+    \midrule
+    \multirow{3}{*}{GPT-5.5}         & \multirow{3}{*}{Codex}       & 1 & 1.63 & 31.25\% & 1.63 & 31.53\% & 37.36 & 85.00 \\ 
+    && 2  & 2.00 & 39.38\% & 1.67 & 33.40\% & 41.12 & 81.50 \\
+    && 3 & 2.38 & 44.58\% & 2.37 & 47.20\% & 34.38 & 74.94 \\ \midrule
+    \multirow{3}{*}{Claude-Opus-4.7}         & \multirow{3}{*}{Claude Code}       & 1 & 0.23 & 4.62\% & 0.56 & 11.11\% & 43.78 & 99.28 \\ 
+    && 2 & 0.14 &  2.83\% & 0.27 & 5.35\% & 28.47 & 76.07 \\
+    && 3 & 1.09 & 21.80\% & 1.49 & 29.77\% & 44.89 & 92.59\\ \midrule
+    \multirow{3}{*}{GLM-5.1}         & \multirow{3}{*}{Claude Code}       & 1 & 0.88 & 18.13\% & 0.58 & 11.23\%  & 17.79 & 111.30 \\ 
+    && 2 & 0.63  &  13.54\% & 0.54 &  11.10\%  & 13.52 & 101.90 \\
+    && 3 & 0.75  & 14.68\%  &  0.75  & 14.19\%   & 20.30   & 105.18 \\ \midrule
+    \multirow{3}{*}{Deepseek-V4-Pro}         & \multirow{3}{*}{Claude Code}       & 1 & 0.50 & 9.79\% & 0.63 & 12.57\% & 20.01 & 80.70 \\ 
+    && 2 & 0.50 & 9.79\% & 0.54 & 10.69\% & 26.60 & 79.71 \\
+    && 3 & 0.50 & 9.38\% & 0.83 & 15.33\% & 24.22 & 83.15 \\ \midrule
+    \multirow{3}{*}{Qwen-3.7-Max}         & \multirow{3}{*}{Qwen Code}       & 1 & 1.00 & 18.13\% & 0.67 & 12.45\% & 21.84 & 90.18 \\ 
+    && 2 & 0.63 &  13.96\% & 0.67 & 13.99\% & 17.89 & 77.83 \\
+    && 3 & 0.75 & 13.96\% & 0.92 & 17.91\% & 21.80 & 86.53 \\ \midrule
+    \multirow{3}{*}{Kimi-2.6}         & \multirow{3}{*}{Kimi Code}       & 1 & 0.50 & 9.79\% & 0.29 & 5.34\% & 18.23 & 104.10 \\ 
+    && 2 & 0.38 & 7.29\% & 0.33 & 6.26\% & 18.73 &  111.18\\
+    && 3 & 0.88 & 17.71\% & 0.67 & 12.79\% & 21.79 & 108.36 \\ 
+    \bottomrule
+    \end{tabular}
+    \begin{tablenotes}[flushleft]
+        \footnotesize
+        \item \textit{Note.} Succ.@1 and Rate@1 denote the number of solved tasks and the corresponding success rate in a single run. Succ.@3 and Rate@3 denote the average result over three independent runs.
+    \end{tablenotes}
+    \end{threeparttable}
+\end{table}

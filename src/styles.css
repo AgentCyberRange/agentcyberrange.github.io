@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #F7F8FA;
+    --bg-card: #FCFCFC;
+    --bg-overlay: #1a1a18;
+    --text-primary: #1a1a18;
+    --text-secondary: #6b6560;
+    --text-muted: #9c9590;
+    --text-link: #5c3d2e;
+    /* --accent-rust: #8b4a3a; */
+    --accent-rust: #2B3270;
+    --accent-brown: #6b3c2a;
+    --accent-brown-hover: #5a3022;
+    --border-default: #d8d4ce;
+    --border-subtle: #e5e1db;
+
+    --background: 40 26% 93%;
+    --foreground: 60 4% 10%;
+    --card: 60 14% 93%;
+    --card-foreground: 60 4% 10%;
+    --popover: 40 26% 93%;
+    --popover-foreground: 60 4% 10%;
+    --primary: 18 43% 29%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 36 14% 88%;
+    --secondary-foreground: 60 4% 10%;
+    --muted: 36 14% 88%;
+    --muted-foreground: 24 5% 40%;
+    --accent: 36 14% 88%;
+    --accent-foreground: 60 4% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 35 12% 83%;
+    --input: 35 12% 83%;
+    --ring: 18 43% 29%;
+    --radius: 1.125rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    min-width: 320px;
+    background: var(--bg-page);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  color: #ffffff;
+  background: var(--accent-brown);
+}
+
+.grid-decoration {
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: min(58%, 720px);
+  height: 640px;
+  background-image:
+    linear-gradient(rgba(180, 174, 165, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 174, 165, 0.35) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to right, transparent 0%, black 42%);
+  opacity: 0.55;
+  pointer-events: none;
+}
