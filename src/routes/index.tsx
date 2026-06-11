@@ -512,7 +512,7 @@ function PaperSite() {
         <main>
           <section className="relative overflow-hidden">
             <div className="grid-decoration" />
-            <div className="relative mx-auto max-w-[1200px] px-3 pb-14 pt-8 sm:px-5 sm:pb-20 sm:pt-12 lg:px-10 lg:pb-24 lg:pt-14">
+            <div className="relative mx-auto max-w-[1200px] px-3 pb-6 pt-8 sm:px-5 sm:pb-8 sm:pt-12 lg:px-10 lg:pb-10 lg:pt-14">
               <div>
                 <Badge
                   variant="outline"
