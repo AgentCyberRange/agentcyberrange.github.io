@@ -797,11 +797,11 @@ function PaperSite() {
             <div className="mt-8 flex flex-col gap-6">
               <FindingCard
                 index={1}
-                title="Detection rate across different depths of GPT-5.5"
+                title="Failure analysis"
                 image={finding1Fig}
                 imageAlt="Detection rate of GPT-5.5 across vulnerability depths"
               >
-                Depth counts interactions needed to reach a vulnerable endpoint from the entry URL. Bars show total (light) and detected (dark) vulnerabilities; the line is the detection rate, falling from 35% at depth 2 to 11% at depth 6, showing that agents struggle to find deeper vulnerabilities.
+                We analyze failed tasks and find that the primary cause is insufficient attack-surface exploration. Agents often stay on surface pages and common routes, missing deeper endpoints embedded in application-specific workflows. We use vulnerability depth to denote the number of application interactions needed to reach the vulnerable endpoint from the initial target URL. As the figure shows, the detection rate decreases as the vulnerability depth increases, dropping from 35% at depth 2 to 11% at depth 6. This trend indicates that deeper application workflows create a clear exploration barrier for current agents. This is also a long-standing challenge for traditional web scanners, where crawler design is critical for improving endpoint coverage. Agents inherit the same bottleneck: once they fail to reach the vulnerable endpoint, no exploitation can follow.
               </FindingCard>
               <FindingCard
                 index={2}
