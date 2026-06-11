@@ -428,7 +428,7 @@ function FindingCard({
 }>) {
   return (
     <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-      <div className="grid items-center gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22%)]">
+      <div className="grid items-center gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,46%)]">
         <div>
           <div className="mb-4 flex items-center gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A1A5B5] font-mono text-xs text-white">
