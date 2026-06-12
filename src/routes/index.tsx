@@ -527,7 +527,7 @@ function PaperSite() {
               </div>
 
               <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
-                <div className="max-w-[50ch]">
+                <div className="min-w-0">
                   <p className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
                     Benchmarking Frontier AI Systems in{' '}
                     <span className="text-[var(--accent-rust)]">
