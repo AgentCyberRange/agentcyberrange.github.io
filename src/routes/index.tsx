@@ -627,7 +627,7 @@ function PaperSite() {
                       variant="outline"
                       className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
-                      <a href="./Pentest_Bench.docx">
+                      <a href="https://google.com" target="_blank" rel="noreferrer">
                         <FileText />
                         Paper
                       </a>
