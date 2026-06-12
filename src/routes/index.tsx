@@ -13,6 +13,7 @@ import finding2Fig from '../assets/finding2.png?url'
 import overallResultFig from '../assets/overall-result.png?url'
 import {
   ArrowDown,
+  ArrowRight,
   ArrowUpDown,
   Clipboard,
   Code2,
@@ -283,25 +284,43 @@ const features = [
 
 const tracks = [
   {
-    label: 'WebExploitBench',
-    value: '110',
-    suffix: 'vulnerabilities',
+    pill: 'Web Exploitation',
+    title: 'WebExploitBench',
     detail:
       'Fifteen real web applications with zero-day, one-day, and synthetic vulnerabilities across 16 vulnerability classes.',
+    stats: [
+      { value: '110', label: 'vulnerabilities' },
+      { value: '15', label: 'web applications' },
+    ],
+    accent: '#0E7490',
+    href: 'https://github.com/AgentCyberRange/WebExploitBench',
+    cta: 'View benchmark',
   },
   {
-    label: 'PostExploitBench',
-    value: '156',
-    suffix: 'internal hosts',
+    pill: 'Post Exploitation',
+    title: 'PostExploitBench',
     detail:
       'Eight enterprise-like ranges with pivots, decoys, deeper segments, and verifier-observable compromise markers.',
+    stats: [
+      { value: '156', label: 'internal hosts' },
+      { value: '8', label: 'cyber ranges' },
+    ],
+    accent: '#BE123C',
+    href: 'https://github.com/AgentCyberRange/PostExploitBench',
+    cta: 'View benchmark',
   },
   {
-    label: 'CAGE',
-    value: 'Infra',
-    suffix: 'Evaluation',
+    pill: 'Infra · Evaluation',
+    title: 'CAGE',
     detail:
-      'An evaluation toolchain for scalable system execution, task orchestration, benchmark deployment, result collection, and automatic verification.',
+      'An evaluation toolchain for scalable system execution, task orchestration, result collection, and automatic verification.',
+    stats: [
+      { value: 'CLI', label: 'agent runner' },
+      { value: 'Open', label: 'infrastructure' },
+    ],
+    accent: '#6D28D9',
+    href: 'https://github.com/AgentCyberRange/CAGE',
+    cta: 'View toolkit',
   },
 ]
 
@@ -619,27 +638,54 @@ function PaperSite() {
           <section className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 lg:px-16">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               {tracks.map((track) => (
-                <Card
-                  key={track.label}
-                  className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none"
+                <a
+                  key={track.title}
+                  href={track.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex flex-col rounded-xl border bg-[var(--bg-card)] p-6 transition-all hover:-translate-y-0.5 hover:shadow-paper"
+                  style={{ borderColor: `${track.accent}33` }}
                 >
-                  <CardHeader>
-                    <CardDescription className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                      {track.label}
-                    </CardDescription>
-                    <CardTitle className="flex items-baseline gap-3 font-serif text-4xl text-[var(--text-primary)]">
-                      {track.value}
-                      <span className="font-sans text-sm font-normal text-[var(--text-secondary)]">
-                        {track.suffix}
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm leading-7 text-[var(--text-secondary)]">
-                      {track.detail}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <span
+                    className="w-fit rounded-full px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em]"
+                    style={{ backgroundColor: `${track.accent}14`, color: track.accent }}
+                  >
+                    {track.pill}
+                  </span>
+
+                  <h3 className="mt-5 font-serif text-3xl font-bold tracking-tight text-[var(--text-primary)]">
+                    {track.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
+                    {track.detail}
+                  </p>
+
+                  <div className="mt-auto">
+                    <div className="my-6 h-px w-full bg-[var(--border-default)]" />
+                    <div className="grid grid-cols-2 gap-4">
+                      {track.stats.map((stat) => (
+                        <div key={stat.label}>
+                          <div
+                            className="font-serif text-3xl font-bold tracking-tight"
+                            style={{ color: track.accent }}
+                          >
+                            {stat.value}
+                          </div>
+                          <div className="mt-1 text-[13px] leading-5 text-[var(--text-secondary)]">
+                            {stat.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div
+                      className="mt-6 flex items-center gap-1.5 text-sm font-medium"
+                      style={{ color: track.accent }}
+                    >
+                      {track.cta}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+                </a>
               ))}
             </div>
           </section>
