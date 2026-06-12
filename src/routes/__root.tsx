@@ -18,12 +18,12 @@ export const Route = createRootRoute({
       },
       {
         title:
-          'OpenCyberRange: Benchmarking LLM-based Agents on Realistic Cyber Attacks',
+          'AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges',
       },
       {
         name: 'description',
         content:
-          'Official project page for OpenCyberRange, a benchmark for evaluating LLM-based agents on realistic cyber attacks.',
+          'Official project page for AgentCyberRange, a benchmark for evaluating frontier AI systems on realistic cyber attacks.',
       },
     ],
     links: [
