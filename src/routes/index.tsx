@@ -428,7 +428,7 @@ function FindingCard({
 }>) {
   return (
     <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none">
-      <div className="grid items-center gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,46%)]">
+      <div className="grid grid-cols-1 items-center gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,46%)]">
         <div>
           <div className="mb-4 flex items-center gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A1A5B5] font-mono text-xs text-white">
@@ -521,12 +521,12 @@ function PaperSite() {
                   agentcyberrange · v0
                 </Badge>
 
-                <h1 className="mt-7 font-serif text-[clamp(2.9rem,5.2vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
+                <h1 className="mt-7 break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
                   AgentCyberRange
                 </h1>
               </div>
 
-              <div className="mt-9 grid gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
+              <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
                 <div className="max-w-[50ch]">
                   <p className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
                     Benchmarking Frontier AI Systems in{' '}
@@ -617,7 +617,7 @@ function PaperSite() {
           {/* </section> */}
 
           <section className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 lg:px-16">
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               {tracks.map((track) => (
                 <Card
                   key={track.label}
@@ -823,7 +823,7 @@ function PaperSite() {
               title="Performance Across Difficulty Levels"
               description="Success rate (Pass@3) of each model on web exploitation and post exploitation tasks under the Level-0, Level-1, and Level-2 settings."
             />
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               <DifficultyChart
                 title="Web Exploitation Success Rate by Level"
                 data={webExploitationChartData}
