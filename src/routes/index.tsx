@@ -556,7 +556,7 @@ function PaperSite() {
                     rising to 33.0% and 46.3% with more concrete hints.
                   </p>
 
-                  <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="mt-8 flex flex-wrap gap-3 justify-center">
                     <Button
                       asChild
                       className="h-10 rounded-lg bg-[#2C4E59] px-5 text-sm text-white shadow-none hover:bg-[#2C3759]"
