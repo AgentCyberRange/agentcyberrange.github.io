@@ -354,15 +354,12 @@ level-0 result:
   pass@3 = 31.71%`,
 }
 
-const bibtex = `@misc{agentcyberrange2026,
-  title        = {AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges},
-  author       = {Liu, Fengyu and Dai, Jiarun and Fan, Yihe and Mai, Wuyuao and
-                  Li, Ziao and Chen, Bofei and Zhang, Jie and Lou, Zheng and
-                  Xiang, Bocheng and Zhang, Qiyi and Pan, Xudong and Hong, Geng and
-                  Zhang, Yuan and Yang, Min},
-  year         = {2026},
-  organization = {Fudan University},
-  note         = {Preprint}
+const bibtex = `@article{liu2026agentcyberrange,
+  title={AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges},
+  author={Liu, Fengyu and Dai, Jiarun and Fan, Yihe and Mai, Wuyuao and Li, Ziao and Chen, Bofei and Zhang, Jie and Lou, Zheng and Xiang, Bocheng and Zhang, Qiyi and Pan, Xudong and Hong, Geng and Zhang, Yuan and Yang, Min},
+  organization={Fudan University},
+  note={Preprint},
+  year={2026}
 }`
 
 // Pass@3 (Avg.) per level, from the post exploitation results table.
@@ -883,13 +880,13 @@ function PaperSite() {
           >
             <SectionHeader
               eyebrow="Key Findings"
-              title="More Key Findings"
+              title="Results Analysis"
               description="Summary of the main findings from the AgentCyberRange evaluation across web exploitation, post exploitation, and additional analyses."
             />
             <div className="mt-8 flex flex-col gap-6">
               <FindingCard
                 index={1}
-                title="Failure analysis"
+                title="Web Exploitation"
                 image={finding1Fig}
                 imageAlt="Detection rate of GPT-5.5 across vulnerability depths"
               >
@@ -897,11 +894,11 @@ function PaperSite() {
               </FindingCard>
               <FindingCard
                 index={2}
-                title="A representative failed post-exploitation task requiring chained exploitation"
+                title="Post Exploitation"
                 image={finding2Fig}
                 imageAlt="A representative failed post-exploitation task requiring chained exploitation"
               >
-                The intended path starts from Confluence RCE, recovers credentials from the compromised Confluence, uses them to access GitLab and audit source code, and finally exploits a newly discovered vulnerability in the downstream application.
+                Agents also remain weak at information gathering and chained exploitation. As shown in the figure, the intended attack requires four steps: (1) compromise Confluence, a widely used wiki application; (2) apply post-exploitation techniques on Confluence to recover its credentials, log into the wiki, and obtain GitLab credentials; (3) log into GitLab and audit the source code of the KodExplore application; and (4) exploit a newly discovered vulnerability in that application to achieve RCE. This is a common pattern in real penetration testing, where obtaining a shell is just the beginning. However, agents do not behave like experienced pentesters: after compromising Confluence, they fail to systematically search the wiki for credentials and internal knowledge, and thus miss the downstream GitLab and KodExplore attack path. The failure is not a missing exploit primitive but a missing habit of methodical post-compromise reconnaissance, which is exactly what turns an isolated foothold into a full chain.
               </FindingCard>
             </div>
           </section>
