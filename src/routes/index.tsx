@@ -25,8 +25,10 @@ import {
   ShieldCheck,
   UserRound,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -66,6 +68,8 @@ import {
   type ChartConfig,
 } from '@/components/ui/chart'
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+
+gsap.registerPlugin(useGSAP)
 
 export const Route = createFileRoute('/')({
   component: PaperSite,
@@ -515,6 +519,41 @@ function PaperSite() {
   const [copied, setCopied] = useState<string | null>(null)
   const [level] = useState<'level0' | 'level1' | 'level2'>('level0')
 
+  const heroRef = useRef<HTMLElement>(null)
+
+  // Hero text floats up + fades in on mount (staggered). Respects
+  // prefers-reduced-motion: there we just snap elements to their final state.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+
+      mm.add(
+        {
+          animate: '(prefers-reduced-motion: no-preference)',
+          reduce: '(prefers-reduced-motion: reduce)',
+        },
+        (context) => {
+          const targets = gsap.utils.toArray<HTMLElement>('[data-reveal]')
+
+          if (context.conditions?.reduce) {
+            gsap.set(targets, { opacity: 1, y: 0, clearProps: 'all' })
+            return
+          }
+
+          gsap.from(targets, {
+            opacity: 0,
+            y: 24,
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: 0.12,
+            clearProps: 'transform',
+          })
+        },
+      )
+    },
+    { scope: heroRef },
+  )
+
   const activeResult = resultTables[activeTable]
 
   const copyText = async (key: string, value: string) => {
@@ -529,25 +568,26 @@ function PaperSite() {
         <Navigation />
 
         <main>
-          <section className="relative overflow-hidden">
+          <section ref={heroRef} className="relative overflow-hidden">
             <div className="grid-decoration" />
             <div className="relative mx-auto max-w-[1200px] px-3 pb-6 pt-8 sm:px-5 sm:pb-8 sm:pt-12 lg:px-10 lg:pb-10 lg:pt-14">
               <div>
                 <Badge
+                  data-reveal
                   variant="outline"
                   className="rounded-full border-[var(--border-default)] bg-transparent px-3 py-1 font-mono text-[11px] font-normal text-[var(--text-secondary)]"
                 >
                   agentcyberrange · v0
                 </Badge>
 
-                <h1 className="mt-7 break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
+                <h1 data-reveal className="mt-7 break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
                   AgentCyberRange
                 </h1>
               </div>
 
               <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
                 <div className="min-w-0">
-                  <p className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
+                  <p data-reveal className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
                     Benchmarking Frontier AI Systems in{' '}
                     <span className="text-[var(--accent-rust)]">
                       Realistic Cyber Ranges
@@ -555,27 +595,27 @@ function PaperSite() {
                     .
                   </p>
 
-                  <p className="mt-7 text-xl leading-8 text-[var(--text-primary)] sm:text-[1.35rem] sm:leading-9">
+                  <p data-reveal className="mt-7 text-xl leading-8 text-[var(--text-primary)] sm:text-[1.35rem] sm:leading-9">
                     AgentCyberRange is the first open, multi-range evaluation
                     infrastructure for measuring the autonomous cyber attack
                     capability of frontier AI systems, covering two core stages of
                     realistic attacks: web exploitation and post-exploitation.
                   </p>
-                  <p className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
+                  <p data-reveal className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
                     The benchmark suite contains 110 vulnerabilities across 15 real
                     web applications and 8 enterprise-like cyber ranges with 156
                     internal hosts, together with CAGE, an evaluation toolchain for
                     scalable system execution, task orchestration, result
                     collection, and automatic verification.
                   </p>
-                  <p className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
+                  <p data-reveal className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
                     Across six frontier AI systems under matched prompts and
                     budgets, GPT-5.5 with Codex achieves the highest success rates:
                     16.1% on web exploitation and 31.7% on post-exploitation,
                     rising to 33.0% and 46.3% with more concrete hints.
                   </p>
 
-                  <div className="mt-8 flex flex-wrap gap-3 justify-center">
+                  <div data-reveal className="mt-8 flex flex-wrap gap-3 justify-center">
                     <Button
                       asChild
                       className="h-10 rounded-lg bg-[#2C4E59] px-5 text-sm text-white shadow-none hover:bg-[#2C3759]"
@@ -596,12 +636,18 @@ function PaperSite() {
                       </a>
                     </Button>
                     <Button
-                      disabled
+                      asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm shadow-none"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
-                      <GitFork />
-                      GitHub soon
+                      <a
+                        href="https://github.com/AgentCyberRange"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <GitFork />
+                        GitHub
+                      </a>
                     </Button>
                   </div>
                 </div>
