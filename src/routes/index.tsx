@@ -871,8 +871,8 @@ function PaperSite() {
 
         <footer className="border-t border-[var(--border-subtle)]">
           <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-5 py-8 text-sm text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-16">
-            <span>AgentCyberRange · official project page</span>
-            <span>Static TanStack Start SPA · shadcn/ui</span>
+            <a href="https://github.com/AgentCyberRange">AgentCyberRange</a>
+            {/*<span>Static TanStack Start SPA · shadcn/ui</span>*/}
           </div>
         </footer>
       </div>
