@@ -268,6 +268,8 @@ const resultTables = {
   }
 >
 
+const formatPassRate = (value?: number) => (value == null ? '—' : `${value.toFixed(2)}%`)
+
 const features = [
   {
     icon: Layers3,
@@ -1007,10 +1009,10 @@ function ResultPreview({
                         {row.agent}
                       </TableCell>
                       <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {webByModel.get(row.model)?.[level].pass3.toFixed(2)}%
+                        {formatPassRate(webByModel.get(row.model)?.[level].pass3)}
                       </TableCell>
                       <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {postRow?.[level].pass3.toFixed(2) ?? '—'}
+                        {formatPassRate(postRow?.[level].pass3)}
                       </TableCell>
                     </TableRow>
                   )
