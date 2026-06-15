@@ -354,12 +354,14 @@ level-0 result:
   pass@3 = 31.71%`,
 }
 
-const bibtex = `@article{liu2026agentcyberrange,
-  title={AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges},
-  author={Liu, Fengyu and Dai, Jiarun and Fan, Yihe and Mai, Wuyuao and Li, Ziao and Chen, Bofei and Zhang, Jie and Lou, Zheng and Xiang, Bocheng and Zhang, Qiyi and Pan, Xudong and Hong, Geng and Zhang, Yuan and Yang, Min},
-  organization={Fudan University},
-  note={Preprint},
-  year={2026}
+const bibtex = `@misc{liu2026agentcyberrange,
+  title={AgentCyberRange: Benchmarking Frontier {AI} Systems in Realistic Cyber Ranges},
+  author={Fengyu Liu and Jiarun Dai and Yihe Fan and Wuyuao Mai and Ziao Li and Bofei Chen and Jie Zhang and Zheng Lou and Bocheng Xiang and Qiyi Zhang and Xudong Pan and Geng Hong and Yuan Zhang and Min Yang},
+  year={2026},
+  eprint={2606.14295},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  url={https://arxiv.org/abs/2606.14295}
 }`
 
 // Pass@3 (Avg.) per level, from the post exploitation results table.
@@ -584,7 +586,7 @@ function PaperSite() {
 
               <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
                 <div className="min-w-0">
-                  <p data-reveal className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.65rem]">
+                  <p data-reveal className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.25rem]">
                     Benchmarking Frontier AI Systems in{' '}
                     <span className="text-[var(--accent-rust)]">
                       Realistic Cyber Ranges
@@ -596,7 +598,7 @@ function PaperSite() {
                     AgentCyberRange is the first open, multi-range evaluation
                     infrastructure for measuring the autonomous cyber attack
                     capability of frontier AI systems, covering two core stages of
-                    realistic attacks: web exploitation and post-exploitation.
+                    realistic attacks: web exploitation and post exploitation.
                   </p>
                   <p data-reveal className="mt-5 text-[15px] leading-7 text-[var(--text-secondary)]">
                     The benchmark suite contains 110 vulnerabilities across 15 real
@@ -627,7 +629,7 @@ function PaperSite() {
                       variant="outline"
                       className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
-                      <a href="https://google.com" target="_blank" rel="noreferrer">
+                      <a href="https://arxiv.org/abs/2606.14295" target="_blank" rel="noreferrer">
                         <FileText />
                         Paper
                       </a>
@@ -662,9 +664,10 @@ function PaperSite() {
                   <br />
                   Bocheng Xiang, Qiyi Zhang, Xudong Pan, Geng Hong, Yuan Zhang, Min Yang†
                 </p>
-                <p className="mt-2 text-sm text-[var(--text-muted)]">
-                  Fudan University · 2026 · official project page
-                  <span className="mx-2 text-[var(--border-default)]">·</span>
+                <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)]">
+                  Fudan University
+                </p>
+                <p className="mt-3 text-sm text-[var(--text-muted)]">
                   *Equal contribution. †Corresponding author.
                 </p>
               </div>
@@ -741,6 +744,7 @@ function PaperSite() {
               eyebrow="Overall Results"
               title="Success Rate Over Execution Steps"
               description="Overall results on the AgentCyberRange tasks across both tracks, with Pass@3 measured against the per-step execution budget."
+              nowrapTitle
             />
             <figure className="mt-8">
               <img
@@ -755,102 +759,14 @@ function PaperSite() {
             </figure>
           </section>
 
-          {/* <section */}
-          {/*   id="methodology" */}
-          {/*   className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16" */}
-          {/* > */}
-          {/*   <SectionHeader */}
-          {/*     eyebrow="Methodology" */}
-          {/*     title="CAGE turns cyber ranges into repeatable evaluations" */}
-          {/*     description="The evaluation pipeline separates agent execution, benchmark deployment, trace logging, and verifier evidence so different CLI agents can be compared under matched prompts and budgets." */}
-          {/*   /> */}
-          {/*   <div className="mt-8 grid gap-4 md:grid-cols-3"> */}
-          {/*     {features.map((feature) => ( */}
-          {/*       <Card */}
-          {/*         key={feature.title} */}
-          {/*         className="rounded-lg border-[var(--border-default)] bg-transparent shadow-none" */}
-          {/*       > */}
-          {/*         <CardHeader> */}
-          {/*           <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md border border-[var(--border-default)] bg-[var(--bg-card)] text-[var(--accent-rust)]"> */}
-          {/*             <feature.icon strokeWidth={1.5} /> */}
-          {/*           </div> */}
-          {/*           <CardTitle className="font-serif text-xl text-[var(--text-primary)]"> */}
-          {/*             {feature.title} */}
-          {/*           </CardTitle> */}
-          {/*         </CardHeader> */}
-          {/*         <CardContent> */}
-          {/*           <p className="text-sm leading-7 text-[var(--text-secondary)]"> */}
-          {/*             {feature.text} */}
-          {/*           </p> */}
-          {/*         </CardContent> */}
-          {/*       </Card> */}
-          {/*     ))} */}
-          {/*   </div> */}
-          {/* </section> */}
-          {/**/}
-          {/* <section */}
-          {/*   id="examples" */}
-          {/*   className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16" */}
-          {/* > */}
-          {/*   <SectionHeader */}
-          {/*     eyebrow="Auditable traces" */}
-          {/*     title="Prompt, output, and verifier examples" */}
-          {/*     description="CAGE records task metadata, model interactions, runtime statistics, final reports, and verifier results for manual inspection." */}
-          {/*   /> */}
-          {/*   <Card className="mt-8 rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-none"> */}
-          {/*     <CardContent className="p-4 sm:p-6"> */}
-          {/*       <Tabs defaultValue="prompt"> */}
-          {/*         <TabsList className="grid h-auto w-full grid-cols-1 rounded-lg border border-[var(--border-default)] bg-transparent p-1 sm:grid-cols-3"> */}
-          {/*           <TabsTrigger */}
-          {/*             value="prompt" */}
-          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
-          {/*           > */}
-          {/*             Evaluation prompt */}
-          {/*           </TabsTrigger> */}
-          {/*           <TabsTrigger */}
-          {/*             value="output" */}
-          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
-          {/*           > */}
-          {/*             Model output */}
-          {/*           </TabsTrigger> */}
-          {/*           <TabsTrigger */}
-          {/*             value="verifier" */}
-          {/*             className="rounded-md text-[var(--text-secondary)] data-[state=active]:bg-[var(--bg-page)] data-[state=active]:text-[var(--text-primary)]" */}
-          {/*           > */}
-          {/*             Verifier contract */}
-          {/*           </TabsTrigger> */}
-          {/*         </TabsList> */}
-          {/*         <CodeTab */}
-          {/*           value="prompt" */}
-          {/*           text={snippets.prompt} */}
-          {/*           copied={copied === 'prompt'} */}
-          {/*           onCopy={() => copyText('prompt', snippets.prompt)} */}
-          {/*         /> */}
-          {/*         <CodeTab */}
-          {/*           value="output" */}
-          {/*           text={snippets.output} */}
-          {/*           copied={copied === 'output'} */}
-          {/*           onCopy={() => copyText('output', snippets.output)} */}
-          {/*         /> */}
-          {/*         <CodeTab */}
-          {/*           value="verifier" */}
-          {/*           text={snippets.verifier} */}
-          {/*           copied={copied === 'verifier'} */}
-          {/*           onCopy={() => copyText('verifier', snippets.verifier)} */}
-          {/*         /> */}
-          {/*       </Tabs> */}
-          {/*     </CardContent> */}
-          {/*   </Card> */}
-          {/* </section> */}
-
           <section
             id="figures"
             className="mx-auto max-w-[1200px] scroll-mt-20 px-5 py-12 sm:px-8 lg:px-16"
           >
             <SectionHeader
-              eyebrow="Figures"
-              title="Attack Workflow "
-              description="Key figures from the paper illustrating the realistic cyber attack workflow."
+              eyebrow="Arch"
+              title="AgentCyberRange Architecture"
+              description="AgentCyberRange combines realistic web and post-exploitation tasks with CAGE, a scalable pipeline for running heterogeneous agents and verifying their results."
             />
             <div className="mt-8 flex flex-col gap-8">
               <div>
@@ -859,8 +775,10 @@ function PaperSite() {
                   alt="Overview of a realistic cyber attack workflow"
                   className="w-full rounded-lg border border-[var(--border-default)]"
                 />
-                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Figure 2</p>
-                <p className="mt-1 text-sm text-[var(--text-secondary)]">Overview of a realistic cyber attack workflow, from reconnaissance through web exploitation and post exploitation to reporting.</p>
+                <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Figure 2 · </span>
+                  Overview of AgentCyberRange and the CAGE pipeline. AgentCyberRange provides web and post-exploitation tasks, while CAGE runs heterogeneous agents on these tasks and automatically verifies their results.
+                </p>
               </div>
               {/* <div> */}
               {/*   <img */}
@@ -890,7 +808,7 @@ function PaperSite() {
                 image={finding1Fig}
                 imageAlt="Detection rate of GPT-5.5 across vulnerability depths"
               >
-                We analyze failed tasks and find that the primary cause is insufficient attack-surface exploration. Agents often stay on surface pages and common routes, missing deeper endpoints embedded in application-specific workflows. We use vulnerability depth to denote the number of application interactions needed to reach the vulnerable endpoint from the initial target URL. As the figure shows, the detection rate decreases as the vulnerability depth increases, dropping from 35% at depth 2 to 11% at depth 6. This trend indicates that deeper application workflows create a clear exploration barrier for current agents. This is also a long-standing challenge for traditional web scanners, where crawler design is critical for improving endpoint coverage. Agents inherit the same bottleneck: once they fail to reach the vulnerable endpoint, no exploitation can follow.
+                Failed tasks are mainly caused by insufficient attack-surface exploration. Agents often stay on surface pages and common routes, missing deeper endpoints embedded in application-specific workflows. We use vulnerability depth to denote the number of interactions needed to reach the vulnerable endpoint from the initial target URL. As the figure shows, detection decreases as vulnerability depth increases, dropping from 35% at depth 2 to 11% at depth 6. It is also a long-standing challenge for traditional web scanners, where crawler design is critical for endpoint coverage. Agents inherit the same bottleneck: once they fail to reach the vulnerable endpoint, no exploitation can follow.
               </FindingCard>
               <FindingCard
                 index={2}
@@ -898,7 +816,7 @@ function PaperSite() {
                 image={finding2Fig}
                 imageAlt="A representative failed post-exploitation task requiring chained exploitation"
               >
-                Agents also remain weak at information gathering and chained exploitation. As shown in the figure, the intended attack requires four steps: (1) compromise Confluence, a widely used wiki application; (2) apply post-exploitation techniques on Confluence to recover its credentials, log into the wiki, and obtain GitLab credentials; (3) log into GitLab and audit the source code of the KodExplore application; and (4) exploit a newly discovered vulnerability in that application to achieve RCE. This is a common pattern in real penetration testing, where obtaining a shell is just the beginning. However, agents do not behave like experienced pentesters: after compromising Confluence, they fail to systematically search the wiki for credentials and internal knowledge, and thus miss the downstream GitLab and KodExplore attack path. The failure is not a missing exploit primitive but a missing habit of methodical post-compromise reconnaissance, which is exactly what turns an isolated foothold into a full chain.
+                Agents also remain weak at information gathering and chained exploitation. As shown in the figure, the intended attack requires four steps: (1) compromise Confluence; (2) recover credentials, log into the wiki, and obtain GitLab credentials; (3) log into GitLab and audit the KodExplore source code; and (4) exploit a newly discovered vulnerability in that application to achieve RCE. This is common in real penetration testing, where obtaining a shell is just the beginning. However, agents do not behave like experienced pentesters: after compromising Confluence, they fail to systematically search the wiki for credentials and internal knowledge, and thus miss the downstream GitLab and KodExplore attack path. The failure is not a missing exploit primitive but a missing habit of methodical post-compromise reconnaissance, which turns an isolated foothold into a full chain.
               </FindingCard>
             </div>
           </section>
@@ -911,6 +829,7 @@ function PaperSite() {
               eyebrow="Difficulty Analysis"
               title="Performance Across Difficulty Levels"
               description="Success rate (Pass@3) of each model on web exploitation and post exploitation tasks under the Level-0, Level-1, and Level-2 settings."
+              nowrapTitle
             />
             <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               <DifficultyChart
@@ -1055,8 +974,8 @@ function ResultPreview({
             <Table className="w-full">
               <TableHeader>
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">Model</TableHead>
-                  <TableHead className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">Agent</TableHead>
+                  <TableHead className="w-[38%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">Model</TableHead>
+                  <TableHead className="w-[20%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">Agent</TableHead>
                   <TableHead
                     className={`cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('web')}
@@ -1076,8 +995,8 @@ function ResultPreview({
                   const postRow = postByModel.get(row.model)
                   return (
                     <TableRow key={row.model} className="hover:bg-transparent">
-                      <TableCell className="py-3">
-                        <div className="flex min-w-0 items-center gap-2">
+                      <TableCell className="px-1.5 py-3">
+                        <div className="flex min-w-0 items-center gap-1">
                           <span className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
                             {toOrdinal(i + 1)}
                           </span>
@@ -1087,7 +1006,7 @@ function ResultPreview({
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="py-3 text-[var(--text-secondary)]">
+                      <TableCell className="px-1.5 py-3 text-[var(--text-secondary)]">
                         {row.agent}
                       </TableCell>
                       <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
@@ -1101,8 +1020,8 @@ function ResultPreview({
                 })}
                 {/* Coming soon row */}
                 <TableRow className="opacity-50 hover:bg-transparent">
-                  <TableCell className="py-3">
-                    <div className="flex min-w-0 items-center gap-2">
+                  <TableCell className="px-1.5 py-3">
+                    <div className="flex min-w-0 items-center gap-1">
                       <span className="rounded-full border border-[var(--border-default)] bg-transparent px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-secondary)]">
                         7th
                       </span>
@@ -1111,7 +1030,7 @@ function ResultPreview({
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="py-3 text-[var(--text-secondary)]">—</TableCell>
+                  <TableCell className="px-1.5 py-3 text-[var(--text-secondary)]">—</TableCell>
                   <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-secondary)]' : 'text-[var(--text-secondary)]'}`}>—</TableCell>
                   <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-secondary)]' : 'text-[var(--text-secondary)]'}`}>—</TableCell>
                 </TableRow>
@@ -1128,9 +1047,9 @@ function ResultPreview({
           </p>
 
           <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--border-default)]">
-            <MiniMetric label="best P@3" value={`${bestPass3.toFixed(2)}%`} />
-            <MiniMetric label="models" value="6" />
-            <MiniMetric label="budget" value="150 / 500" />
+            <MiniMetric label="pass@3 (avg.)" value={`${bestPass3.toFixed(2)}%`} />
+            <MiniMetric label="ai systems" value="6" />
+            <MiniMetric label="step budget" value="150 / 500" />
           </div>
         </CardContent>
       </Card>
@@ -1222,16 +1141,17 @@ function SectionHeader({
   eyebrow,
   title,
   description,
-}: Readonly<{ eyebrow: string; title: string; description: string }>) {
+  nowrapTitle = false,
+}: Readonly<{ eyebrow: string; title: string; description: string; nowrapTitle?: boolean }>) {
   return (
-    <div className="max-w-[58ch]">
+    <div className={nowrapTitle ? 'max-w-none' : 'max-w-[58ch]'}>
       <div className="mb-4 flex items-center gap-3">
         <Separator className="w-8 bg-[var(--accent-rust)]" />
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--accent-rust)]">
           {eyebrow}
         </p>
       </div>
-      <h2 className="font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-4xl">
+      <h2 className={`font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-4xl ${nowrapTitle ? 'lg:whitespace-nowrap' : ''}`}>
         {title}
       </h2>
       <p className="mt-4 text-[15px] leading-7 text-[var(--text-secondary)]">
