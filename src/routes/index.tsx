@@ -896,10 +896,7 @@ function Navigation() {
             />
           </span>
           <span className="truncate">
-            AgentCyberRange{' '}
-            <span className="hidden font-normal text-[var(--text-secondary)] sm:inline">
-              · benchmark results
-            </span>
+            AgentCyberRange
           </span>
         </a>
 
