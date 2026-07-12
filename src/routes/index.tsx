@@ -80,11 +80,31 @@ type SortKey = 'model' | 'agent' | 'pass1' | 'pass3' | 'cost' | 'time'
 type SortDirection = 'asc' | 'desc'
 type ResultTableId = 'web' | 'post'
 type Language = 'en' | 'zh'
+type BenchmarkLevelResult = { pass1?: number; pass3: number }
+type BenchmarkResultRow = {
+  model: string
+  agent: string
+  pass1?: number
+  pass3?: number
+  level0: BenchmarkLevelResult
+  level1?: BenchmarkLevelResult
+  level2?: BenchmarkLevelResult
+  cost?: number
+  time?: number
+  note?: string
+}
 
 // Web exploitation results (Table: external-results-with-levels).
 // Levels 0, 1, 2; pass3 is the Pass@3 (Avg.) column. Cost/Time are averaged
 // across the three levels (not currently surfaced in the table UI).
-const resultRows = [
+const resultRows: BenchmarkResultRow[] = [
+  {
+    model: 'GPT-5.6 Sol',
+    agent: 'Codex',
+    pass3: 34.53,
+    level0: { pass3: 34.53 },
+    note: 'Latest result',
+  },
   {
     model: 'GPT-5.5',
     agent: 'Codex',
@@ -162,7 +182,14 @@ const resultRows = [
 // Post exploitation results (Table: internal-results-with-levels).
 // Levels 0, 1, 2; pass3 is the Pass@3 (Avg.) column. Cost/Time are averaged
 // across the three levels (not currently surfaced in the table UI).
-const postResultRows = [
+const postResultRows: BenchmarkResultRow[] = [
+  {
+    model: 'GPT-5.6 Sol',
+    agent: 'Codex',
+    pass3: 74.10,
+    level0: { pass3: 74.10 },
+    note: 'Latest result',
+  },
   {
     model: 'GPT-5.5',
     agent: 'Codex',
@@ -266,7 +293,7 @@ const resultTables = {
     eyebrow: string
     title: string
     description: string
-    rows: typeof resultRows
+    rows: BenchmarkResultRow[]
   }
 >
 
@@ -371,7 +398,7 @@ const pageCopy = {
       body:
         'The benchmark suite contains 110 vulnerabilities across 15 real web applications and 8 enterprise-like cyber ranges with 156 internal hosts, together with CAGE, an evaluation toolchain for scalable system execution, task orchestration, result collection, and automatic verification.',
       result:
-        'Across six frontier AI systems under matched prompts and budgets, GPT-5.5 with Codex achieves the highest success rates: 16.1% on web exploitation and 31.7% on post-exploitation, rising to 33.0% and 46.3% with more concrete hints.',
+        'The latest evaluation adds GPT-5.6 Sol with Codex, which achieves the highest success rates on the current leaderboard: 34.53% on web exploitation and 74.10% on post-exploitation.',
       readResults: 'Read the results',
       paper: 'Paper',
       github: 'GitHub',
@@ -419,7 +446,6 @@ const pageCopy = {
     resultPreview: {
       model: 'Model',
       agent: 'Agent',
-      comingSoon: 'Coming soon...',
       note:
         'columns show Succ. Rate Pass@3. Click a column header to sort and rank by that scenario.',
       metrics: ['pass@3 (avg.)', 'ai systems', 'step budget'],
@@ -432,7 +458,7 @@ const pageCopy = {
           'Overall results on the AgentCyberRange tasks across both tracks, with Pass@3 measured against the per-step execution budget.',
         alt: 'Success rate (Pass@3) over execution steps for web exploitation and post exploitation',
         caption:
-          'Solid curves show Pass@3 (Avg.) over execution steps for all systems. For the top two systems, dashed curves show Pass@3 (Max). Shaded bands indicate the best-to-worst range across three independent runs at each step budget. GPT-5.5 with Codex leads on both tracks, reaching 16.1% on web exploitation and 31.7% on post-exploitation, but remains far from full compromise.',
+          'Solid curves show Pass@3 (Avg.) over execution steps for the original six-system evaluation. For the top two systems, dashed curves show Pass@3 (Max). Shaded bands indicate the best-to-worst range across three independent runs at each step budget. In this original evaluation, GPT-5.5 with Codex leads on both tracks, reaching 16.1% on web exploitation and 31.7% on post-exploitation.',
       },
       arch: {
         eyebrow: 'Arch',
@@ -499,7 +525,7 @@ const pageCopy = {
       body:
         '该基准套件包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 个企业级仿真网络靶场中的 156 台内部主机；同时提供 CAGE 评测工具链，用于可扩展的系统执行、任务编排、结果收集与自动验证。',
       result:
-        '在统一提示词和预算设置下，我们评测了六个前沿 AI 系统。GPT-5.5 搭配 Codex 取得最高成功率：Web 漏洞利用为 16.1%，后渗透为 31.7%；在给出更具体线索后分别提升至 33.0% 和 46.3%。',
+        '最新评测加入了 GPT-5.6 Sol 搭配 Codex 的结果，其在当前排行榜中取得最高成功率：Web 漏洞利用为 34.53%，后渗透为 74.10%。',
       readResults: '查看结果',
       paper: '论文',
       github: 'GitHub',
@@ -545,7 +571,6 @@ const pageCopy = {
     resultPreview: {
       model: '模型',
       agent: '智能体',
-      comingSoon: '即将发布...',
       note: '列展示 Succ. Rate Pass@3。点击列标题可按对应场景排序和排名。',
       metrics: ['pass@3（均值）', 'AI 系统', '步数预算'],
     },
@@ -557,7 +582,7 @@ const pageCopy = {
           'AgentCyberRange 两条任务线的总体结果，其中 Pass@3 按每步执行预算进行统计。',
         alt: 'Web 漏洞利用与后渗透任务在执行步数下的成功率 Pass@3',
         caption:
-          '实线展示所有系统在不同执行步数下的 Pass@3（均值）。对于排名前两位的系统，虚线展示 Pass@3（最大值）。阴影区域表示每个步数预算下三次独立运行的最好到最差范围。GPT-5.5 搭配 Codex 在两条任务线上领先，在 Web 漏洞利用中达到 16.1%，在后渗透中达到 31.7%，但距离完全攻陷仍有明显差距。',
+          '实线展示原始六系统评测在不同执行步数下的 Pass@3（均值）。对于排名前两位的系统，虚线展示 Pass@3（最大值）。阴影区域表示每个步数预算下三次独立运行的最好到最差范围。在该原始评测中，GPT-5.5 搭配 Codex 在两条任务线上领先，Web 漏洞利用为 16.1%，后渗透为 31.7%。',
       },
       arch: {
         eyebrow: '架构',
@@ -635,7 +660,6 @@ const pageCopy = {
   resultPreview: {
     model: string
     agent: string
-    comingSoon: string
     note: string
     metrics: [string, string, string]
   }
@@ -1271,16 +1295,28 @@ function ResultPreview({
 }: Readonly<{
   copy: (typeof pageCopy)['en']['resultPreview']
   level: 'level0' | 'level1' | 'level2'
-  rows: typeof resultRows
+  rows: BenchmarkResultRow[]
   table: (typeof resultTables)[ResultTableId]
 }>) {
   const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
 
-  const webSorted = [...rows].sort((a, b) => b[level].pass3 - a[level].pass3)
-  const postSorted = [...postResultRows].sort((a, b) => b[level].pass3 - a[level].pass3)
+  const webSorted = [...rows].sort(
+    (a, b) =>
+      (b[level]?.pass3 ?? -Infinity) -
+      (a[level]?.pass3 ?? -Infinity),
+  )
+  const postSorted = [...postResultRows].sort(
+    (a, b) =>
+      (b[level]?.pass3 ?? -Infinity) -
+      (a[level]?.pass3 ?? -Infinity),
+  )
 
   const previewRows = sortBy === 'web' ? webSorted : postSorted
-  const bestPass3 = previewRows[0]?.[level].pass3 ?? 0
+  const bestPass3 = previewRows[0]?.[level]?.pass3 ?? 0
+  const evaluatedSystemCount = new Set([
+    ...rows.map((row) => row.model),
+    ...postResultRows.map((row) => row.model),
+  ]).size
 
   // Map model -> post row for quick lookup
   const postByModel = new Map(postResultRows.map((r) => [r.model, r]))
@@ -1340,30 +1376,14 @@ function ResultPreview({
                         {row.agent}
                       </TableCell>
                       <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {formatPassRate(webByModel.get(row.model)?.[level].pass3)}
+                        {formatPassRate(webByModel.get(row.model)?.[level]?.pass3)}
                       </TableCell>
                       <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {formatPassRate(postRow?.[level].pass3)}
+                        {formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
                     </TableRow>
                   )
                 })}
-                {/* Coming soon row */}
-                <TableRow className="opacity-50 hover:bg-transparent">
-                  <TableCell className="px-1.5 py-3">
-                    <div className="flex min-w-0 items-center gap-1">
-                      <span className="rounded-full border border-[var(--border-default)] bg-transparent px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-secondary)]">
-                        7th
-                      </span>
-                      <span className="truncate italic text-[var(--text-secondary)]">
-                        {copy.comingSoon}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-1.5 py-3 text-[var(--text-secondary)]">—</TableCell>
-                  <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-secondary)]' : 'text-[var(--text-secondary)]'}`}>—</TableCell>
-                  <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-secondary)]' : 'text-[var(--text-secondary)]'}`}>—</TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </div>
@@ -1378,7 +1398,7 @@ function ResultPreview({
 
           <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--border-default)]">
             <MiniMetric label={copy.metrics[0]} value={`${bestPass3.toFixed(2)}%`} />
-            <MiniMetric label={copy.metrics[1]} value="6" />
+            <MiniMetric label={copy.metrics[1]} value={String(evaluatedSystemCount)} />
             <MiniMetric label={copy.metrics[2]} value="150 / 500" />
           </div>
         </CardContent>
