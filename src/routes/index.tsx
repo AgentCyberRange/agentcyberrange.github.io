@@ -262,6 +262,26 @@ const postResultRows: BenchmarkResultRow[] = [
     time: 107.88,
     note: 'Kimi scaffold',
   },
+  {
+    model: 'DeepSeek-V4-Pro',
+    agent: 'Strix',
+    pass1: 7.32,
+    pass3: 7.32,
+    level0: { pass1: 7.32, pass3: 7.32 },
+    cost: 44.74,
+    time: 39.03,
+    note: 'Post-exploitation only',
+  },
+  {
+    model: 'DeepSeek-V4-Pro',
+    agent: 'Pentagi',
+    pass1: 2.44,
+    pass3: 4.88,
+    level0: { pass1: 2.44, pass3: 4.88 },
+    cost: 7.84,
+    time: 95.85,
+    note: 'Post-exploitation only',
+  },
 ]
 
 function toOrdinal(n: number): string {
@@ -275,9 +295,9 @@ function toOrdinal(n: number): string {
 const resultTables = {
   web: {
     eyebrow: '5.2 · RQ1',
-    title: 'Exploitation Performance',
+    title: 'Evaluation Leaderboard',
     description:
-      'Evaluation results on web and post exploitation tasks across difficulty levels.',
+      'Leaderboard results across web exploitation and post-exploitation tasks.',
     rows: resultRows,
   },
   post: {
@@ -389,19 +409,20 @@ const pageCopy = {
       toggleText: '中文',
     },
     hero: {
-      subtitleStart: 'Benchmarking Frontier AI Systems in ',
-      subtitleAccent: 'Realistic Cyber Ranges',
+      subtitleStart: 'A Cybersecurity Benchmark for ',
+      subtitleAccent: 'Frontier AI Systems',
       subtitleSuffix: '',
-      subtitlePunctuation: '.',
+      subtitlePunctuation: '',
       lead:
-        'AgentCyberRange is the first open, multi-range evaluation infrastructure for measuring the autonomous cyber attack capability of frontier AI systems, covering two core stages of realistic attacks: web exploitation and post exploitation.',
+        'AgentCyberRange is an open cybersecurity benchmark for testing whether frontier AI systems can autonomously complete web exploitation and post-exploitation tasks.',
       body:
-        'The benchmark suite contains 110 vulnerabilities across 15 real web applications and 8 enterprise-like cyber ranges with 156 internal hosts, together with CAGE, an evaluation toolchain for scalable system execution, task orchestration, result collection, and automatic verification.',
+        'The benchmark includes 110 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
       result:
-        'The latest evaluation adds GPT-5.6 Sol with Codex, which achieves the highest success rates on the current leaderboard: 34.53% on web exploitation and 74.10% on post-exploitation.',
-      readResults: 'Read the results',
+        'GPT-5.6 Sol with Codex currently ranks first, with 34.53% success on web exploitation and 74.10% on post-exploitation.',
+      readResults: 'Results',
       paper: 'Paper',
       github: 'GitHub',
+      evaluation: 'Apply',
       affiliation: 'Fudan University',
       contribution: '*Equal contribution. †Corresponding author.',
     },
@@ -433,9 +454,9 @@ const pageCopy = {
     },
     resultTables: {
       web: {
-        title: 'Exploitation Performance',
+        title: 'Evaluation Leaderboard',
         description:
-          'Evaluation results on web and post exploitation tasks across difficulty levels.',
+          'Leaderboard results across web exploitation and post-exploitation tasks.',
       },
       post: {
         title: 'Post Exploitation Performance',
@@ -508,27 +529,27 @@ const pageCopy = {
     ],
   },
   zh: {
-    metaTitle: 'AgentCyberRange：真实网络靶场中的前沿 AI 系统评测',
-    metaDescription:
-      'AgentCyberRange 官方项目页，用于在真实网络攻击任务中评测前沿 AI 系统。',
+    metaTitle: 'AgentCyberRange：面向前沿 AI 系统的网络安全基准测试集',
+    metaDescription: '在真实网络攻击任务中测试前沿 AI 系统的自主攻击能力。',
     nav: {
       toggleLabel: 'Switch to English',
       toggleText: 'EN',
     },
     hero: {
       subtitleStart: '面向',
-      subtitleAccent: '真实网络靶场',
-      subtitleSuffix: '的前沿 AI 系统评测',
+      subtitleAccent: '真实网络环境',
+      subtitleSuffix: '的前沿 AI 安全评测',
       subtitlePunctuation: '',
       lead:
-        'AgentCyberRange 是首个开放的多靶场评测基础设施，用于衡量前沿 AI 系统的自主网络攻击能力，覆盖真实攻击中的两个核心阶段：Web 漏洞利用与后渗透。',
+        'AgentCyberRange 是一套开放的网络安全基准测试集，用来测试前沿 AI 系统自主完成 Web 漏洞利用和后渗透任务的能力。',
       body:
-        '该基准套件包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 个企业级仿真网络靶场中的 156 台内部主机；同时提供 CAGE 评测工具链，用于可扩展的系统执行、任务编排、结果收集与自动验证。',
+        '测试集包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 工具链负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
-        '最新评测加入了 GPT-5.6 Sol 搭配 Codex 的结果，其在当前排行榜中取得最高成功率：Web 漏洞利用为 34.53%，后渗透为 74.10%。',
+        '排行榜已加入 GPT-5.6 Sol 搭配 Codex 的结果：Web 漏洞利用成功率为 34.53%，后渗透为 74.10%，目前均排在第一。',
       readResults: '查看结果',
       paper: '论文',
       github: 'GitHub',
+      evaluation: '申请评测',
       affiliation: '复旦大学',
       contribution: '*共同一作。†通讯作者。',
     },
@@ -537,7 +558,7 @@ const pageCopy = {
         pill: 'Web 漏洞利用',
         title: 'WebExploitBench',
         detail:
-          '包含 15 个真实 Web 应用，覆盖零日、一日和合成漏洞，横跨 16 类漏洞类型。',
+          '包含 15 个真实 Web 应用，覆盖 0-day、1-day 和合成漏洞，共 16 类漏洞。',
         stats: ['漏洞数量', 'Web 应用'],
         cta: '查看基准',
       },
@@ -545,23 +566,23 @@ const pageCopy = {
         pill: '后渗透',
         title: 'PostExploitBench',
         detail:
-          '包含 8 个企业级仿真靶场，具备跳板主机、诱饵、深层网段以及可由验证器观察的攻陷标记。',
-        stats: ['内部主机', '网络靶场'],
+          '包含 8 套接近企业网络的评测环境，设置了跳板主机、诱饵和多层网段，并用运行时标记验证攻陷结果。',
+        stats: ['内部主机', '评测环境'],
         cta: '查看基准',
       },
       cage: {
-        pill: '基础设施 · 评测',
+        pill: '工具链 · 评测',
         title: 'CAGE',
         detail:
           '面向可扩展系统执行、任务编排、结果收集与自动验证的评测工具链。',
-        stats: ['智能体运行器', '开放基础设施'],
+        stats: ['Agent 运行器', '评测工具链'],
         cta: '查看工具链',
       },
     },
     resultTables: {
       web: {
-        title: '漏洞利用性能',
-        description: '跨难度级别的 Web 漏洞利用与后渗透任务评测结果。',
+        title: '评测排行榜',
+        description: 'Web 漏洞利用与后渗透任务的综合评测结果。',
       },
       post: {
         title: '后渗透性能',
@@ -646,6 +667,7 @@ const pageCopy = {
     readResults: string
     paper: string
     github: string
+    evaluation: string
     affiliation: string
     contribution: string
   }
@@ -845,7 +867,7 @@ function PaperSite() {
   const [activeTable] = useState<ResultTableId>('web')
   const [copied, setCopied] = useState<string | null>(null)
   const [level] = useState<'level0' | 'level1' | 'level2'>('level0')
-  const [language, setLanguage] = useState<Language>('en')
+  const [language, setLanguage] = useState<Language>('zh')
 
   const heroRef = useRef<HTMLElement>(null)
   const copy = pageCopy[language]
@@ -928,8 +950,8 @@ function PaperSite() {
                 </h1>
               </div>
 
-              <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-start">
-                <div className="min-w-0">
+              <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-stretch">
+                <div className="min-w-0 lg:flex lg:flex-col lg:justify-center">
                   <p data-reveal className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.25rem]">
                     {copy.hero.subtitleStart}
                     <span className="text-[var(--accent-rust)]">
@@ -949,10 +971,10 @@ function PaperSite() {
                     {copy.hero.result}
                   </p>
 
-                  <div data-reveal className="mt-8 flex flex-wrap gap-3 justify-center">
+                  <div data-reveal className="mt-8 flex flex-wrap justify-center gap-2">
                     <Button
                       asChild
-                      className="h-10 rounded-lg bg-[#2C4E59] px-5 text-sm text-white shadow-none hover:bg-[#2C3759]"
+                      className="h-10 rounded-lg bg-[#2C4E59] px-4 text-sm text-white shadow-none hover:bg-[#2C3759]"
                     >
                       <a href="#overall-results">
                         <ArrowDown />
@@ -962,7 +984,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
                       <a href="https://arxiv.org/abs/2606.14295" target="_blank" rel="noreferrer">
                         <FileText />
@@ -972,7 +994,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-5 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
                       <a
                         href="https://github.com/AgentCyberRange"
@@ -981,6 +1003,20 @@ function PaperSite() {
                       >
                         <GitFork />
                         {copy.hero.github}
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                    >
+                      <a
+                        href="https://eval.agentcyberrange.io/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Globe2 />
+                        {copy.hero.evaluation}
                       </a>
                     </Button>
                   </div>
@@ -1300,56 +1336,55 @@ function ResultPreview({
 }>) {
   const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
 
-  const webSorted = [...rows].sort(
-    (a, b) =>
-      (b[level]?.pass3 ?? -Infinity) -
-      (a[level]?.pass3 ?? -Infinity),
+  const systemKey = (row: Pick<BenchmarkResultRow, 'agent' | 'model'>) =>
+    JSON.stringify([row.agent, row.model])
+  const webBySystem = new Map(rows.map((row) => [systemKey(row), row]))
+  const postBySystem = new Map(
+    postResultRows.map((row) => [systemKey(row), row]),
   )
-  const postSorted = [...postResultRows].sort(
-    (a, b) =>
-      (b[level]?.pass3 ?? -Infinity) -
-      (a[level]?.pass3 ?? -Infinity),
+  const systems = Array.from(
+    new Map(
+      [...rows, ...postResultRows].map((row) => [systemKey(row), row]),
+    ).values(),
   )
-
-  const previewRows = sortBy === 'web' ? webSorted : postSorted
-  const bestPass3 = previewRows[0]?.[level]?.pass3 ?? 0
-  const evaluatedSystemCount = new Set([
-    ...rows.map((row) => row.model),
-    ...postResultRows.map((row) => row.model),
-  ]).size
-
-  // Map model -> post row for quick lookup
-  const postByModel = new Map(postResultRows.map((r) => [r.model, r]))
-  const webByModel = new Map(rows.map((r) => [r.model, r]))
+  const activeRows = sortBy === 'web' ? webBySystem : postBySystem
+  const previewRows = systems.sort(
+    (a, b) =>
+      (activeRows.get(systemKey(b))?.[level]?.pass3 ?? -Infinity) -
+      (activeRows.get(systemKey(a))?.[level]?.pass3 ?? -Infinity),
+  )
+  const bestPass3 =
+    activeRows.get(systemKey(previewRows[0]))?.[level]?.pass3 ?? 0
+  const evaluatedSystemCount = systems.length
 
   return (
-    <div className="w-full lg:justify-self-end lg:pt-10">
+    <div className="w-full lg:justify-self-end">
       <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper">
-        <CardHeader className="relative space-y-5">
+        <CardHeader className="relative space-y-0 p-5 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <CardTitle className="font-serif text-2xl leading-tight text-[var(--text-primary)]">
+              <CardTitle className="font-serif text-xl leading-tight text-[var(--text-primary)]">
                 {table.title}
               </CardTitle>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="pt-0">
-          <div className="overflow-hidden rounded-lg border border-[var(--border-default)]">
+        <CardContent className="px-5 pb-5 pt-0">
+          <div className="max-h-[432px] overflow-y-auto rounded-lg border border-[var(--border-default)]">
             <Table className="w-full">
-              <TableHeader>
+              <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="w-[38%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.model}</TableHead>
-                  <TableHead className="w-[20%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.agent}</TableHead>
+                  <TableHead className="h-9 w-[38%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.model}</TableHead>
+                  <TableHead className="h-9 w-[20%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.agent}</TableHead>
                   <TableHead
-                    className={`cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('web')}
                   >
                     Web
                   </TableHead>
                   <TableHead
-                    className={`cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('post')}
                   >
                     Post
@@ -1358,10 +1393,12 @@ function ResultPreview({
               </TableHeader>
               <TableBody>
                 {previewRows.map((row, i) => {
-                  const postRow = postByModel.get(row.model)
+                  const key = systemKey(row)
+                  const webRow = webBySystem.get(key)
+                  const postRow = postBySystem.get(key)
                   return (
-                    <TableRow key={row.model} className="hover:bg-transparent">
-                      <TableCell className="px-1.5 py-3">
+                    <TableRow key={key} className="hover:bg-transparent">
+                      <TableCell className="px-1.5 py-2">
                         <div className="flex min-w-0 items-center gap-1">
                           <span className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
                             {toOrdinal(i + 1)}
@@ -1372,13 +1409,13 @@ function ResultPreview({
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="px-1.5 py-3 text-[var(--text-secondary)]">
+                      <TableCell className="px-1.5 py-2 text-[var(--text-secondary)]">
                         {row.agent}
                       </TableCell>
-                      <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {formatPassRate(webByModel.get(row.model)?.[level]?.pass3)}
+                      <TableCell className={`py-2 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                        {formatPassRate(webRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className={`py-3 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`py-2 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
                     </TableRow>
@@ -1396,7 +1433,7 @@ function ResultPreview({
             {' '}{copy.note}
           </p>
 
-          <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--border-default)]">
+          <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--border-default)]">
             <MiniMetric label={copy.metrics[0]} value={`${bestPass3.toFixed(2)}%`} />
             <MiniMetric label={copy.metrics[1]} value={String(evaluatedSystemCount)} />
             <MiniMetric label={copy.metrics[2]} value="150 / 500" />
@@ -1412,11 +1449,11 @@ function MiniMetric({
   value,
 }: Readonly<{ label: string; value: string }>) {
   return (
-    <div className="bg-[var(--bg-page)] p-3 text-center">
-      <div className="font-serif text-xl font-bold text-[var(--text-primary)]">
+    <div className="bg-[var(--bg-page)] p-2 text-center">
+      <div className="font-serif text-lg font-bold text-[var(--text-primary)]">
         {value}
       </div>
-      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+      <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
         {label}
       </div>
     </div>
