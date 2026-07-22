@@ -84,6 +84,7 @@ type BenchmarkLevelResult = { pass1?: number; pass3: number }
 type BenchmarkResultRow = {
   model: string
   agent: string
+  entryType?: 'model' | 'agent'
   pass1?: number
   pass3?: number
   level0: BenchmarkLevelResult
@@ -265,6 +266,7 @@ const postResultRows: BenchmarkResultRow[] = [
   {
     model: 'DeepSeek-V4-Pro',
     agent: 'Strix',
+    entryType: 'agent',
     pass1: 7.32,
     pass3: 7.32,
     level0: { pass1: 7.32, pass3: 7.32 },
@@ -275,6 +277,7 @@ const postResultRows: BenchmarkResultRow[] = [
   {
     model: 'DeepSeek-V4-Pro',
     agent: 'Pentagi',
+    entryType: 'agent',
     pass1: 2.44,
     pass3: 4.88,
     level0: { pass1: 2.44, pass3: 4.88 },
@@ -401,7 +404,7 @@ level-0 result:
 const pageCopy = {
   en: {
     metaTitle:
-      'AgentCyberRange: Benchmarking Frontier AI Systems in Realistic Cyber Ranges',
+      'AgentCyberRange: Evaluate Agent Cyberattack Capabilities in Enterprise-like Cyber Ranges',
     metaDescription:
       'Official project page for AgentCyberRange, a benchmark for evaluating frontier AI systems on realistic cyber attacks.',
     nav: {
@@ -409,9 +412,9 @@ const pageCopy = {
       toggleText: '中文',
     },
     hero: {
-      subtitleStart: 'A Cybersecurity Benchmark for ',
-      subtitleAccent: 'Frontier AI Systems',
-      subtitleSuffix: '',
+      subtitleStart: 'Evaluate Agent Cyberattack',
+      subtitleAccent: 'Capabilities',
+      subtitleSuffix: 'Enterprise-like Cyber Ranges',
       subtitlePunctuation: '',
       lead:
         'AgentCyberRange is an open cybersecurity benchmark for testing whether frontier AI systems can autonomously complete web exploitation and post-exploitation tasks.',
@@ -465,8 +468,12 @@ const pageCopy = {
       },
     },
     resultPreview: {
-      model: 'Model',
-      agent: 'Agent',
+      system: 'Agent / Model',
+      submitter: 'Submitter',
+      submittedAt: 'Submitted',
+      modelBadge: 'MODEL',
+      agentBadge: 'AGENT',
+      uses: 'Uses ',
       note:
         'columns show Succ. Rate Pass@3. Click a column header to sort and rank by that scenario.',
       metrics: ['pass@3 (avg.)', 'ai systems', 'step budget'],
@@ -529,7 +536,7 @@ const pageCopy = {
     ],
   },
   zh: {
-    metaTitle: 'AgentCyberRange：面向前沿 AI 系统的网络安全基准测试集',
+    metaTitle: 'AgentCyberRange：面向企业级复杂环境的智能体网络攻击能力评估',
     metaDescription: '在真实网络攻击任务中测试前沿 AI 系统的自主攻击能力。',
     nav: {
       toggleLabel: 'Switch to English',
@@ -537,13 +544,13 @@ const pageCopy = {
     },
     hero: {
       subtitleStart: '面向',
-      subtitleAccent: '真实网络环境',
-      subtitleSuffix: '的前沿 AI 安全评测',
+      subtitleAccent: '企业级复杂环境',
+      subtitleSuffix: '\n的智能体网络攻击能力评估',
       subtitlePunctuation: '',
       lead:
         'AgentCyberRange 是一套开放的网络安全基准测试集，用来测试前沿 AI 系统自主完成 Web 漏洞利用和后渗透任务的能力。',
       body:
-        '测试集包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 工具链负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
+        '测试集包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
         '排行榜已加入 GPT-5.6 Sol 搭配 Codex 的结果：Web 漏洞利用成功率为 34.53%，后渗透为 74.10%，目前均排在第一。',
       readResults: '查看结果',
@@ -571,12 +578,12 @@ const pageCopy = {
         cta: '查看基准',
       },
       cage: {
-        pill: '工具链 · 评测',
+        pill: '基础设施 · 评测',
         title: 'CAGE',
         detail:
-          '面向可扩展系统执行、任务编排、结果收集与自动验证的评测工具链。',
-        stats: ['Agent 运行器', '评测工具链'],
-        cta: '查看工具链',
+          '面向可扩展系统执行、任务编排、结果收集与自动验证的评测基础设施。',
+        stats: ['智能体控制台', '评测基础设施'],
+        cta: '查看基础设施',
       },
     },
     resultTables: {
@@ -590,8 +597,12 @@ const pageCopy = {
       },
     },
     resultPreview: {
-      model: '模型',
-      agent: '智能体',
+      system: '智能体 / 模型',
+      submitter: '提交者',
+      submittedAt: '提交时间',
+      modelBadge: 'MODEL',
+      agentBadge: 'AGENT',
+      uses: '使用 ',
       note: '列展示 Succ. Rate Pass@3。点击列标题可按对应场景排序和排名。',
       metrics: ['pass@3（均值）', 'AI 系统', '步数预算'],
     },
@@ -680,8 +691,12 @@ const pageCopy = {
   }>
   resultTables: Record<ResultTableId, { title: string; description: string }>
   resultPreview: {
-    model: string
-    agent: string
+    system: string
+    submitter: string
+    submittedAt: string
+    modelBadge: string
+    agentBadge: string
+    uses: string
     note: string
     metrics: [string, string, string]
   }
@@ -950,15 +965,35 @@ function PaperSite() {
                 </h1>
               </div>
 
-              <div className="mt-9 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_620px] lg:items-stretch">
-                <div className="min-w-0 lg:flex lg:flex-col lg:justify-center">
-                  <p data-reveal className="mt-6 font-serif text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.25rem]">
-                    {copy.hero.subtitleStart}
-                    <span className="text-[var(--accent-rust)]">
-                      {copy.hero.subtitleAccent}
-                    </span>
-                    {copy.hero.subtitleSuffix}
-                    {copy.hero.subtitlePunctuation}
+              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:grid-cols-[minmax(0,1fr)_620px] xl:items-stretch xl:gap-x-8">
+                <div className="min-w-0 xl:flex xl:flex-col xl:justify-center">
+                  <p
+                    data-reveal
+                    className={`mt-6 font-serif font-bold leading-tight tracking-tight text-[var(--text-primary)] ${language === 'en' ? 'text-[clamp(1rem,6.4vw,2.5rem)] xl:text-[2rem]' : 'whitespace-pre-line text-3xl sm:text-[2.25rem]'}`}
+                  >
+                    {language === 'en' ? (
+                      <>
+                        <span className="block whitespace-nowrap">{copy.hero.subtitleStart}</span>
+                        <span className="block whitespace-nowrap">
+                          <span className="text-[var(--accent-rust)]">
+                            {copy.hero.subtitleAccent}
+                          </span>
+                          {' in'}
+                        </span>
+                        <span className="block whitespace-nowrap">
+                          {copy.hero.subtitleSuffix}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        {copy.hero.subtitleStart}
+                        <span className="text-[var(--accent-rust)]">
+                          {copy.hero.subtitleAccent}
+                        </span>
+                        {copy.hero.subtitleSuffix}
+                        {copy.hero.subtitlePunctuation}
+                      </>
+                    )}
                   </p>
 
                   <p data-reveal className="mt-7 text-xl leading-8 text-[var(--text-primary)] sm:text-[1.35rem] sm:leading-9">
@@ -1356,14 +1391,16 @@ function ResultPreview({
   const bestPass3 =
     activeRows.get(systemKey(previewRows[0]))?.[level]?.pass3 ?? 0
   const evaluatedSystemCount = systems.length
+  const submitter = 'ACR Team'
+  const submittedAt = '2026-07-15'
 
   return (
-    <div className="w-full lg:justify-self-end">
+    <div className="w-full xl:justify-self-end">
       <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper">
         <CardHeader className="relative space-y-0 p-5 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <CardTitle className="font-serif text-xl leading-tight text-[var(--text-primary)]">
+              <CardTitle className="font-sans text-xl font-semibold leading-tight text-[var(--text-primary)]">
                 {table.title}
               </CardTitle>
             </div>
@@ -1371,23 +1408,30 @@ function ResultPreview({
         </CardHeader>
 
         <CardContent className="px-5 pb-5 pt-0">
-          <div className="max-h-[432px] overflow-y-auto rounded-lg border border-[var(--border-default)]">
-            <Table className="w-full">
+          <div className="overflow-hidden rounded-lg border border-[var(--border-default)]">
+            <Table className="min-w-[560px] table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="h-9 w-[38%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.model}</TableHead>
-                  <TableHead className="h-9 w-[20%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{copy.agent}</TableHead>
+                  <TableHead className="h-9 w-[46%] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                    {copy.system}
+                  </TableHead>
                   <TableHead
-                    className={`h-9 cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 w-[12%] cursor-pointer px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('web')}
                   >
                     Web
                   </TableHead>
                   <TableHead
-                    className={`h-9 cursor-pointer font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 w-[12%] cursor-pointer px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('post')}
                   >
                     Post
+                  </TableHead>
+                  <TableHead className="h-9 w-[15%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                    {copy.submitter}
+                  </TableHead>
+                  <TableHead className="h-9 w-[15%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                    {copy.submittedAt}
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -1396,27 +1440,45 @@ function ResultPreview({
                   const key = systemKey(row)
                   const webRow = webBySystem.get(key)
                   const postRow = postBySystem.get(key)
+                  const isAgent = row.entryType === 'agent'
+                  const primaryLabel = isAgent ? row.agent : row.model
+                  const secondaryLabel = isAgent
+                    ? `${copy.uses}${row.model}`
+                    : row.agent
                   return (
                     <TableRow key={key} className="hover:bg-transparent">
-                      <TableCell className="px-1.5 py-2">
-                        <div className="flex min-w-0 items-center gap-1">
-                          <span className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
+                      <TableCell className="py-3 pl-3 pr-1.5">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <span className={`shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
                             {toOrdinal(i + 1)}
                           </span>
-                          <ModelLogo model={row.model} />
-                          <span className="truncate font-medium text-[var(--text-primary)]">
-                            {row.model}
-                          </span>
+                          <SubmissionLogo row={row} />
+                          <div className="min-w-0">
+                            <div className="flex min-w-0 items-center gap-1.5">
+                              <span className="truncate font-medium leading-5 text-[var(--text-primary)]">
+                                {primaryLabel}
+                              </span>
+                              <span className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[8px] leading-none tracking-[0.12em] ${isAgent ? 'bg-[#D9F3F8] text-[#00758D]' : 'bg-[#F5F5F5] text-[var(--text-muted)]'}`}>
+                                {isAgent ? copy.agentBadge : copy.modelBadge}
+                              </span>
+                            </div>
+                            <div className="mt-0.5 truncate text-[11px] leading-4 text-[var(--text-muted)]">
+                              {secondaryLabel}
+                            </div>
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell className="px-1.5 py-2 text-[var(--text-secondary)]">
-                        {row.agent}
-                      </TableCell>
-                      <TableCell className={`py-2 font-mono transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-1.5 py-3 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(webRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className={`py-2 font-mono transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-1.5 py-3 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(postRow?.[level]?.pass3)}
+                      </TableCell>
+                      <TableCell className="px-1.5 py-3 text-xs text-[var(--text-secondary)]">
+                        {submitter}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap px-1.5 py-3 font-mono text-[11px] text-[var(--text-muted)]">
+                        {submittedAt}
                       </TableCell>
                     </TableRow>
                   )
@@ -1457,6 +1519,22 @@ function MiniMetric({
         {label}
       </div>
     </div>
+  )
+}
+
+function SubmissionLogo({ row }: Readonly<{ row: BenchmarkResultRow }>) {
+  if (row.entryType !== 'agent') {
+    return <ModelLogo model={row.model} />
+  }
+
+  const isStrix = row.agent === 'Strix'
+  return (
+    <span
+      aria-label={`${row.agent} logo`}
+      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border font-mono text-sm font-semibold ${isStrix ? 'border-[#333333] bg-[#111111] text-white' : 'border-[#9DDCFF] bg-[#EAF7FF] text-[#0076A8]'}`}
+    >
+      {row.agent.charAt(0)}
+    </span>
   )
 }
 

@@ -17,7 +17,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'AgentCyberRange：面向前沿 AI 系统的网络安全基准测试集',
+        title: 'AgentCyberRange：面向企业级复杂环境的智能体网络攻击能力评估',
       },
       {
         name: 'description',
