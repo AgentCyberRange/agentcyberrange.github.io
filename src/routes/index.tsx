@@ -554,7 +554,7 @@ const pageCopy = {
       result:
         '排行榜已加入 GPT-5.6 Sol 搭配 Codex 的结果：Web 漏洞利用成功率为 34.53%，后渗透为 74.10%，目前均排在第一。',
       readResults: '查看结果',
-      paper: '论文',
+      paper: '技术报告',
       github: 'GitHub',
       evaluation: '申请评测',
       affiliation: '复旦大学',
