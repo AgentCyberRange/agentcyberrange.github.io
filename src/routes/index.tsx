@@ -1006,10 +1006,10 @@ function PaperSite() {
                     {copy.hero.result}
                   </p>
 
-                  <div data-reveal className="mt-8 flex flex-wrap justify-center gap-2">
+                  <div data-reveal className="mt-8 flex flex-nowrap justify-center gap-2">
                     <Button
                       asChild
-                      className="h-10 rounded-lg bg-[#2C4E59] px-4 text-sm text-white shadow-none hover:bg-[#2C3759]"
+                      className="h-10 rounded-lg bg-[#2C4E59] px-3 text-sm text-white shadow-none hover:bg-[#2C3759]"
                     >
                       <a href="#overall-results">
                         <ArrowDown />
@@ -1019,7 +1019,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
                       <a href="https://arxiv.org/abs/2606.14295" target="_blank" rel="noreferrer">
                         <FileText />
@@ -1029,7 +1029,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
                       <a
                         href="https://github.com/AgentCyberRange"
@@ -1043,7 +1043,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-4 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
                     >
                       <a
                         href="https://eval.agentcyberrange.io/"
