@@ -14,7 +14,6 @@ import overallResultFig from '../assets/overall-result.png?url'
 import {
   ArrowDown,
   ArrowRight,
-  ArrowUpRightIcon,
   ArrowUpDown,
   Clipboard,
   Code2,
@@ -1026,10 +1025,10 @@ function PaperSite() {
                     {copy.hero.result}
                   </p>
 
-                  <div data-reveal className="mt-8 flex flex-nowrap justify-center gap-2">
+                  <div data-reveal className="mt-8 grid w-full grid-cols-4 gap-3">
                     <Button
                       asChild
-                      className="h-10 rounded-lg bg-[#2C4E59] px-3 text-sm text-white shadow-none hover:bg-[#2C3759]"
+                      className="h-10 w-full min-w-0 rounded-lg bg-[#2C4E59] px-2 text-sm text-white shadow-none hover:bg-[#2C3759] sm:px-3"
                     >
                       <a href="#overall-results">
                         <ArrowDown />
@@ -1039,7 +1038,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 w-full min-w-0 rounded-lg border-[var(--border-default)] bg-transparent px-2 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)] sm:px-3"
                     >
                       <a href="https://arxiv.org/abs/2606.14295" target="_blank" rel="noreferrer">
                         <FileText />
@@ -1049,7 +1048,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 w-full min-w-0 rounded-lg border-[var(--border-default)] bg-transparent px-2 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)] sm:px-3"
                     >
                       <a
                         href="https://github.com/AgentCyberRange"
@@ -1063,7 +1062,7 @@ function PaperSite() {
                     <Button
                       asChild
                       variant="outline"
-                      className="h-10 rounded-lg border-[var(--border-default)] bg-transparent px-3 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)]"
+                      className="h-10 w-full min-w-0 rounded-lg border-[var(--border-default)] bg-transparent px-2 text-sm text-[var(--text-primary)] shadow-none hover:bg-[var(--bg-card)] sm:px-3"
                     >
                       <a
                         href="https://eval.agentcyberrange.io/"
@@ -1421,13 +1420,7 @@ function ResultPreview({
           ? '2026-07-15'
           : '2026-06-12'
 
-    return row.model === 'Kimi-K3'
-      ? {
-          submitter: 'Kimi Team',
-          submittedAt,
-          submitterUrl: 'https://www.kimi.com/',
-        }
-      : { submitter: 'ACR Team', submittedAt, submitterUrl: undefined }
+    return { submitter: 'ACR Team', submittedAt }
   }
 
   return (
@@ -1520,22 +1513,7 @@ function ResultPreview({
                         {formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
                       <TableCell className="px-1.5 py-2 text-xs text-[var(--text-secondary)]">
-                        {submission.submitterUrl ? (
-                          <a
-                            className="inline-flex items-center gap-0.5 whitespace-nowrap transition-colors hover:text-primary focus-visible:text-primary"
-                            href={submission.submitterUrl}
-                            rel="noreferrer"
-                            target="_blank"
-                          >
-                            {submission.submitter}
-                            <ArrowUpRightIcon
-                              aria-hidden="true"
-                              className="size-3.5"
-                            />
-                          </a>
-                        ) : (
-                          submission.submitter
-                        )}
+                        {submission.submitter}
                       </TableCell>
                       <TableCell className="whitespace-nowrap px-1.5 py-2 font-mono text-[11px] text-[var(--text-muted)]">
                         {submission.submittedAt}
