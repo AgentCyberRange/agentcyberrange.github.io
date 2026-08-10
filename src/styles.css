@@ -65,6 +65,33 @@ html {
   background: var(--accent-brown);
 }
 
+.leaderboard-scroll {
+  scrollbar-color: #b8b1aa transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.leaderboard-scroll::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #b8b1aa;
+  background-clip: padding-box;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-thumb:hover {
+  background: #918981;
+  background-clip: padding-box;
+}
+
 .grid-decoration {
   position: absolute;
   inset: 0 0 auto auto;

@@ -14,6 +14,7 @@ import overallResultFig from '../assets/overall-result.png?url'
 import {
   ArrowDown,
   ArrowRight,
+  ArrowUpRightIcon,
   ArrowUpDown,
   Clipboard,
   Code2,
@@ -30,7 +31,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -155,6 +155,13 @@ const resultRows: BenchmarkResultRow[] = [
     note: 'Fastest run',
   },
   {
+    model: 'DeepSeek-V4-Flash',
+    agent: 'Claude Code',
+    pass3: 14.85,
+    level0: { pass3: 14.85 },
+    note: 'Latest result',
+  },
+  {
     model: 'Qwen-3.7-Max',
     agent: 'Qwen Code',
     pass1: 10.91,
@@ -177,6 +184,13 @@ const resultRows: BenchmarkResultRow[] = [
     cost: 8.89,
     time: 49.74,
     note: 'Kimi scaffold',
+  },
+  {
+    model: 'Kimi-K3',
+    agent: 'Kimi Code',
+    pass3: 28.18,
+    level0: { pass3: 28.18 },
+    note: 'Latest result',
   },
 ]
 
@@ -240,6 +254,13 @@ const postResultRows: BenchmarkResultRow[] = [
     note: 'Fastest run',
   },
   {
+    model: 'DeepSeek-V4-Flash',
+    agent: 'Claude Code',
+    pass3: 28.46,
+    level0: { pass3: 28.46 },
+    note: 'Latest result',
+  },
+  {
     model: 'Qwen-3.7-Max',
     agent: 'Qwen Code',
     pass1: 19.51,
@@ -262,6 +283,13 @@ const postResultRows: BenchmarkResultRow[] = [
     cost: 19.58,
     time: 107.88,
     note: 'Kimi scaffold',
+  },
+  {
+    model: 'Kimi-K3',
+    agent: 'Kimi Code',
+    pass3: 43.90,
+    level0: { pass3: 43.90 },
+    note: 'Latest result',
   },
   {
     model: 'DeepSeek-V4-Pro',
@@ -952,15 +980,7 @@ function PaperSite() {
             <div className="grid-decoration" />
             <div className="relative mx-auto max-w-[1200px] px-3 pb-6 pt-8 sm:px-5 sm:pb-8 sm:pt-12 lg:px-10 lg:pb-10 lg:pt-14">
               <div>
-                <Badge
-                  data-reveal
-                  variant="outline"
-                  className="rounded-full border-[var(--border-default)] bg-transparent px-3 py-1 font-mono text-[11px] font-normal text-[var(--text-secondary)]"
-                >
-                  agentcyberrange · v0
-                </Badge>
-
-                <h1 data-reveal className="mt-7 break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
+                <h1 data-reveal className="break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
                   AgentCyberRange
                 </h1>
               </div>
@@ -1391,8 +1411,24 @@ function ResultPreview({
   const bestPass3 =
     activeRows.get(systemKey(previewRows[0]))?.[level]?.pass3 ?? 0
   const evaluatedSystemCount = systems.length
-  const submitter = 'ACR Team'
-  const submittedAt = '2026-07-15'
+  const getSubmissionMetadata = (row: BenchmarkResultRow) => {
+    const submittedAt =
+      row.model === 'DeepSeek-V4-Flash' || row.model === 'Kimi-K3'
+        ? '2026-08-08'
+        : row.model === 'GPT-5.6 Sol' ||
+            row.agent === 'Strix' ||
+            row.agent === 'Pentagi'
+          ? '2026-07-15'
+          : '2026-06-12'
+
+    return row.model === 'Kimi-K3'
+      ? {
+          submitter: 'Kimi Team',
+          submittedAt,
+          submitterUrl: 'https://www.kimi.com/',
+        }
+      : { submitter: 'ACR Team', submittedAt, submitterUrl: undefined }
+  }
 
   return (
     <div className="w-full xl:justify-self-end">
@@ -1408,11 +1444,16 @@ function ResultPreview({
         </CardHeader>
 
         <CardContent className="px-5 pb-5 pt-0">
-          <div className="overflow-hidden rounded-lg border border-[var(--border-default)]">
-            <Table className="min-w-[560px] table-fixed">
+          <div
+            aria-label={table.title}
+            className="leaderboard-scroll max-h-[26rem] max-w-full overflow-auto overscroll-contain rounded-lg border border-[var(--border-default)] [&_[data-slot=table-container]]:overflow-visible [&_[data-slot=table-container]]:touch-pan-x"
+            role="region"
+            tabIndex={0}
+          >
+            <Table className="min-w-[680px] table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="h-9 w-[46%] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="sticky left-0 z-20 h-9 w-[44%] border-r border-[var(--border-default)] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.system}
                   </TableHead>
                   <TableHead
@@ -1427,7 +1468,7 @@ function ResultPreview({
                   >
                     Post
                   </TableHead>
-                  <TableHead className="h-9 w-[15%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[17%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submitter}
                   </TableHead>
                   <TableHead className="h-9 w-[15%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
@@ -1440,14 +1481,18 @@ function ResultPreview({
                   const key = systemKey(row)
                   const webRow = webBySystem.get(key)
                   const postRow = postBySystem.get(key)
+                  const submission = getSubmissionMetadata(row)
                   const isAgent = row.entryType === 'agent'
                   const primaryLabel = isAgent ? row.agent : row.model
                   const secondaryLabel = isAgent
                     ? `${copy.uses}${row.model}`
                     : row.agent
                   return (
-                    <TableRow key={key} className="hover:bg-transparent">
-                      <TableCell className="py-3 pl-3 pr-1.5">
+                    <TableRow
+                      key={key}
+                      className="h-[3.375rem] hover:bg-transparent"
+                    >
+                      <TableCell className="sticky left-0 z-[5] border-r border-[var(--border-default)] bg-[var(--bg-card)] py-2 pl-3 pr-1.5">
                         <div className="flex min-w-0 items-center gap-2">
                           <span className={`shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
                             {toOrdinal(i + 1)}
@@ -1455,30 +1500,45 @@ function ResultPreview({
                           <SubmissionLogo row={row} />
                           <div className="min-w-0">
                             <div className="flex min-w-0 items-center gap-1.5">
-                              <span className="truncate font-medium leading-5 text-[var(--text-primary)]">
+                              <span className="whitespace-nowrap font-medium leading-5 text-[var(--text-primary)]">
                                 {primaryLabel}
                               </span>
                               <span className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[8px] leading-none tracking-[0.12em] ${isAgent ? 'bg-[#D9F3F8] text-[#00758D]' : 'bg-[#F5F5F5] text-[var(--text-muted)]'}`}>
                                 {isAgent ? copy.agentBadge : copy.modelBadge}
                               </span>
                             </div>
-                            <div className="mt-0.5 truncate text-[11px] leading-4 text-[var(--text-muted)]">
+                            <div className="mt-0.5 whitespace-nowrap text-[11px] leading-4 text-[var(--text-muted)]">
                               {secondaryLabel}
                             </div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className={`px-1.5 py-3 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-1.5 py-2 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(webRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className={`px-1.5 py-3 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-1.5 py-2 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className="px-1.5 py-3 text-xs text-[var(--text-secondary)]">
-                        {submitter}
+                      <TableCell className="px-1.5 py-2 text-xs text-[var(--text-secondary)]">
+                        {submission.submitterUrl ? (
+                          <a
+                            className="inline-flex items-center gap-0.5 whitespace-nowrap transition-colors hover:text-primary focus-visible:text-primary"
+                            href={submission.submitterUrl}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {submission.submitter}
+                            <ArrowUpRightIcon
+                              aria-hidden="true"
+                              className="size-3.5"
+                            />
+                          </a>
+                        ) : (
+                          submission.submitter
+                        )}
                       </TableCell>
-                      <TableCell className="whitespace-nowrap px-1.5 py-3 font-mono text-[11px] text-[var(--text-muted)]">
-                        {submittedAt}
+                      <TableCell className="whitespace-nowrap px-1.5 py-2 font-mono text-[11px] text-[var(--text-muted)]">
+                        {submission.submittedAt}
                       </TableCell>
                     </TableRow>
                   )
