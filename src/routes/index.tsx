@@ -14,6 +14,7 @@ import overallResultFig from '../assets/overall-result.png?url'
 import {
   ArrowDown,
   ArrowRight,
+  ArrowUpRightIcon,
   ArrowUpDown,
   Clipboard,
   Code2,
@@ -83,6 +84,7 @@ type BenchmarkLevelResult = { pass1?: number; pass3: number }
 type BenchmarkResultRow = {
   model: string
   agent: string
+  agentVersion?: string
   entryType?: 'model' | 'agent'
   pass1?: number
   pass3?: number
@@ -116,6 +118,14 @@ const resultRows: BenchmarkResultRow[] = [
     cost: 14.23,
     time: 27.4,
     note: 'Best Pass@1',
+  },
+  {
+    model: 'GPT-5.5',
+    agent: 'Codex',
+    agentVersion: '0.147.0',
+    pass3: 30.30,
+    level0: { pass3: 30.30 },
+    note: 'Latest result',
   },
   {
     model: 'Claude-Opus-4.7',
@@ -173,6 +183,13 @@ const resultRows: BenchmarkResultRow[] = [
     note: 'Competitive Pass@1',
   },
   {
+    model: 'Qwen-3.8-Max',
+    agent: 'Qwen Code',
+    pass3: 26.36,
+    level0: { pass3: 26.36 },
+    note: 'Latest result',
+  },
+  {
     model: 'Kimi-2.6',
     agent: 'Kimi Code',
     pass1: 3.64,
@@ -215,6 +232,14 @@ const postResultRows: BenchmarkResultRow[] = [
     cost: 37.62,
     time: 80.48,
     note: 'Best Pass@1',
+  },
+  {
+    model: 'GPT-5.5',
+    agent: 'Codex',
+    agentVersion: '0.147.0',
+    pass3: 42.07,
+    level0: { pass3: 42.07 },
+    note: 'Latest result',
   },
   {
     model: 'Claude-Opus-4.7',
@@ -272,6 +297,13 @@ const postResultRows: BenchmarkResultRow[] = [
     note: 'Competitive Pass@1',
   },
   {
+    model: 'Qwen-3.8-Max',
+    agent: 'Qwen Code',
+    pass3: 27.64,
+    level0: { pass3: 27.64 },
+    note: 'Latest result',
+  },
+  {
     model: 'Kimi-2.6',
     agent: 'Kimi Code',
     pass1: 12.20,
@@ -313,6 +345,19 @@ const postResultRows: BenchmarkResultRow[] = [
     note: 'Post-exploitation only',
   },
 ]
+
+const agentVersionByModel: Record<string, string> = {
+  'GPT-5.6 Sol': '0.144.1',
+  'GPT-5.5': '0.133.0',
+  'Claude-Opus-4.7': '2.1.150',
+  'GLM-5.1': '2.1.150',
+  'DeepSeek-V4-Pro': '2.1.150',
+  'DeepSeek-V4-Flash': '2.1.226',
+  'Qwen-3.7-Max': '0.16.1',
+  'Qwen-3.8-Max': '0.21.10',
+  'Kimi-2.6': '1.44.0',
+  'Kimi-K3': '0.35.0',
+}
 
 function toOrdinal(n: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']
@@ -1388,10 +1433,16 @@ function ResultPreview({
   rows: BenchmarkResultRow[]
   table: (typeof resultTables)[ResultTableId]
 }>) {
-  const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
+  const [sortBy, setSortBy] = useState<'web' | 'post'>('post')
 
-  const systemKey = (row: Pick<BenchmarkResultRow, 'agent' | 'model'>) =>
-    JSON.stringify([row.agent, row.model])
+  const systemKey = (
+    row: Pick<BenchmarkResultRow, 'agent' | 'agentVersion' | 'model'>,
+  ) =>
+    JSON.stringify([
+      row.agent,
+      row.model,
+      row.agentVersion ?? agentVersionByModel[row.model],
+    ])
   const webBySystem = new Map(rows.map((row) => [systemKey(row), row]))
   const postBySystem = new Map(
     postResultRows.map((row) => [systemKey(row), row]),
@@ -1411,16 +1462,35 @@ function ResultPreview({
     activeRows.get(systemKey(previewRows[0]))?.[level]?.pass3 ?? 0
   const evaluatedSystemCount = systems.length
   const getSubmissionMetadata = (row: BenchmarkResultRow) => {
+    const previousBenchmarkModels = new Set([
+      'GPT-5.5',
+      'Claude-Opus-4.7',
+      'GLM-5.1',
+      'DeepSeek-V4-Pro',
+      'Qwen-3.7-Max',
+    ])
     const submittedAt =
-      row.model === 'DeepSeek-V4-Flash' || row.model === 'Kimi-K3'
+      row.entryType !== 'agent' &&
+      previousBenchmarkModels.has(row.model) &&
+      !row.agentVersion
+        ? '2026-05-25'
+        : row.model === 'Qwen-3.8-Max' || row.agentVersion === '0.147.0'
+        ? '2026-08-11'
+        : row.model === 'DeepSeek-V4-Flash' || row.model === 'Kimi-K3'
         ? '2026-08-08'
-        : row.model === 'GPT-5.6 Sol' ||
-            row.agent === 'Strix' ||
-            row.agent === 'Pentagi'
+        : row.model === 'GPT-5.6 Sol'
+          ? '2026-07-11'
+          : row.agent === 'Strix' || row.agent === 'Pentagi'
           ? '2026-07-15'
           : '2026-06-12'
 
-    return { submitter: 'ACR Team', submittedAt }
+    return row.model === 'Qwen-3.8-Max'
+      ? {
+          submitter: 'Qwen Team',
+          submittedAt,
+          submitterUrl: 'https://qwen.ai/',
+        }
+      : { submitter: 'ACR Team', submittedAt, submitterUrl: undefined }
   }
 
   return (
@@ -1446,25 +1516,25 @@ function ResultPreview({
             <Table className="min-w-[680px] table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="sticky left-0 z-20 h-9 w-[44%] border-r border-[var(--border-default)] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="sticky left-0 z-20 h-9 w-[41%] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.system}
                   </TableHead>
                   <TableHead
-                    className={`h-9 w-[12%] cursor-pointer px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 w-[10%] cursor-pointer px-[5px] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('web')}
                   >
                     Web
                   </TableHead>
                   <TableHead
-                    className={`h-9 w-[12%] cursor-pointer px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`h-9 w-[10%] cursor-pointer px-[5px] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] font-bold text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                     onClick={() => setSortBy('post')}
                   >
                     Post
                   </TableHead>
-                  <TableHead className="h-9 w-[17%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[13%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submitter}
                   </TableHead>
-                  <TableHead className="h-9 w-[15%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[26%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submittedAt}
                   </TableHead>
                 </TableRow>
@@ -1479,13 +1549,13 @@ function ResultPreview({
                   const primaryLabel = isAgent ? row.agent : row.model
                   const secondaryLabel = isAgent
                     ? `${copy.uses}${row.model}`
-                    : row.agent
+                    : `${row.agent} (${row.agentVersion ?? agentVersionByModel[row.model]})`
                   return (
                     <TableRow
                       key={key}
                       className="h-[3.375rem] hover:bg-transparent"
                     >
-                      <TableCell className="sticky left-0 z-[5] border-r border-[var(--border-default)] bg-[var(--bg-card)] py-2 pl-3 pr-1.5">
+                      <TableCell className="sticky left-0 z-[5] bg-[var(--bg-card)] py-2 pl-3 pr-1.5">
                         <div className="flex min-w-0 items-center gap-2">
                           <span className={`shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[10px] ${i === 0 ? 'border border-[#A1A5B5] bg-[#A1A5B5] text-white' : 'border border-[#DCE2E6] bg-[#F0F3F5] text-[var(--text-secondary)]'}`}>
                             {toOrdinal(i + 1)}
@@ -1506,14 +1576,29 @@ function ResultPreview({
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className={`px-1.5 py-2 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-[5px] py-2 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(webRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className={`px-1.5 py-2 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      <TableCell className={`px-[5px] py-2 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className="px-1.5 py-2 text-xs text-[var(--text-secondary)]">
-                        {submission.submitter}
+                      <TableCell className="whitespace-nowrap px-1.5 py-2 text-xs text-[var(--text-secondary)]">
+                        {submission.submitterUrl ? (
+                          <a
+                            className="inline-flex items-center gap-0.5 transition-colors hover:text-primary focus-visible:text-primary"
+                            href={submission.submitterUrl}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {submission.submitter}
+                            <ArrowUpRightIcon
+                              aria-hidden="true"
+                              className="size-3.5"
+                            />
+                          </a>
+                        ) : (
+                          submission.submitter
+                        )}
                       </TableCell>
                       <TableCell className="whitespace-nowrap px-1.5 py-2 font-mono text-[11px] text-[var(--text-muted)]">
                         {submission.submittedAt}
