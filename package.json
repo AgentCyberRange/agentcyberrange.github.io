@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "build": "vite build && node scripts/prepare-static.mjs",
     "preview": "vite preview"
   },

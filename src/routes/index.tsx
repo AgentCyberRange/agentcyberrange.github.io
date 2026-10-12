@@ -29,6 +29,12 @@ import {
 } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import {
+  DEFAULT_LANGUAGE,
+  getPreferredLanguage,
+  saveLanguagePreference,
+  type Language,
+} from '@/lib/language'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { Button } from '@/components/ui/button'
@@ -79,7 +85,6 @@ export const Route = createFileRoute('/')({
 type SortKey = 'model' | 'agent' | 'pass1' | 'pass3' | 'cost' | 'time'
 type SortDirection = 'asc' | 'desc'
 type ResultTableId = 'web' | 'post'
-type Language = 'en' | 'zh'
 type BenchmarkLevelResult = { pass1?: number; pass3: number }
 type BenchmarkResultRow = {
   model: string
@@ -954,7 +959,7 @@ function PaperSite() {
   const [activeTable] = useState<ResultTableId>('web')
   const [copied, setCopied] = useState<string | null>(null)
   const [level] = useState<'level0' | 'level1' | 'level2'>('level0')
-  const [language, setLanguage] = useState<Language>('zh')
+  const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE)
 
   const heroRef = useRef<HTMLElement>(null)
   const copy = pageCopy[language]
@@ -992,6 +997,11 @@ function PaperSite() {
     { scope: heroRef },
   )
 
+  // Resolve browser preferences after hydration so the server and client agree.
+  useEffect(() => {
+    setLanguage(getPreferredLanguage())
+  }, [])
+
   useEffect(() => {
     document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'
     document.title = copy.metaTitle
@@ -1005,6 +1015,12 @@ function PaperSite() {
     ...copy.resultTables[activeTable],
   }
 
+  const toggleLanguage = () => {
+    const nextLanguage = language === 'en' ? 'zh' : 'en'
+    setLanguage(nextLanguage)
+    saveLanguagePreference(nextLanguage)
+  }
+
   const copyText = async (key: string, value: string) => {
     await navigator.clipboard.writeText(value)
     setCopied(key)
@@ -1016,7 +1032,7 @@ function PaperSite() {
       <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)]">
         <Navigation
           copy={copy.nav}
-          onToggleLanguage={() => setLanguage((current) => current === 'en' ? 'zh' : 'en')}
+          onToggleLanguage={toggleLanguage}
         />
 
         <main>

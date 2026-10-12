@@ -17,11 +17,11 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'AgentCyberRange：面向企业级复杂环境的智能体网络攻击能力评估',
+        title: 'AgentCyberRange: Evaluate Agent Cyberattack Capabilities in Enterprise-like Cyber Ranges',
       },
       {
         name: 'description',
-        content: '在真实网络攻击任务中测试前沿 AI 系统的自主攻击能力。',
+        content: 'Official project page for AgentCyberRange, a benchmark for evaluating frontier AI systems on realistic cyber attacks.',
       },
     ],
     links: [
@@ -45,7 +45,7 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
