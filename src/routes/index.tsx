@@ -1045,8 +1045,8 @@ function PaperSite() {
                 </h1>
               </div>
 
-              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:grid-cols-[minmax(0,1fr)_620px] xl:items-stretch xl:gap-x-8">
-                <div className="min-w-0 xl:flex xl:flex-col xl:justify-center">
+              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:min-h-[37.5rem] xl:grid-cols-[minmax(0,1fr)_620px] xl:items-stretch xl:gap-x-8">
+                <div className="min-w-0 xl:flex xl:flex-col xl:justify-end">
                   <p
                     data-reveal
                     className={`mt-6 font-serif font-bold leading-tight tracking-tight text-[var(--text-primary)] ${language === 'en' ? 'text-[clamp(1rem,6.4vw,2.5rem)] xl:text-[2rem]' : 'whitespace-pre-line text-3xl sm:text-[2.25rem]'}`}
@@ -1510,8 +1510,8 @@ function ResultPreview({
   }
 
   return (
-    <div className="w-full xl:justify-self-end">
-      <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper">
+    <div className="w-full xl:relative xl:min-h-0 xl:justify-self-end">
+      <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper xl:absolute xl:inset-0 xl:flex xl:flex-col">
         <CardHeader className="relative space-y-0 p-5 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -1522,10 +1522,10 @@ function ResultPreview({
           </div>
         </CardHeader>
 
-        <CardContent className="px-5 pb-5 pt-0">
+        <CardContent className="px-5 pb-5 pt-0 xl:flex xl:min-h-0 xl:flex-1 xl:flex-col">
           <div
             aria-label={table.title}
-            className="leaderboard-scroll max-h-[26rem] max-w-full overflow-auto overscroll-contain rounded-lg border border-[var(--border-default)] [&_[data-slot=table-container]]:overflow-visible [&_[data-slot=table-container]]:touch-pan-x"
+            className="leaderboard-scroll max-h-[26rem] max-w-full overflow-auto overscroll-contain rounded-lg border border-[var(--border-default)] xl:h-0 xl:min-h-0 xl:max-h-none xl:flex-1 [&_[data-slot=table-container]]:overflow-visible [&_[data-slot=table-container]]:touch-pan-x"
             role="region"
             tabIndex={0}
           >
