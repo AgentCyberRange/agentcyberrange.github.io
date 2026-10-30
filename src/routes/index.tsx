@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import byteDanceLogo from '@lobehub/icons-static-svg/icons/bytedance-color.svg?url'
 import { NewsSection } from '../components/news-section'
 import claudeLogo from '@lobehub/icons-static-svg/icons/claude-color.svg?url'
 import deepSeekLogo from '@lobehub/icons-static-svg/icons/deepseek-color.svg?url'
@@ -100,12 +101,24 @@ type BenchmarkResultRow = {
   cost?: number
   time?: number
   note?: string
+  submitter?: string
+  submittedAt?: string
 }
 
 // Web exploitation results (Table: external-results-with-levels).
 // Levels 0, 1, 2; pass3 is the Pass@3 (Avg.) column. Cost/Time are averaged
 // across the three levels (not currently surfaced in the table UI).
 const resultRows: BenchmarkResultRow[] = [
+  {
+    model: 'Seed-2.1-Pro',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 22.89,
+    level0: { pass3: 22.89 },
+    submitter: '—',
+    submittedAt: '—',
+    note: 'Latest result',
+  },
   {
     model: 'GPT-5.6 Sol',
     agent: 'Codex',
@@ -220,6 +233,16 @@ const resultRows: BenchmarkResultRow[] = [
 // Levels 0, 1, 2; pass3 is the Pass@3 (Avg.) column. Cost/Time are averaged
 // across the three levels (not currently surfaced in the table UI).
 const postResultRows: BenchmarkResultRow[] = [
+  {
+    model: 'Seed-2.1-Pro',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 34.15,
+    level0: { pass3: 34.15 },
+    submitter: '—',
+    submittedAt: '—',
+    note: 'Latest result',
+  },
   {
     model: 'GPT-5.6 Sol',
     agent: 'Codex',
@@ -1509,7 +1532,11 @@ function ResultPreview({
           submittedAt,
           submitterUrl: 'https://qwen.ai/',
         }
-      : { submitter: 'ACR Team', submittedAt, submitterUrl: undefined }
+      : {
+          submitter: row.submitter ?? 'ACR Team',
+          submittedAt: row.submittedAt ?? submittedAt,
+          submitterUrl: undefined,
+        }
   }
 
   return (
@@ -1684,7 +1711,10 @@ function ModelLogo({ model }: Readonly<{ model: string }>) {
   let src: string | null = null
   let alt = model
 
-  if (model.startsWith('GPT')) {
+  if (model.startsWith('Seed')) {
+    src = byteDanceLogo
+    alt = 'ByteDance'
+  } else if (model.startsWith('GPT')) {
     src = openAiLogo
     alt = 'OpenAI'
   } else if (model.startsWith('Claude')) {
