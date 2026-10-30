@@ -16,7 +16,7 @@ export const newsItems = [
     category: { zh: '基准', en: 'Benchmark' },
     text: {
       zh: '与 Google DeepMind Team 合作更新 WebExploitBench，漏洞总数扩充至 203 个，非常感谢！',
-      en: 'Together with the Google DeepMind team, we expanded WebExploitBench to 203 vulnerabilities. Many thanks!',
+      en: 'In collaboration with the Google DeepMind team, we expanded WebExploitBench to 203 vulnerabilities. Many thanks!',
     },
   },
   {
