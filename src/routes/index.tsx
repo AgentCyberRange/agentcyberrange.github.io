@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { NewsSection } from '../components/news-section'
 import claudeLogo from '@lobehub/icons-static-svg/icons/claude-color.svg?url'
 import deepSeekLogo from '@lobehub/icons-static-svg/icons/deepseek-color.svg?url'
 import kimiLogo from '@lobehub/icons-static-svg/icons/kimi.svg?url'
@@ -1161,6 +1162,8 @@ function PaperSite() {
             </div>
           </section>
 
+          <NewsSection language={language} />
+
           {/* <section className="mx-auto grid max-w-[1200px] gap-px border-y border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4"> */}
           {/*   <Metric value="110" label="web vulnerabilities" /> */}
           {/*   <Metric value="15" label="real web applications" /> */}
@@ -1398,7 +1401,7 @@ function Navigation({
         </a>
 
         <div className="flex items-center gap-4">
-          {/* <NavLink href="#examples">Blog</NavLink> */}
+          <a href="#news" className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[#2B3270]">News</a>
           <Button
             size="sm"
             variant="outline"
