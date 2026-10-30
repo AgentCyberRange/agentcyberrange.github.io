@@ -1,65 +1,58 @@
-// Publication dates are examples from the approved design, not verified release dates.
-// Confirm them before a production merge. Keep this seed data synchronized between
-// agentcyberrange.github.io/src/content/news.ts and cage-fleet/web/src/content/news.ts.
+// Keep this list synchronized between agentcyberrange.github.io/src/content/news.ts
+// and cage-fleet/web/src/content/news.ts. Order newest first; every change needs zh and en.
 export const newsItems = [
   {
-    id: 'v2-preview',
-    date: '2026-10-20',
-    category: { zh: '预告', en: 'Preview' },
-    text: {
-      zh: 'AgentCyberRange v2.0 即将发布：更真实、更复杂、规模更大的评测环境。',
-      en: 'AgentCyberRange v2.0 is coming: more realistic, more complex, and larger-scale environments.',
-    },
-    href: 'https://eval.agentcyberrange.io/',
-  },
-  {
-    id: 'leaderboard-update',
-    date: '2026-10-18',
+    id: 'doubao-seed-evolving',
+    date: '2026-10-29',
     category: { zh: '评测', en: 'Results' },
     text: {
-      zh: '排行榜新增 Qwen-3.8-Max 与 GPT-5.5（Codex 0.147.0）的评测结果。',
-      en: 'New leaderboard results for Qwen-3.8-Max and GPT-5.5 with Codex 0.147.0.',
+      zh: 'Seed Team 提交了 Doubao-Seed-Evolving 在 AgentCyberRange 上的评测结果。',
+      en: 'Seed Team submitted Doubao-Seed-Evolving results on AgentCyberRange.',
     },
-    href: 'https://eval.agentcyberrange.io/#leaderboard',
   },
   {
-    id: 'python-sdk-guide',
-    date: '2026-10-15',
-    category: { zh: 'SDK', en: 'SDK' },
+    id: 'webexploitbench-deepmind',
+    date: '2026-10-25',
+    category: { zh: '基准', en: 'Benchmark' },
     text: {
-      zh: 'Python SDK 接入指南已上线，通过 run_agent() 运行 Agent 并提交评测。',
-      en: 'The Python SDK integration guide is available. Run and submit evaluations with run_agent().',
+      zh: '与 Google DeepMind Team 合作更新 WebExploitBench，漏洞总数扩充至 203 个，非常感谢！',
+      en: 'Together with the Google DeepMind team, we expanded WebExploitBench to 203 vulnerabilities. Many thanks!',
     },
-    href: 'https://eval.agentcyberrange.io/#sdk',
   },
   {
-    id: 'open-source-environments',
-    date: '2026-10-12',
-    category: { zh: '开源', en: 'Open source' },
+    id: 'deepseek-v4-1-flash-1017',
+    date: '2026-10-22',
+    category: { zh: '评测', en: 'Results' },
     text: {
-      zh: '部分 Web 与后渗透测试环境已开源，可先本地验证，再申请正式评测。',
-      en: 'Selected Web and post-exploitation environments are open source for local testing.',
+      zh: '新增 DeepSeek-V4.1-Flash-1017 在 AgentCyberRange 上的评测结果。',
+      en: 'Added DeepSeek-V4.1-Flash-1017 results on AgentCyberRange.',
     },
-    href: 'https://github.com/AgentCyberRange',
   },
   {
-    id: 'technical-report',
-    date: '2026-10-08',
-    category: { zh: '报告', en: 'Research' },
+    id: 'qwen-3-8-max',
+    date: '2026-08-25',
+    category: { zh: '评测', en: 'Results' },
     text: {
-      zh: 'AgentCyberRange 技术报告已公开，介绍评测任务、实验结果与关键发现。',
-      en: 'Read the AgentCyberRange technical report for tasks, evaluation results, and findings.',
+      zh: 'Qwen Team 提交了 Qwen-3.8-Max 在 AgentCyberRange 上的评测结果。',
+      en: 'Qwen Team submitted Qwen-3.8-Max results on AgentCyberRange.',
     },
-    href: 'https://arxiv.org/abs/2606.14295',
   },
   {
-    id: 'cage-toolkit',
-    date: '2026-10-01',
-    category: { zh: '工具', en: 'Toolkit' },
+    id: 'gpt-5-5-new-codex',
+    date: '2026-08-11',
+    category: { zh: '评测', en: 'Results' },
     text: {
-      zh: 'CAGE 提供 Agent 运行、任务编排、结果收集与自动验证工具链。',
-      en: 'Explore CAGE for agent execution, task orchestration, result collection, and verification.',
+      zh: '更新了 GPT-5.5 搭配新版 Codex 在 AgentCyberRange 上的评测结果。',
+      en: 'Updated GPT-5.5 results with the new Codex on AgentCyberRange.',
     },
-    href: 'https://github.com/AgentCyberRange/CAGE',
+  },
+  {
+    id: 'gpt-5-6-sol',
+    date: '2026-07-11',
+    category: { zh: '评测', en: 'Results' },
+    text: {
+      zh: '新增 GPT-5.6 Sol 搭配 Codex 在 AgentCyberRange 上的评测结果。',
+      en: 'Added GPT-5.6 Sol results with Codex on AgentCyberRange.',
+    },
   },
 ] as const

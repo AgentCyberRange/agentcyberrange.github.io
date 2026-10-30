@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ArrowDown, ArrowUpRightIcon } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 import type { Language } from '../lib/language'
 
 import { newsItems } from '../content/news'
@@ -20,7 +20,7 @@ export function NewsSection({ language }: { language: Language }) {
     <section
       id="news"
       aria-labelledby="news-title"
-      className="news-section mx-auto max-w-[1200px] scroll-mt-24 px-3 pb-5 pt-8 sm:px-5 lg:px-10"
+      className="news-section mx-auto max-w-[1200px] scroll-mt-24 px-3 pb-5 pt-0 sm:px-5 lg:px-10"
     >
       <div className="mb-5 flex items-baseline justify-between gap-4">
         <div className="flex items-baseline gap-3">
@@ -28,48 +28,39 @@ export function NewsSection({ language }: { language: Language }) {
             id="news-title"
             className="font-serif text-[2rem] font-bold tracking-tight text-[#413052]"
           >
-            News
+            {zh ? '最新动态🔥' : 'News🔥'}
           </h2>
-          <span className="text-sm text-[var(--text-secondary)]">
-            {zh ? '最新动态' : 'Latest updates'}
-          </span>
+          {!zh && (
+            <span className="text-sm text-[var(--text-secondary)]">
+              Latest updates
+            </span>
+          )}
         </div>
       </div>
       <ul id="news-list" className="border-y border-[var(--border-default)]">
-        {newsItems
-          .slice(0, expanded ? newsItems.length : 4)
-          .map((item, index) => (
-            <li
-              key={item.id}
-              className="border-b border-[var(--border-subtle)] last:border-0"
-            >
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                className="news-row group grid min-h-14 grid-cols-[100px_88px_minmax(0,1fr)_18px] items-center gap-4 rounded-sm py-4 text-sm transition-colors hover:bg-[#2B3270]/[0.035] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2B3270]"
+        {newsItems.slice(0, expanded ? newsItems.length : 4).map((item, index) => (
+          <li
+            key={item.id}
+            className="border-b border-[var(--border-subtle)] last:border-0"
+          >
+            <div className="news-row grid min-h-14 grid-cols-[112px_96px_minmax(0,1fr)] items-center gap-4 py-4 text-base">
+              <time
+                dateTime={item.date}
+                className={`font-mono text-sm tabular-nums ${index === 0 ? 'font-semibold text-[#2B3270]' : 'text-[var(--text-secondary)]'}`}
               >
-                <time
-                  dateTime={item.date}
-                  className={`font-mono text-xs tabular-nums ${index === 0 ? 'font-semibold text-[#2B3270]' : 'text-[var(--text-secondary)]'}`}
-                >
-                  {item.date.replaceAll('-', '.')}
-                </time>
-                <span
-                  className={`news-category w-fit whitespace-nowrap rounded px-2 py-1 text-[10px] font-medium ${index === 0 ? 'bg-[#2B3270]/[0.08] text-[#2B3270]' : 'bg-[#6b6560]/[0.06] text-[var(--text-secondary)]'}`}
-                >
-                  {item.category[language]}
-                </span>
-                <span className="leading-6 text-[var(--text-primary)] group-hover:text-[#2B3270]">
-                  {item.text[language]}
-                </span>
-                <ArrowUpRightIcon
-                  aria-hidden="true"
-                  className="h-4 w-4 text-[var(--text-secondary)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#2B3270]"
-                />
-              </a>
-            </li>
-          ))}
+                {item.date.replaceAll('-', '.')}
+              </time>
+              <span
+                className={`news-category w-fit whitespace-nowrap rounded px-2 py-1 text-xs font-medium ${index === 0 ? 'bg-[#2B3270]/[0.08] text-[#2B3270]' : 'bg-[#6b6560]/[0.06] text-[var(--text-secondary)]'}`}
+              >
+                {item.category[language]}
+              </span>
+              <span className="leading-6 text-[var(--text-primary)] lg:truncate">
+                {item.text[language]}
+              </span>
+            </div>
+          </li>
+        ))}
       </ul>
       <div className="flex justify-end pt-4">
         <button

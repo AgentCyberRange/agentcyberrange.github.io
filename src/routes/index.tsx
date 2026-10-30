@@ -103,6 +103,7 @@ type BenchmarkResultRow = {
   note?: string
   submitter?: string
   submittedAt?: string
+  submitterUrl?: string
 }
 
 // Web exploitation results (Table: external-results-with-levels).
@@ -110,13 +111,14 @@ type BenchmarkResultRow = {
 // across the three levels (not currently surfaced in the table UI).
 const resultRows: BenchmarkResultRow[] = [
   {
-    model: 'Seed-2.1-Pro',
+    model: 'Doubao-Seed-Evolving',
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 22.89,
     level0: { pass3: 22.89 },
-    submitter: '—',
-    submittedAt: '—',
+    submitter: 'Seed Team',
+    submittedAt: '2026-10-29',
+    submitterUrl: 'https://seed.bytedance.com/',
     note: 'Latest result',
   },
   {
@@ -234,13 +236,14 @@ const resultRows: BenchmarkResultRow[] = [
 // across the three levels (not currently surfaced in the table UI).
 const postResultRows: BenchmarkResultRow[] = [
   {
-    model: 'Seed-2.1-Pro',
+    model: 'Doubao-Seed-Evolving',
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 34.15,
     level0: { pass3: 34.15 },
-    submitter: '—',
-    submittedAt: '—',
+    submitter: 'Seed Team',
+    submittedAt: '2026-10-29',
+    submitterUrl: 'https://seed.bytedance.com/',
     note: 'Latest result',
   },
   {
@@ -445,7 +448,7 @@ const tracks = [
   {
     id: 'web',
     stats: [
-      { value: '110' },
+      { value: '203' },
       { value: '15' },
     ],
     accent: '#0E7490',
@@ -520,7 +523,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange is an open cybersecurity benchmark for testing whether frontier AI systems can autonomously complete web exploitation and post-exploitation tasks.',
       body:
-        'The benchmark includes 110 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
+        'The benchmark includes 203 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
       result:
         'GPT-5.6 Sol with Codex currently ranks first, with 35.37% success on web exploitation and 74.10% on post-exploitation.',
       readResults: 'Results',
@@ -651,7 +654,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange 是一套开放的网络安全基准测试集，用来测试前沿 AI 系统自主完成 Web 漏洞利用和后渗透任务的能力。',
       body:
-        '测试集包含 15 个真实 Web 应用中的 110 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
+        '测试集包含 15 个真实 Web 应用中的 203 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
         '排行榜已加入 GPT-5.6 Sol 搭配 Codex 的结果：Web 漏洞利用成功率为 35.37%，后渗透为 74.10%，目前均排在第一。',
       readResults: '查看结果',
@@ -1062,18 +1065,18 @@ function PaperSite() {
         <main>
           <section ref={heroRef} className="relative overflow-hidden">
             <div className="grid-decoration" />
-            <div className="relative mx-auto max-w-[1200px] px-3 pb-6 pt-8 sm:px-5 sm:pb-8 sm:pt-12 lg:px-10 lg:pb-10 lg:pt-14">
+            <div className="relative mx-auto max-w-[1200px] px-3 pb-3 pt-8 sm:px-5 sm:pb-4 sm:pt-12 lg:px-10 lg:pb-4 lg:pt-14">
               <div>
                 <h1 data-reveal className="break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
                   AgentCyberRange
                 </h1>
               </div>
 
-              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:min-h-[37.5rem] xl:grid-cols-[minmax(0,1fr)_620px] xl:items-stretch xl:gap-x-8">
-                <div className="min-w-0 xl:flex xl:flex-col xl:justify-end">
+              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:min-h-[37.5rem] xl:grid-cols-[minmax(0,1fr)_660px] xl:items-stretch xl:gap-x-6">
+                <div className="min-w-0 xl:flex xl:flex-col">
                   <p
                     data-reveal
-                    className={`mt-6 font-serif font-bold leading-tight tracking-tight text-[var(--text-primary)] ${language === 'en' ? 'text-[clamp(1rem,6.4vw,2.5rem)] xl:text-[2rem]' : 'whitespace-pre-line text-3xl sm:text-[2.25rem]'}`}
+                    className={`mt-6 font-serif font-bold leading-tight tracking-tight text-[var(--text-primary)] ${language === 'en' ? 'text-[clamp(1rem,6.4vw,2.5rem)] xl:text-[1.85rem]' : 'whitespace-pre-line text-3xl sm:text-[2.25rem]'}`}
                   >
                     {language === 'en' ? (
                       <>
@@ -1110,7 +1113,7 @@ function PaperSite() {
                     {copy.hero.result}
                   </p>
 
-                  <div data-reveal className="mt-8 grid w-full grid-cols-4 gap-3">
+                  <div data-reveal className="mt-8 grid w-full grid-cols-4 gap-3 xl:mt-auto xl:pt-8">
                     <Button
                       asChild
                       className="h-10 w-full min-w-0 rounded-lg bg-[#2C4E59] px-2 text-sm text-white shadow-none hover:bg-[#2C3759] sm:px-3"
@@ -1424,7 +1427,6 @@ function Navigation({
         </a>
 
         <div className="flex items-center gap-4">
-          <a href="#news" className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[#2B3270]">News</a>
           <Button
             size="sm"
             variant="outline"
@@ -1475,7 +1477,7 @@ function ResultPreview({
   rows: BenchmarkResultRow[]
   table: (typeof resultTables)[ResultTableId]
 }>) {
-  const [sortBy, setSortBy] = useState<'web' | 'post'>('post')
+  const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
 
   const systemKey = (
     row: Pick<BenchmarkResultRow, 'agent' | 'agentVersion' | 'model'>,
@@ -1535,7 +1537,7 @@ function ResultPreview({
       : {
           submitter: row.submitter ?? 'ACR Team',
           submittedAt: row.submittedAt ?? submittedAt,
-          submitterUrl: undefined,
+          submitterUrl: row.submitterUrl,
         }
   }
 
@@ -1559,10 +1561,10 @@ function ResultPreview({
             role="region"
             tabIndex={0}
           >
-            <Table className="min-w-[680px] table-fixed">
+            <Table className="min-w-[600px] table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
-                  <TableHead className="sticky left-0 z-20 h-9 w-[41%] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="sticky left-0 z-20 h-9 w-[48%] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.system}
                   </TableHead>
                   <TableHead
@@ -1577,10 +1579,10 @@ function ResultPreview({
                   >
                     Post
                   </TableHead>
-                  <TableHead className="h-9 w-[13%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[16%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submitter}
                   </TableHead>
-                  <TableHead className="h-9 w-[26%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[16%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submittedAt}
                   </TableHead>
                 </TableRow>
@@ -1711,7 +1713,7 @@ function ModelLogo({ model }: Readonly<{ model: string }>) {
   let src: string | null = null
   let alt = model
 
-  if (model.startsWith('Seed')) {
+  if (model.startsWith('Seed') || model.startsWith('Doubao')) {
     src = byteDanceLogo
     alt = 'ByteDance'
   } else if (model.startsWith('GPT')) {
