@@ -111,6 +111,33 @@ type BenchmarkResultRow = {
 // across the three levels (not currently surfaced in the table UI).
 const resultRows: BenchmarkResultRow[] = [
   {
+    model: 'Kimi-K3.1-Pro',
+    agent: 'Kimi Code',
+    agentVersion: '2.5.2',
+    pass3: 38.59,
+    level0: { pass3: 38.59 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
+  {
+    model: 'GPT-6 Sol',
+    agent: 'Codex',
+    agentVersion: '0.166.0',
+    pass3: 36.80,
+    level0: { pass3: 36.80 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
+  {
+    model: 'DeepSeek-V4.1-Flash',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 24.47,
+    level0: { pass3: 24.47 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
+  {
     model: 'Doubao-Seed-Evolving',
     agent: 'Claude Code',
     agentVersion: '2.1.296',
@@ -235,6 +262,33 @@ const resultRows: BenchmarkResultRow[] = [
 // Levels 0, 1, 2; pass3 is the Pass@3 (Avg.) column. Cost/Time are averaged
 // across the three levels (not currently surfaced in the table UI).
 const postResultRows: BenchmarkResultRow[] = [
+  {
+    model: 'Kimi-K3.1-Pro',
+    agent: 'Kimi Code',
+    agentVersion: '2.5.2',
+    pass3: 58.54,
+    level0: { pass3: 58.54 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
+  {
+    model: 'GPT-6 Sol',
+    agent: 'Codex',
+    agentVersion: '0.166.0',
+    pass3: 72.36,
+    level0: { pass3: 72.36 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
+  {
+    model: 'DeepSeek-V4.1-Flash',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 69.11,
+    level0: { pass3: 69.11 },
+    submittedAt: '2026-11-10',
+    note: 'Latest result',
+  },
   {
     model: 'Doubao-Seed-Evolving',
     agent: 'Claude Code',
@@ -525,7 +579,7 @@ const pageCopy = {
       body:
         'The benchmark includes 203 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
       result:
-        'GPT-5.6 Sol with Codex currently ranks first, with 35.37% success on web exploitation and 74.10% on post-exploitation.',
+        'Kimi-K3.1-Pro with Kimi Code currently ranks first on web exploitation at 38.59%, while GPT-5.6 Sol with Codex leads post-exploitation at 74.10%.',
       readResults: 'Results',
       paper: 'Paper',
       github: 'GitHub',
@@ -656,7 +710,7 @@ const pageCopy = {
       body:
         '测试集包含 15 个真实 Web 应用中的 203 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
-        '排行榜已加入 GPT-5.6 Sol 搭配 Codex 的结果：Web 漏洞利用成功率为 35.37%，后渗透为 74.10%，目前均排在第一。',
+        '排行榜已加入 Kimi-K3.1-Pro、GPT-6 Sol 等新结果：Kimi-K3.1-Pro 搭配 Kimi Code 以 38.59% 位列 Web 漏洞利用第一，GPT-5.6 Sol 搭配 Codex 以 74.10% 保持后渗透第一。',
       readResults: '查看结果',
       paper: '技术报告',
       github: 'GitHub',
@@ -1523,7 +1577,7 @@ function ResultPreview({
         : row.model === 'DeepSeek-V4-Flash' || row.model === 'Kimi-K3'
         ? '2026-08-08'
         : row.model === 'GPT-5.6 Sol'
-          ? '2026-07-11'
+          ? '2026-11-01'
           : row.agent === 'Strix' || row.agent === 'Pentagi'
           ? '2026-07-15'
           : '2026-06-12'
@@ -1597,7 +1651,9 @@ function ResultPreview({
                   const primaryLabel = isAgent ? row.agent : row.model
                   const secondaryLabel = isAgent
                     ? `${copy.uses}${row.model}`
-                    : `${row.agent} (${row.agentVersion ?? agentVersionByModel[row.model]})`
+                    : (row.agentVersion ?? agentVersionByModel[row.model])
+                      ? `${row.agent} (${row.agentVersion ?? agentVersionByModel[row.model]})`
+                      : row.agent
                   return (
                     <TableRow
                       key={key}

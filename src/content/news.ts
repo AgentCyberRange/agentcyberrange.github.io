@@ -2,6 +2,15 @@
 // and cage-fleet/web/src/content/news.ts. Order newest first; every change needs zh and en.
 export const newsItems = [
   {
+    id: 'kimi-k3-1-pro-gpt-6-sol',
+    date: '2026-11-10',
+    category: { zh: '评测', en: 'Results' },
+    text: {
+      zh: '新增 Kimi-K3.1-Pro 与 GPT-6 Sol 在 AgentCyberRange 上的评测结果。',
+      en: 'Added Kimi-K3.1-Pro and GPT-6 Sol results on AgentCyberRange.',
+    },
+  },
+  {
     id: 'doubao-seed-evolving',
     date: '2026-10-29',
     category: { zh: '评测', en: 'Results' },
