@@ -1531,7 +1531,7 @@ function ResultPreview({
   rows: BenchmarkResultRow[]
   table: (typeof resultTables)[ResultTableId]
 }>) {
-  const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
+  const [sortBy, setSortBy] = useState<'web' | 'post'>('post')
 
   const systemKey = (
     row: Pick<BenchmarkResultRow, 'agent' | 'agentVersion' | 'model'>,
