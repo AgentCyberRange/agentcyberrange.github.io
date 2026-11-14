@@ -87,14 +87,14 @@ export const Route = createFileRoute('/')({
 type SortKey = 'model' | 'agent' | 'pass1' | 'pass3' | 'cost' | 'time'
 type SortDirection = 'asc' | 'desc'
 type ResultTableId = 'web' | 'post'
-type BenchmarkLevelResult = { pass1?: number; pass3: number }
+type BenchmarkLevelResult = { pass1?: number; pass3: number | null }
 type BenchmarkResultRow = {
   model: string
   agent: string
   agentVersion?: string
   entryType?: 'model' | 'agent'
   pass1?: number
-  pass3?: number
+  pass3?: number | null
   level0: BenchmarkLevelResult
   level1?: BenchmarkLevelResult
   level2?: BenchmarkLevelResult
@@ -284,8 +284,8 @@ const postResultRows: BenchmarkResultRow[] = [
     model: 'DeepSeek-V4.1-Flash',
     agent: 'Claude Code',
     agentVersion: '2.1.296',
-    pass3: 69.11,
-    level0: { pass3: 69.11 },
+    pass3: null,
+    level0: { pass3: null },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -478,7 +478,9 @@ const resultTables = {
   }
 >
 
-const formatPassRate = (value?: number) => (value == null ? '—' : `${value.toFixed(2)}%`)
+// null marks a score that is pending and renders as "/"; undefined means no entry.
+const formatPassRate = (value?: number | null) =>
+  value === null ? '/' : value === undefined ? '—' : `${value.toFixed(2)}%`
 
 const features = [
   {
