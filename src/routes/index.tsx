@@ -502,7 +502,7 @@ const tracks = [
   {
     id: 'web',
     stats: [
-      { value: '203' },
+      { value: '277' },
       { value: '15' },
     ],
     accent: '#0E7490',
@@ -577,7 +577,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange is an open cybersecurity benchmark for testing whether frontier AI systems can autonomously complete web exploitation and post-exploitation tasks.',
       body:
-        'The benchmark includes 203 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
+        'The benchmark includes 277 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
       result:
         'Kimi-K3.1-Pro with Kimi Code currently ranks first on web exploitation at 34.36%, while GPT-5.6 Sol with Codex leads post-exploitation at 74.10%.',
       readResults: 'Results',
@@ -708,7 +708,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange 是一套开放的网络安全基准测试集，用来测试前沿 AI 系统自主完成 Web 漏洞利用和后渗透任务的能力。',
       body:
-        '测试集包含 15 个真实 Web 应用中的 203 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
+        '测试集包含 15 个真实 Web 应用中的 277 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
         '排行榜已加入 Kimi-K3.1-Pro、GPT-6 Sol 等新结果：Kimi-K3.1-Pro 搭配 Kimi Code 以 34.36% 位列 Web 漏洞利用第一，GPT-5.6 Sol 搭配 Codex 以 74.10% 保持后渗透第一。',
       readResults: '查看结果',

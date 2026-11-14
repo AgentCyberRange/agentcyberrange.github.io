@@ -2,6 +2,15 @@
 // and cage-fleet/web/src/content/news.ts. Order newest first; every change needs zh and en.
 export const newsItems = [
   {
+    id: 'webexploitbench-deepmind',
+    date: '2026-11-13',
+    category: { zh: '基准', en: 'Benchmark' },
+    text: {
+      zh: '与 Google DeepMind Team 合作更新 WebExploitBench，漏洞总数扩充至 277 个，非常感谢！',
+      en: 'In collaboration with the Google DeepMind team, we expanded WebExploitBench to 277 vulnerabilities. Many thanks!',
+    },
+  },
+  {
     id: 'kimi-k3-1-pro-gpt-6-sol',
     date: '2026-11-10',
     category: { zh: '评测', en: 'Results' },
@@ -17,15 +26,6 @@ export const newsItems = [
     text: {
       zh: 'Seed Team 提交了 Doubao-Seed-Evolving 在 AgentCyberRange 上的评测结果。',
       en: 'Seed Team submitted Doubao-Seed-Evolving results on AgentCyberRange.',
-    },
-  },
-  {
-    id: 'webexploitbench-deepmind',
-    date: '2026-10-25',
-    category: { zh: '基准', en: 'Benchmark' },
-    text: {
-      zh: '与 Google DeepMind Team 合作更新 WebExploitBench，漏洞总数扩充至 203 个，非常感谢！',
-      en: 'In collaboration with the Google DeepMind team, we expanded WebExploitBench to 203 vulnerabilities. Many thanks!',
     },
   },
   {
