@@ -111,6 +111,15 @@ type BenchmarkResultRow = {
 // across the three levels (not currently surfaced in the table UI).
 const resultRows: BenchmarkResultRow[] = [
   {
+    model: 'GLM-5.3',
+    agent: 'Claude Code',
+    agentVersion: '2.1.316',
+    pass3: 14.32,
+    level0: { pass3: 14.32 },
+    submittedAt: '2026-11-16',
+    note: 'Latest result',
+  },
+  {
     model: 'Kimi-K3.1-Pro',
     agent: 'Kimi Code',
     agentVersion: '2.5.2',
@@ -263,6 +272,15 @@ const resultRows: BenchmarkResultRow[] = [
 // across the three levels (not currently surfaced in the table UI).
 const postResultRows: BenchmarkResultRow[] = [
   {
+    model: 'GLM-5.3',
+    agent: 'Claude Code',
+    agentVersion: '2.1.316',
+    pass3: 34.96,
+    level0: { pass3: 34.96 },
+    submittedAt: '2026-11-16',
+    note: 'Latest result',
+  },
+  {
     model: 'Kimi-K3.1-Pro',
     agent: 'Kimi Code',
     agentVersion: '2.5.2',
@@ -284,8 +302,8 @@ const postResultRows: BenchmarkResultRow[] = [
     model: 'DeepSeek-V4.1-Flash',
     agent: 'Claude Code',
     agentVersion: '2.1.296',
-    pass3: 69.11,
-    level0: { pass3: 69.11 },
+    pass3: 65.04,
+    level0: { pass3: 65.04 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
