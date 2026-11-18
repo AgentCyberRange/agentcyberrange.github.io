@@ -651,7 +651,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange is an open cybersecurity benchmark for testing whether frontier AI systems can autonomously complete web exploitation and post-exploitation tasks.',
       body:
-        'The benchmark includes 277 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
+        'WebExploitBench covers 277 vulnerabilities across 15 real web applications, spanning 16 vulnerability classes and including 0-day, 1-day, and synthetic vulnerabilities. PostExploitBench includes 156 internal hosts in eight enterprise-like environments, with segmented networks, pivot hosts, decoys, and multi-step attack paths for reconnaissance, lateral movement, and chained exploitation. CAGE runs agents, orchestrates tasks, collects trajectories, and verifies outcomes automatically using runtime evidence. Some environments are open source, so teams can validate agents locally before applying for an official evaluation.',
       result:
         `${webLeader.model} with ${webLeader.agent} currently ranks first on web exploitation at ${formatPassRate(webLeader.level0.pass3)}, while ${postLeader.model} with ${postLeader.agent} leads post-exploitation at ${formatPassRate(postLeader.level0.pass3)}.`,
       readResults: 'Results',
@@ -782,7 +782,7 @@ const pageCopy = {
       lead:
         'AgentCyberRange 是一套开放的网络安全基准测试集，用来测试前沿 AI 系统自主完成 Web 漏洞利用和后渗透任务的能力。',
       body:
-        '测试集包含 15 个真实 Web 应用中的 277 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
+        'WebExploitBench 包含 15 个真实 Web 应用中的 277 个漏洞，覆盖 16 类漏洞，兼有 0-day、1-day 和合成漏洞。PostExploitBench 包含 8 套企业网络评测环境中的 156 台内部主机，设置了多层网段、跳板主机、诱饵和多步攻击路径，考察信息收集、横向移动与链式利用能力。CAGE 基础设施负责运行 Agent、编排任务、收集执行轨迹，并基于运行时证据自动验证攻陷结果。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
         `${webLeader.model} 搭配 ${webLeader.agent} 以 ${formatPassRate(webLeader.level0.pass3)} 位列 Web 漏洞利用第一，${postLeader.model} 搭配 ${postLeader.agent} 以 ${formatPassRate(postLeader.level0.pass3)} 位列后渗透第一。`,
       readResults: '查看结果',
