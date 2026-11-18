@@ -3,6 +3,7 @@ import byteDanceLogo from '@lobehub/icons-static-svg/icons/bytedance-color.svg?u
 import { NewsSection } from '../components/news-section'
 import claudeLogo from '@lobehub/icons-static-svg/icons/claude-color.svg?url'
 import deepSeekLogo from '@lobehub/icons-static-svg/icons/deepseek-color.svg?url'
+import geminiLogo from '@lobehub/icons-static-svg/icons/gemini-color.svg?url'
 import kimiLogo from '@lobehub/icons-static-svg/icons/kimi.svg?url'
 import openAiLogo from '@lobehub/icons-static-svg/icons/openai.svg?url'
 import qwenLogo from '@lobehub/icons-static-svg/icons/qwen-color.svg?url'
@@ -111,6 +112,56 @@ type BenchmarkResultRow = {
 // across the three levels (not currently surfaced in the table UI).
 const resultRows: BenchmarkResultRow[] = [
   {
+    model: 'DeepSeek-Flash-Cyber',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 20.10,
+    level0: { pass3: 20.10 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
+    model: 'GPT-6-Astra',
+    agent: 'Codex',
+    agentVersion: '0.170.0',
+    submitter: 'ACR Team',
+    pass3: 38.99,
+    level0: { pass3: 38.99 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
+    model: 'Claude-Opus-5.5',
+    agent: 'Claude Code',
+    agentVersion: '2.1.327',
+    submitter: 'DeepMind Team',
+    submitterUrl: 'https://deepmind.google/',
+    pass3: 37.06,
+    level0: { pass3: 37.06 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
+    model: 'Gemini-4-Neon',
+    agent: 'Google Antigravity',
+    submitter: 'DeepMind Team',
+    submitterUrl: 'https://deepmind.google/',
+    pass3: 51.26,
+    level0: { pass3: 51.26 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
+    model: 'Gemini-4-Carbon',
+    agent: 'Google Antigravity',
+    submitter: 'DeepMind Team',
+    submitterUrl: 'https://deepmind.google/',
+    pass3: 44.65,
+    level0: { pass3: 44.65 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
     model: 'GLM-5.3',
     agent: 'Claude Code',
     agentVersion: '2.1.316',
@@ -175,14 +226,6 @@ const resultRows: BenchmarkResultRow[] = [
     cost: 14.23,
     time: 27.4,
     note: 'Best Pass@1',
-  },
-  {
-    model: 'GPT-5.5',
-    agent: 'Codex',
-    agentVersion: '0.147.0',
-    pass3: 22.50,
-    level0: { pass3: 22.50 },
-    note: 'Latest result',
   },
   {
     model: 'Claude-Opus-4.7',
@@ -272,6 +315,15 @@ const resultRows: BenchmarkResultRow[] = [
 // across the three levels (not currently surfaced in the table UI).
 const postResultRows: BenchmarkResultRow[] = [
   {
+    model: 'DeepSeek-Flash-Cyber',
+    agent: 'Claude Code',
+    agentVersion: '2.1.296',
+    pass3: 20.10,
+    level0: { pass3: 20.10 },
+    submittedAt: '2026-11-18',
+    note: 'Latest result',
+  },
+  {
     model: 'GLM-5.3',
     agent: 'Claude Code',
     agentVersion: '2.1.316',
@@ -336,14 +388,6 @@ const postResultRows: BenchmarkResultRow[] = [
     cost: 37.62,
     time: 80.48,
     note: 'Best Pass@1',
-  },
-  {
-    model: 'GPT-5.5',
-    agent: 'Codex',
-    agentVersion: '0.147.0',
-    pass3: 42.07,
-    level0: { pass3: 42.07 },
-    note: 'Latest result',
   },
   {
     model: 'Claude-Opus-4.7',
@@ -500,6 +544,16 @@ const resultTables = {
 const formatPassRate = (value?: number | null) =>
   value === null ? '/' : value === undefined ? '—' : `${value.toFixed(2)}%`
 
+const getLeaderboardLeader = (rows: BenchmarkResultRow[]) =>
+  rows.reduce((leader, row) =>
+    (row.level0.pass3 ?? -Infinity) > (leader.level0.pass3 ?? -Infinity)
+      ? row
+      : leader,
+  )
+
+const webLeader = getLeaderboardLeader(resultRows)
+const postLeader = getLeaderboardLeader(postResultRows)
+
 const features = [
   {
     icon: Layers3,
@@ -599,7 +653,7 @@ const pageCopy = {
       body:
         'The benchmark includes 277 vulnerabilities across 15 real web applications and 156 internal hosts in eight enterprise-like environments. CAGE runs agents, orchestrates tasks, collects results, and verifies outcomes automatically. Some environments are open source, so teams can validate locally before applying for an official evaluation.',
       result:
-        'Kimi-K3.1-Pro with Kimi Code currently ranks first on web exploitation at 34.36%, while GPT-5.6 Sol with Codex leads post-exploitation at 74.10%.',
+        `${webLeader.model} with ${webLeader.agent} currently ranks first on web exploitation at ${formatPassRate(webLeader.level0.pass3)}, while ${postLeader.model} with ${postLeader.agent} leads post-exploitation at ${formatPassRate(postLeader.level0.pass3)}.`,
       readResults: 'Results',
       paper: 'Paper',
       github: 'GitHub',
@@ -730,7 +784,7 @@ const pageCopy = {
       body:
         '测试集包含 15 个真实 Web 应用中的 277 个漏洞，以及 8 套企业网络评测环境中的 156 台内部主机。CAGE 基础设施负责运行 Agent、编排任务、收集结果和自动验证。部分测试环境已开源，可先在本地接入并验证 Agent，效果达到预期后再申请正式评测。',
       result:
-        '排行榜已加入 Kimi-K3.1-Pro、GPT-6 Sol 等新结果：Kimi-K3.1-Pro 搭配 Kimi Code 以 34.36% 位列 Web 漏洞利用第一，GPT-5.6 Sol 搭配 Codex 以 74.10% 保持后渗透第一。',
+        `${webLeader.model} 搭配 ${webLeader.agent} 以 ${formatPassRate(webLeader.level0.pass3)} 位列 Web 漏洞利用第一，${postLeader.model} 搭配 ${postLeader.agent} 以 ${formatPassRate(postLeader.level0.pass3)} 位列后渗透第一。`,
       readResults: '查看结果',
       paper: '技术报告',
       github: 'GitHub',
@@ -1139,15 +1193,12 @@ function PaperSite() {
         <main>
           <section ref={heroRef} className="relative overflow-hidden">
             <div className="grid-decoration" />
-            <div className="relative mx-auto max-w-[1200px] px-3 pb-3 pt-8 sm:px-5 sm:pb-4 sm:pt-12 lg:px-10 lg:pb-4 lg:pt-14">
-              <div>
-                <h1 data-reveal className="break-words font-serif text-[clamp(2rem,10vw,5.2rem)] font-bold leading-[0.96] tracking-tight text-[#413052]">
-                  AgentCyberRange
-                </h1>
-              </div>
-
-              <div className="mt-9 grid grid-cols-1 gap-y-12 xl:min-h-[37.5rem] xl:grid-cols-[minmax(0,1fr)_660px] xl:items-stretch xl:gap-x-6">
+            <div className="relative mx-auto max-w-[1320px] px-5 pb-3 pt-8 sm:px-8 sm:pb-4 sm:pt-12 lg:px-10 lg:pb-4 lg:pt-14">
+              <div className="grid grid-cols-1 gap-y-12 xl:min-h-[48rem] xl:grid-cols-[minmax(0,1fr)_720px] xl:items-stretch xl:gap-x-6">
                 <div className="min-w-0 xl:flex xl:flex-col">
+                  <h1 data-reveal className="break-words font-serif text-[clamp(2rem,8vw,4.5rem)] font-bold leading-[0.96] tracking-tight text-[#413052] xl:text-[clamp(2rem,3.7vw,3.5rem)]">
+                    AgentCyberRange
+                  </h1>
                   <p
                     data-reveal
                     className={`mt-6 font-serif font-bold leading-tight tracking-tight text-[var(--text-primary)] ${language === 'en' ? 'text-[clamp(1rem,6.4vw,2.5rem)] xl:text-[1.85rem]' : 'whitespace-pre-line text-3xl sm:text-[2.25rem]'}`}
@@ -1483,7 +1534,7 @@ function Navigation({
 }>) {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-page)]/95 backdrop-blur-sm">
-      <nav className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-3 sm:px-5 lg:px-10">
+      <nav className="mx-auto flex h-14 max-w-[1320px] items-center justify-between px-5 sm:px-8 lg:px-10">
         <a
           href="#"
           className="flex min-w-0 items-center gap-2 text-sm font-semibold text-[var(--text-primary)]"
@@ -1551,7 +1602,7 @@ function ResultPreview({
   rows: BenchmarkResultRow[]
   table: (typeof resultTables)[ResultTableId]
 }>) {
-  const [sortBy, setSortBy] = useState<'web' | 'post'>('post')
+  const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
 
   const systemKey = (
     row: Pick<BenchmarkResultRow, 'agent' | 'agentVersion' | 'model'>,
@@ -1592,7 +1643,7 @@ function ResultPreview({
       previousBenchmarkModels.has(row.model) &&
       !row.agentVersion
         ? '2026-05-25'
-        : row.model === 'Qwen-3.8-Max' || row.agentVersion === '0.147.0'
+        : row.model === 'Qwen-3.8-Max'
         ? '2026-08-11'
         : row.model === 'DeepSeek-V4-Flash' || row.model === 'Kimi-K3'
         ? '2026-08-08'
@@ -1616,7 +1667,7 @@ function ResultPreview({
   }
 
   return (
-    <div className="w-full xl:relative xl:min-h-0 xl:justify-self-end">
+    <div className="mx-auto w-full max-w-[720px] xl:relative xl:min-h-0 xl:justify-self-end">
       <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper xl:absolute xl:inset-0 xl:flex xl:flex-col">
         <CardHeader className="relative space-y-0 p-5 pb-4">
           <div className="flex items-start justify-between gap-4">
@@ -1635,7 +1686,7 @@ function ResultPreview({
             role="region"
             tabIndex={0}
           >
-            <Table className="min-w-[600px] table-fixed">
+            <Table className="min-w-[620px] table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-[#F0F3F5]">
                 <TableRow className="bg-[#F0F3F5] hover:bg-[#F0F3F5]">
                   <TableHead className="sticky left-0 z-20 h-9 w-[48%] bg-[#F0F3F5] pl-3 pr-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
@@ -1653,10 +1704,10 @@ function ResultPreview({
                   >
                     Post
                   </TableHead>
-                  <TableHead className="h-9 w-[16%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[18%] px-px font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submitter}
                   </TableHead>
-                  <TableHead className="h-9 w-[16%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                  <TableHead className="h-9 w-[14%] px-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                     {copy.submittedAt}
                   </TableHead>
                 </TableRow>
@@ -1704,12 +1755,14 @@ function ResultPreview({
                         {formatPassRate(webRow?.[level]?.pass3)}
                       </TableCell>
                       <TableCell className={`px-[5px] py-2 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {formatPassRate(postRow?.[level]?.pass3)}
+                        {postRow?.[level]?.pass3 == null
+                          ? 'TBA'
+                          : formatPassRate(postRow?.[level]?.pass3)}
                       </TableCell>
-                      <TableCell className="whitespace-nowrap px-1.5 py-2 text-xs text-[var(--text-secondary)]">
+                      <TableCell className="whitespace-nowrap px-px py-2 text-xs text-[var(--text-secondary)]">
                         {submission.submitterUrl ? (
                           <a
-                            className="inline-flex items-center gap-0.5 transition-colors hover:text-primary focus-visible:text-primary"
+                            className="inline-flex items-center gap-0.5 transition-colors hover:text-[oklch(0.76_0.12_220)] focus-visible:text-[oklch(0.76_0.12_220)]"
                             href={submission.submitterUrl}
                             rel="noreferrer"
                             target="_blank"
@@ -1795,6 +1848,9 @@ function ModelLogo({ model }: Readonly<{ model: string }>) {
   } else if (model.startsWith('GPT')) {
     src = openAiLogo
     alt = 'OpenAI'
+  } else if (model.startsWith('Gemini')) {
+    src = geminiLogo
+    alt = 'Gemini'
   } else if (model.startsWith('Claude')) {
     src = claudeLogo
     alt = 'Claude'
