@@ -9,6 +9,7 @@ import openAiLogo from '@lobehub/icons-static-svg/icons/openai.svg?url'
 import qwenLogo from '@lobehub/icons-static-svg/icons/qwen-color.svg?url'
 import zhipuLogo from '@lobehub/icons-static-svg/icons/zhipu-color.svg?url'
 import paperLogo from '../assets/agent-cyber-range-mark.svg?url'
+import whitzardLogo from '../assets/whitzard-logo.png?url'
 import attackWorkflowFig from '../assets/overview-cyber-attack-workflow.png?url'
 import benchmarkLevelsFig from '../assets/benchmark-levels.png?url'
 import finding1Fig from '../assets/finding1.png?url'
@@ -646,6 +647,7 @@ const pageCopy = {
     nav: {
       toggleLabel: 'Switch to Chinese',
       toggleText: '中文',
+      labUrl: 'https://whitzard.tech/en/',
     },
     hero: {
       subtitleStart: 'Evaluate Agent Cyberattack',
@@ -781,6 +783,7 @@ const pageCopy = {
     nav: {
       toggleLabel: 'Switch to English',
       toggleText: 'EN',
+      labUrl: 'https://whitzard.tech/',
     },
     hero: {
       subtitleStart: '面向',
@@ -910,7 +913,7 @@ const pageCopy = {
 } satisfies Record<Language, {
   metaTitle: string
   metaDescription: string
-  nav: { toggleLabel: string; toggleText: string }
+  nav: { toggleLabel: string; toggleText: string; labUrl: string }
   hero: {
     subtitleStart: string
     subtitleAccent: string
@@ -1567,7 +1570,25 @@ function Navigation({
           </span>
         </a>
 
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+          <a
+            aria-label="Whitzard Lab"
+            className="flex items-center opacity-80 transition-opacity hover:opacity-100"
+            href={copy.labUrl}
+            rel="noreferrer"
+            target="_blank"
+            title="Whitzard Lab"
+          >
+            <img
+              alt="Whitzard"
+              className="h-4 w-auto object-contain sm:h-[18px]"
+              src={whitzardLogo}
+            />
+          </a>
+          <span
+            aria-hidden="true"
+            className="h-4 w-px bg-[var(--border-default)]"
+          />
           <Button
             size="sm"
             variant="outline"
