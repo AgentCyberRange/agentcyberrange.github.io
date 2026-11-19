@@ -9,7 +9,7 @@ import openAiLogo from '@lobehub/icons-static-svg/icons/openai.svg?url'
 import qwenLogo from '@lobehub/icons-static-svg/icons/qwen-color.svg?url'
 import zhipuLogo from '@lobehub/icons-static-svg/icons/zhipu-color.svg?url'
 import paperLogo from '../assets/agent-cyber-range-mark.svg?url'
-import whitzardLogo from '../assets/whitzard-logo.png?url'
+import whitzardMark from '../assets/whitzard-mark.png?url'
 import attackWorkflowFig from '../assets/overview-cyber-attack-workflow.png?url'
 import benchmarkLevelsFig from '../assets/benchmark-levels.png?url'
 import finding1Fig from '../assets/finding1.png?url'
@@ -1570,25 +1570,23 @@ function Navigation({
           </span>
         </a>
 
-        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a
             aria-label="Whitzard Lab"
-            className="flex items-center opacity-80 transition-opacity hover:opacity-100"
+            className="flex h-8 items-center gap-1.5 rounded-full border border-[var(--border-default)] bg-transparent px-3 font-mono text-xs text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-card)]"
             href={copy.labUrl}
             rel="noreferrer"
             target="_blank"
             title="Whitzard Lab"
           >
             <img
-              alt="Whitzard"
-              className="h-4 w-auto object-contain sm:h-[18px]"
-              src={whitzardLogo}
+              alt=""
+              aria-hidden="true"
+              className="h-[18px] w-[18px] object-contain"
+              src={whitzardMark}
             />
+            <span className="whitespace-nowrap">Whitzard</span>
           </a>
-          <span
-            aria-hidden="true"
-            className="h-4 w-px bg-[var(--border-default)]"
-          />
           <Button
             size="sm"
             variant="outline"
