@@ -139,8 +139,7 @@ const resultRows: BenchmarkResultRow[] = [
     model: 'Claude-Opus-5.5',
     agent: 'Claude Code',
     agentVersion: '2.1.327',
-    submitter: 'DeepMind Team',
-    submitterUrl: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/',
+    submitter: 'ASR Team',
     pass3: 37.06,
     level0: { pass3: 37.06, pass3Union: 50.18 },
     submittedAt: '2026-11-18',
@@ -1211,7 +1210,7 @@ function PaperSite() {
           <section ref={heroRef} className="relative overflow-hidden">
             <div className="grid-decoration" />
             <div className="relative mx-auto max-w-[1320px] px-5 pb-3 pt-8 sm:px-8 sm:pb-4 sm:pt-12 lg:px-10 lg:pb-4 lg:pt-14">
-              <div className="grid grid-cols-1 gap-y-12 xl:min-h-[52rem] xl:grid-cols-[minmax(0,1fr)_720px] xl:items-stretch xl:gap-x-6">
+              <div className="grid grid-cols-1 gap-y-12 xl:min-h-[53.5rem] xl:grid-cols-[minmax(0,1fr)_720px] xl:items-stretch xl:gap-x-6">
                 <div className="min-w-0 xl:flex xl:flex-col">
                   <h1 data-reveal className="whitespace-nowrap font-serif text-[clamp(1.75rem,8vw,4.5rem)] font-bold leading-[0.96] tracking-tight text-[#413052] xl:text-[clamp(2rem,3.7vw,3.375rem)]">
                     AgentCyberRange
