@@ -88,7 +88,12 @@ export const Route = createFileRoute('/')({
 type SortKey = 'model' | 'agent' | 'pass1' | 'pass3' | 'cost' | 'time'
 type SortDirection = 'asc' | 'desc'
 type ResultTableId = 'web' | 'post'
-type BenchmarkLevelResult = { pass1?: number; pass3: number | null }
+type LeaderboardMetric = 'avg' | 'union'
+type BenchmarkLevelResult = {
+  pass1?: number
+  pass3: number | null
+  pass3Union?: number | null
+}
 type BenchmarkResultRow = {
   model: string
   agent: string
@@ -116,7 +121,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 20.10,
-    level0: { pass3: 20.10 },
+    level0: { pass3: 20.10, pass3Union: 34.66 },
     submittedAt: '2026-11-18',
     note: 'Latest result',
   },
@@ -126,7 +131,7 @@ const resultRows: BenchmarkResultRow[] = [
     agentVersion: '0.170.0',
     submitter: 'ACR Team',
     pass3: 38.99,
-    level0: { pass3: 38.99 },
+    level0: { pass3: 38.99, pass3Union: 50.54 },
     submittedAt: '2026-11-18',
     note: 'Latest result',
   },
@@ -137,7 +142,7 @@ const resultRows: BenchmarkResultRow[] = [
     submitter: 'DeepMind Team',
     submitterUrl: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/',
     pass3: 37.06,
-    level0: { pass3: 37.06 },
+    level0: { pass3: 37.06, pass3Union: 50.18 },
     submittedAt: '2026-11-18',
     note: 'Latest result',
   },
@@ -147,7 +152,7 @@ const resultRows: BenchmarkResultRow[] = [
     submitter: 'DeepMind Team',
     submitterUrl: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/',
     pass3: 51.26,
-    level0: { pass3: 51.26 },
+    level0: { pass3: 51.26, pass3Union: 63.54 },
     submittedAt: '2026-11-18',
     note: 'Latest result',
   },
@@ -157,7 +162,7 @@ const resultRows: BenchmarkResultRow[] = [
     submitter: 'DeepMind Team',
     submitterUrl: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/',
     pass3: 44.65,
-    level0: { pass3: 44.65 },
+    level0: { pass3: 44.65, pass3Union: 59.21 },
     submittedAt: '2026-11-18',
     note: 'Latest result',
   },
@@ -166,7 +171,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.316',
     pass3: 14.32,
-    level0: { pass3: 14.32 },
+    level0: { pass3: 14.32, pass3Union: 24.91 },
     submittedAt: '2026-11-16',
     note: 'Latest result',
   },
@@ -175,7 +180,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Kimi Code',
     agentVersion: '2.5.2',
     pass3: 34.36,
-    level0: { pass3: 34.36 },
+    level0: { pass3: 34.36, pass3Union: 49.82 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -184,7 +189,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Codex',
     agentVersion: '0.166.0',
     pass3: 31.65,
-    level0: { pass3: 31.65 },
+    level0: { pass3: 31.65, pass3Union: 46.57 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -193,7 +198,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 19.01,
-    level0: { pass3: 19.01 },
+    level0: { pass3: 19.01, pass3Union: 32.13 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -202,7 +207,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 16.85,
-    level0: { pass3: 16.85 },
+    level0: { pass3: 16.85, pass3Union: 29.24 },
     submitter: 'Seed Team',
     submittedAt: '2026-10-29',
     submitterUrl: 'https://seed.bytedance.com/',
@@ -212,7 +217,7 @@ const resultRows: BenchmarkResultRow[] = [
     model: 'GPT-5.6 Sol',
     agent: 'Codex',
     pass3: 29.36,
-    level0: { pass3: 29.36 },
+    level0: { pass3: 29.36, pass3Union: 48.74 },
     note: 'Latest result',
   },
   {
@@ -220,7 +225,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Codex',
     pass1: 19.09,
     pass3: 16.49,
-    level0: { pass1: 19.09, pass3: 16.49 },
+    level0: { pass1: 19.09, pass3: 16.49, pass3Union: 27.08 },
     level1: { pass1: 36.36, pass3: 32.12 },
     level2: { pass1: 31.82, pass3: 33.03 },
     cost: 14.23,
@@ -232,7 +237,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 16.36,
     pass3: 10.71,
-    level0: { pass1: 16.36, pass3: 10.71 },
+    level0: { pass1: 16.36, pass3: 10.71, pass3Union: 20.58 },
     level1: { pass1: 24.55, pass3: 20.61 },
     level2: { pass1: 29.09, pass3: 23.94 },
     cost: 12.78,
@@ -244,7 +249,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 11.82,
     pass3: 10.23,
-    level0: { pass1: 11.82, pass3: 10.23 },
+    level0: { pass1: 11.82, pass3: 10.23, pass3Union: 18.77 },
     level1: { pass1: 12.73, pass3: 14.85 },
     level2: { pass1: 17.27, pass3: 14.85 },
     cost: 10.18,
@@ -256,7 +261,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 10.0,
     pass3: 6.98,
-    level0: { pass1: 10.0, pass3: 6.98 },
+    level0: { pass1: 10.0, pass3: 6.98, pass3Union: 13.00 },
     level1: { pass1: 12.73, pass3: 14.55 },
     level2: { pass1: 13.64, pass3: 20.61 },
     cost: 12.03,
@@ -267,7 +272,7 @@ const resultRows: BenchmarkResultRow[] = [
     model: 'DeepSeek-V4-Flash',
     agent: 'Claude Code',
     pass3: 10.59,
-    level0: { pass3: 10.59 },
+    level0: { pass3: 10.59, pass3Union: 18.77 },
     note: 'Latest result',
   },
   {
@@ -275,7 +280,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Qwen Code',
     pass1: 10.91,
     pass3: 10.47,
-    level0: { pass1: 10.91, pass3: 10.47 },
+    level0: { pass1: 10.91, pass3: 10.47, pass3Union: 17.69 },
     level1: { pass1: 26.36, pass3: 21.52 },
     level2: { pass1: 12.73, pass3: 20.0 },
     cost: 7.24,
@@ -286,7 +291,7 @@ const resultRows: BenchmarkResultRow[] = [
     model: 'Qwen-3.8-Max',
     agent: 'Qwen Code',
     pass3: 16.49,
-    level0: { pass3: 16.49 },
+    level0: { pass3: 16.49, pass3Union: 25.99 },
     note: 'Latest result',
   },
   {
@@ -294,7 +299,7 @@ const resultRows: BenchmarkResultRow[] = [
     agent: 'Kimi Code',
     pass1: 3.64,
     pass3: 5.29,
-    level0: { pass1: 3.64, pass3: 5.29 },
+    level0: { pass1: 3.64, pass3: 5.29, pass3Union: 11.55 },
     level1: { pass1: 12.73, pass3: 12.12 },
     level2: { pass1: 9.09, pass3: 10.0 },
     cost: 8.89,
@@ -305,7 +310,7 @@ const resultRows: BenchmarkResultRow[] = [
     model: 'Kimi-K3',
     agent: 'Kimi Code',
     pass3: 19.55,
-    level0: { pass3: 19.55 },
+    level0: { pass3: 19.55, pass3Union: 25.63 },
     note: 'Latest result',
   },
 ]
@@ -328,7 +333,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.316',
     pass3: 34.96,
-    level0: { pass3: 34.96 },
+    level0: { pass3: 34.96, pass3Union: 58.54 },
     submittedAt: '2026-11-16',
     note: 'Latest result',
   },
@@ -337,7 +342,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Kimi Code',
     agentVersion: '2.5.2',
     pass3: 58.54,
-    level0: { pass3: 58.54 },
+    level0: { pass3: 58.54, pass3Union: 82.93 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -346,7 +351,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Codex',
     agentVersion: '0.166.0',
     pass3: 72.36,
-    level0: { pass3: 72.36 },
+    level0: { pass3: 72.36, pass3Union: 82.93 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -355,7 +360,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 65.04,
-    level0: { pass3: 65.04 },
+    level0: { pass3: 65.04, pass3Union: 87.80 },
     submittedAt: '2026-11-10',
     note: 'Latest result',
   },
@@ -364,7 +369,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     agentVersion: '2.1.296',
     pass3: 34.15,
-    level0: { pass3: 34.15 },
+    level0: { pass3: 34.15, pass3Union: 56.10 },
     submitter: 'Seed Team',
     submittedAt: '2026-10-29',
     submitterUrl: 'https://seed.bytedance.com/',
@@ -382,7 +387,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Codex',
     pass1: 31.71,
     pass3: 31.71,
-    level0: { pass1: 31.71, pass3: 31.71 },
+    level0: { pass1: 31.71, pass3: 31.71, pass3Union: 43.90 },
     level1: { pass1: 39.02, pass3: 32.51 },
     level2: { pass1: 46.34, pass3: 46.34 },
     cost: 37.62,
@@ -394,7 +399,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 12.20,
     pass3: 15.04,
-    level0: { pass1: 12.20, pass3: 15.04 },
+    level0: { pass1: 12.20, pass3: 15.04, pass3Union: 21.95 },
     level1: { pass1: 14.63, pass3: 10.56 },
     level2: { pass1: 31.71, pass3: 30.08 },
     cost: 33.87,
@@ -406,7 +411,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 17.07,
     pass3: 11.37,
-    level0: { pass1: 17.07, pass3: 11.37 },
+    level0: { pass1: 17.07, pass3: 11.37, pass3Union: 19.51 },
     level1: { pass1: 12.20, pass3: 10.56 },
     level2: { pass1: 14.63, pass3: 14.66 },
     cost: 17.20,
@@ -418,7 +423,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Claude Code',
     pass1: 9.76,
     pass3: 12.20,
-    level0: { pass1: 9.76, pass3: 12.20 },
+    level0: { pass1: 9.76, pass3: 12.20, pass3Union: 19.51 },
     level1: { pass1: 9.76, pass3: 10.56 },
     level2: { pass1: 9.76, pass3: 16.24 },
     cost: 23.61,
@@ -437,7 +442,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Qwen Code',
     pass1: 19.51,
     pass3: 13.02,
-    level0: { pass1: 19.51, pass3: 13.02 },
+    level0: { pass1: 19.51, pass3: 13.02, pass3Union: 19.51 },
     level1: { pass1: 12.20, pass3: 12.98 },
     level2: { pass1: 14.63, pass3: 17.88 },
     cost: 20.51,
@@ -456,7 +461,7 @@ const postResultRows: BenchmarkResultRow[] = [
     agent: 'Kimi Code',
     pass1: 12.20,
     pass3: 5.68,
-    level0: { pass1: 12.20, pass3: 5.68 },
+    level0: { pass1: 12.20, pass3: 5.68, pass3Union: 12.20 },
     level1: { pass1: 7.32, pass3: 6.51 },
     level2: { pass1: 17.07, pass3: 13.02 },
     cost: 19.58,
@@ -476,7 +481,7 @@ const postResultRows: BenchmarkResultRow[] = [
     entryType: 'agent',
     pass1: 7.32,
     pass3: 7.32,
-    level0: { pass1: 7.32, pass3: 7.32 },
+    level0: { pass1: 7.32, pass3: 7.32, pass3Union: 9.76 },
     cost: 44.74,
     time: 39.03,
     note: 'Post-exploitation only',
@@ -487,7 +492,7 @@ const postResultRows: BenchmarkResultRow[] = [
     entryType: 'agent',
     pass1: 2.44,
     pass3: 4.88,
-    level0: { pass1: 2.44, pass3: 4.88 },
+    level0: { pass1: 2.44, pass3: 4.88, pass3Union: 9.76 },
     cost: 7.84,
     time: 95.85,
     note: 'Post-exploitation only',
@@ -706,9 +711,13 @@ const pageCopy = {
       modelBadge: 'MODEL',
       agentBadge: 'AGENT',
       uses: 'Uses ',
+      metricLabel: 'Leaderboard metric',
+      avg: 'Avg',
+      union: 'Union',
       note:
-        'columns show Succ. Rate Pass@3 (AVG.). Click a column header to sort and rank by that scenario.',
+        'columns show Succ. Rate Pass@3. Avg is the mean of three runs; Union counts a task solved in any run. Click a column header to sort and rank by that scenario.',
       metrics: ['pass@3 (avg.)', 'ai systems', 'step budget'],
+      unionMetrics: ['pass@3 (union)', 'ai systems', 'step budget'],
     },
     sections: {
       overall: {
@@ -835,8 +844,12 @@ const pageCopy = {
       modelBadge: 'MODEL',
       agentBadge: 'AGENT',
       uses: '使用 ',
-      note: '列展示 Succ. Rate Pass@3 (AVG.)。点击列标题可按对应场景排序和排名。',
+      metricLabel: '排行榜指标',
+      avg: 'Avg',
+      union: 'Union',
+      note: '列展示 Succ. Rate Pass@3。Avg 为三次运行均值；Union 为三次运行取并集（任一次成功即计）。点击列标题可按对应场景排序和排名。',
       metrics: ['pass@3（均值）', 'AI 系统', '步数预算'],
+      unionMetrics: ['pass@3（并集）', 'AI 系统', '步数预算'],
     },
     sections: {
       overall: {
@@ -929,8 +942,12 @@ const pageCopy = {
     modelBadge: string
     agentBadge: string
     uses: string
+    metricLabel: string
+    avg: string
+    union: string
     note: string
     metrics: [string, string, string]
+    unionMetrics: [string, string, string]
   }
   sections: {
     overall: { eyebrow: string; title: string; description: string; alt: string; caption: string }
@@ -1603,6 +1620,7 @@ function ResultPreview({
   table: (typeof resultTables)[ResultTableId]
 }>) {
   const [sortBy, setSortBy] = useState<'web' | 'post'>('web')
+  const [metric, setMetric] = useState<LeaderboardMetric>('avg')
 
   const systemKey = (
     row: Pick<BenchmarkResultRow, 'agent' | 'agentVersion' | 'model'>,
@@ -1622,13 +1640,18 @@ function ResultPreview({
     ).values(),
   )
   const activeRows = sortBy === 'web' ? webBySystem : postBySystem
-  const previewRows = systems.sort(
-    (a, b) =>
-      (activeRows.get(systemKey(b))?.[level]?.pass3 ?? -Infinity) -
-      (activeRows.get(systemKey(a))?.[level]?.pass3 ?? -Infinity),
-  )
-  const bestPass3 =
-    activeRows.get(systemKey(previewRows[0]))?.[level]?.pass3 ?? 0
+  const metricScore = (row?: BenchmarkResultRow) => {
+    const result = row?.[level]
+    const value = metric === 'avg' ? result?.pass3 : result?.pass3Union
+    return value ?? null
+  }
+  const previewRows = systems.sort((a, b) => {
+    const aScore = metricScore(activeRows.get(systemKey(a)))
+    const bScore = metricScore(activeRows.get(systemKey(b)))
+    if (aScore === bScore) return 0
+    return (bScore ?? -Infinity) - (aScore ?? -Infinity)
+  })
+  const bestScore = metricScore(activeRows.get(systemKey(previewRows[0])))
   const evaluatedSystemCount = systems.length
   const getSubmissionMetadata = (row: BenchmarkResultRow) => {
     const previousBenchmarkModels = new Set([
@@ -1670,11 +1693,28 @@ function ResultPreview({
     <div className="mx-auto w-full max-w-[720px] xl:relative xl:min-h-0 xl:justify-self-end">
       <Card className="rounded-lg border-[var(--border-default)] bg-[var(--bg-card)] shadow-paper xl:absolute xl:inset-0 xl:flex xl:flex-col">
         <CardHeader className="relative space-y-0 p-5 pb-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
               <CardTitle className="font-sans text-xl font-semibold leading-tight text-[var(--text-primary)]">
                 {table.title}
               </CardTitle>
+            </div>
+            <div
+              aria-label={copy.metricLabel}
+              className="flex shrink-0 items-center rounded-md border border-[var(--border-default)] p-0.5"
+              role="group"
+            >
+              {(['avg', 'union'] as const).map((value) => (
+                <button
+                  key={value}
+                  aria-pressed={metric === value}
+                  className={`rounded px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors ${metric === value ? 'bg-[var(--bg-page)] font-semibold text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                  onClick={() => setMetric(value)}
+                  type="button"
+                >
+                  {value === 'avg' ? copy.avg : copy.union}
+                </button>
+              ))}
             </div>
           </div>
         </CardHeader>
@@ -1717,6 +1757,8 @@ function ResultPreview({
                   const key = systemKey(row)
                   const webRow = webBySystem.get(key)
                   const postRow = postBySystem.get(key)
+                  const webScore = metricScore(webRow)
+                  const postScore = metricScore(postRow)
                   const submission = getSubmissionMetadata(row)
                   const isAgent = row.entryType === 'agent'
                   const primaryLabel = isAgent ? row.agent : row.model
@@ -1752,12 +1794,10 @@ function ResultPreview({
                         </div>
                       </TableCell>
                       <TableCell className={`px-[5px] py-2 font-mono text-xs transition-colors ${sortBy === 'web' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {formatPassRate(webRow?.[level]?.pass3)}
+                        {webScore == null ? 'TBA' : formatPassRate(webScore)}
                       </TableCell>
                       <TableCell className={`px-[5px] py-2 font-mono text-xs transition-colors ${sortBy === 'post' ? 'bg-[#7C3AED]/[0.07] text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
-                        {postRow?.[level]?.pass3 == null
-                          ? 'TBA'
-                          : formatPassRate(postRow?.[level]?.pass3)}
+                        {postScore == null ? 'TBA' : formatPassRate(postScore)}
                       </TableCell>
                       <TableCell className="whitespace-nowrap px-px py-2 text-xs text-[var(--text-secondary)]">
                         {submission.submitterUrl ? (
@@ -1796,7 +1836,10 @@ function ResultPreview({
           </p>
 
           <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--border-default)]">
-            <MiniMetric label={copy.metrics[0]} value={`${bestPass3.toFixed(2)}%`} />
+            <MiniMetric
+              label={(metric === 'avg' ? copy.metrics : copy.unionMetrics)[0]}
+              value={bestScore == null ? 'TBA' : `${bestScore.toFixed(2)}%`}
+            />
             <MiniMetric label={copy.metrics[1]} value={String(evaluatedSystemCount)} />
             <MiniMetric label={copy.metrics[2]} value="150 / 500" />
           </div>
