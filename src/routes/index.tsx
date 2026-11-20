@@ -1740,7 +1740,7 @@ function ResultPreview({
         <CardContent className="px-5 pb-5 pt-0 xl:flex xl:min-h-0 xl:flex-1 xl:flex-col">
           <div
             aria-label={table.title}
-            className="leaderboard-scroll max-h-[26rem] max-w-full overflow-auto overscroll-contain rounded-lg border border-[var(--border-default)] xl:h-0 xl:min-h-0 xl:max-h-none xl:flex-1 [&_[data-slot=table-container]]:overflow-visible [&_[data-slot=table-container]]:touch-pan-x"
+            className="leaderboard-scroll max-h-[26rem] max-w-full overflow-auto overscroll-contain rounded-lg border border-[var(--border-default)] xl:h-0 xl:min-h-0 xl:max-h-none xl:flex-1 [&_[data-slot=table-container]]:overflow-visible"
             role="region"
             tabIndex={0}
           >
