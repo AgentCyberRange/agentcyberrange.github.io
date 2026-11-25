@@ -5,7 +5,7 @@ import {
   Scripts,
   createRootRoute,
 } from '@tanstack/react-router'
-import faviconUrl from '../assets/agent-cyber-range-mark.svg?url'
+import faviconUrl from '../assets/logo-whitzard.png?url'
 import '../styles.css'
 
 export const Route = createRootRoute({
@@ -27,7 +27,7 @@ export const Route = createRootRoute({
     links: [
       {
         rel: 'icon',
-        type: 'image/svg+xml',
+        type: 'image/png',
         href: faviconUrl,
       },
     ],
