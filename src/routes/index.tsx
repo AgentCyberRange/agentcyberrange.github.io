@@ -8,7 +8,7 @@ import kimiLogo from '@lobehub/icons-static-svg/icons/kimi.svg?url'
 import openAiLogo from '@lobehub/icons-static-svg/icons/openai.svg?url'
 import qwenLogo from '@lobehub/icons-static-svg/icons/qwen-color.svg?url'
 import zhipuLogo from '@lobehub/icons-static-svg/icons/zhipu-color.svg?url'
-import paperLogo from '../assets/agent-cyber-range-mark.svg?url'
+import paperLogo from '../assets/logo-whitzard.png?url'
 import whitzardMark from '../assets/whitzard-mark.png?url'
 import attackWorkflowFig from '../assets/overview-cyber-attack-workflow.png?url'
 import benchmarkLevelsFig from '../assets/benchmark-levels.png?url'
@@ -1558,10 +1558,10 @@ function Navigation({
           href="#"
           className="flex min-w-0 items-center gap-2 text-sm font-semibold text-[var(--text-primary)]"
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--border-default)] bg-[var(--bg-card)]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-[var(--border-default)] bg-white">
             <img
               alt="Agent Cyber Range logo"
-              className="h-4 w-4 object-contain"
+              className="h-full w-full object-contain"
               src={paperLogo}
             />
           </span>
@@ -1930,13 +1930,13 @@ function ModelLogo({ model }: Readonly<{ model: string }>) {
   }
 
   return (
-    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--border-default)] bg-[var(--bg-page)] text-[var(--text-primary)]">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-[var(--border-default)] bg-[var(--bg-page)] text-[var(--text-primary)]">
       {src ? (
         <img alt={`${alt} logo`} className="h-4 w-4 object-contain" src={src} />
       ) : (
         <img
           alt="Agent Cyber Range logo"
-          className="h-4 w-4 object-contain"
+          className="h-full w-full object-contain"
           src={paperLogo}
         />
       )}
